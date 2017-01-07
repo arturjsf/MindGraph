@@ -14,6 +14,8 @@ import javafxgraphs.ui.DrawableGraphElement;
  */
 public class DummyType implements DrawableGraphElement {
     
+    
+    
     private final String id;
     boolean selected;
 
