@@ -43,5 +43,5 @@ public class Jogador {
     public String toString() {
         return nome + " - " + pontuacao;
     }
-
+    
 }

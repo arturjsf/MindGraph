@@ -520,7 +520,6 @@ public class AppMindGraphsFX extends Application {
         rootJogoTT.setId("pane");
 
         return janelaJogoTT;
-
     }
 
     /**
