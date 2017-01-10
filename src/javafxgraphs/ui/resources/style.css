@@ -1,0 +1,53 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 23, 2016, 6:22:20 PM
+    Author     : brunomnsilva
+*/
+
+#pane{
+    -fx-background-image: url("desportos1.jpg");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-font: 16px "Serif";
+}
+
+#pane1{
+    -fx-background-image: url("desportos.jpg");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-font: 16px "Serif";
+}
+#cyclingPane{
+    -fx-background-image: url("cycling.jpg");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-font: 16px "Serif";
+}
+#rugbyPane{
+    -fx-background-image: url("rugby.jpg");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-font: 16px "Serif";
+}
+#footballPane{
+    -fx-background-image: url("football.jpg");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-font: 16px "Serif";
+}
+#surfPane{
+    -fx-background-image: url("surf.jpg");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-font: 16px "Serif";
+}
