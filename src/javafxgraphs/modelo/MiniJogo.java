@@ -27,23 +27,45 @@ import javafxgraphs.tad.iVertex;
  *
  * @author Artur Ferreira
  */
-public class MiniJogo implements iMiniJogo, Serializable {
+public class MiniJogo  extends MiniJogoFactory implements iMiniJogo, Serializable{
 
     public MyGraph<Local, Ligacao> grafoAdaptee;
 
     public iEstrategiaDificuldade nivel;
 
-//    public iVertex<Local> verticeOrigem;
-//    public iVertex<Local> verticeDestino;
     /**
-     * Cosntrutor do MiniJogo
+     * Construtor do MiniJogo
      *
      * @param nivel Cria um miniJogo random consoante o nivel
      */
+    public MiniJogo() {
+    }
+
     public MiniJogo(iEstrategiaDificuldade nivel) {
+
         grafoAdaptee = new MyGraph<>();
+
         this.nivel = nivel;
         criarGrafo(nivel);
+    }
+
+    /**
+     * Construtor de MiniJogos.
+     * Consoante o modo de jogo
+     * @param modo
+     * @return 
+     */
+    public iMiniJogo buildMiniJogo(String modo) {
+        
+        switch (modo) {
+
+            case "TT":
+                return new TimeTrial();
+            case "Arcade":
+                return new Arcade();
+            default:
+                return null;
+        }
     }
 
     /**
@@ -87,7 +109,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
             //Só insere se a origem e destino forem diferentes
             // if (!origemTemp.toString().equals(destinoTemp.toString())) {
             grafoAdaptee.insertEdge(origemTemp, destinoTemp, ligacaoTemp);
-           // System.out.println(ligacaoTemp.toString());
+            // System.out.println(ligacaoTemp.toString());
             //  }
 
         }

@@ -5,23 +5,38 @@
  */
 package javafxgraphs;
 
+import javafxgraphs.modelo.TimeTrial;
+import javafx.animation.Interpolator;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Reflection;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafxgraphs.modelo.DificuldadeDIFICIL;
+import javafxgraphs.modelo.DificuldadeFACIL;
+import javafxgraphs.modelo.DificuldadeMEDIO;
 import javafxgraphs.modelo.Jogador;
 import javafxgraphs.modelo.Ligacao;
 import javafxgraphs.modelo.Local;
@@ -101,6 +116,24 @@ public class AppMindGraphsFX extends Application {
         BorderPane rootMenu = new BorderPane();
         Scene janelaMenu = new Scene(rootMenu, 1000, 600);
 
+        /**
+         * Titulo
+         */
+        Text textoTitulo = new Text();
+        //textoTitulo.setX(100.0f);
+        // textoTitulo.setY(20.0f);
+        textoTitulo.setCache(true);
+        textoTitulo.setText("Mind Graph");
+        textoTitulo.setFill(Color.GREEN);
+        textoTitulo.setFont(Font.font(null, FontWeight.BOLD, 70));
+        textoTitulo.setTextAlignment(TextAlignment.CENTER);
+
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+
+        textoTitulo.setEffect(r);
+        textoTitulo.setTranslateY(20);
+
         //BOTÕES MENU
         int btnSize = 150;
 
@@ -122,9 +155,7 @@ public class AppMindGraphsFX extends Application {
             }
         });
 
-     
-
-        Button btnConfiguracao = new Button("Escolha de tema");
+        Button btnConfiguracao = new Button("Temas");
         btnConfiguracao.setMaxWidth(btnSize);
         btnConfiguracao.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -134,7 +165,7 @@ public class AppMindGraphsFX extends Application {
         });
 
         Button btnSair = new Button("Sair");
-        btnSair.setMaxWidth(btnSize);
+        btnSair.setMaxWidth(250);
         btnSair.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -143,8 +174,8 @@ public class AppMindGraphsFX extends Application {
             }
         });
 
-        //VBOX DE BOTOES DO MENU
-        VBox boxBotoes = new VBox(btnTimeTrial, btnArcade, btnConfiguracao, btnSair);
+        //VBOX DE TITULO+BOTOES DO MENU
+        VBox boxBotoes = new VBox(textoTitulo, btnTimeTrial, btnArcade, btnConfiguracao, btnSair);
         boxBotoes.setSpacing(10);
         boxBotoes.setAlignment(Pos.CENTER);
         rootMenu.setCenter(boxBotoes);
@@ -164,7 +195,12 @@ public class AppMindGraphsFX extends Application {
         return janelaMenu;
     }
 
-//ESCOLHER TEMA
+    /**
+     * MENU TEMAS
+     *
+     * @param primaryStage
+     * @return
+     */
     public Scene menuTemas(Stage primaryStage) {
 
         BorderPane rootTemas = new BorderPane();
@@ -174,8 +210,8 @@ public class AppMindGraphsFX extends Application {
         int btnSize = 150;
         // BOTOES DE ESCOLHA DE TEMA
         Text textEscolherTema = new Text("Escolha o tema");
-        textEscolherTema.setFill(Color.BLACK);
-        textEscolherTema.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+        textEscolherTema.setFill(Color.GREEN);
+        textEscolherTema.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
 
         Button btnSurf = new Button("Surf");
         btnSurf.setMaxWidth(btnSize);
@@ -251,14 +287,25 @@ public class AppMindGraphsFX extends Application {
         return janelaTemas;
     }
 
+    /**
+     * MENU TT
+     *
+     * @param primaryStage
+     * @return
+     */
     public Scene menuTimeTrial(Stage primaryStage) {
 
         BorderPane rootTimeTrial = new BorderPane();
         Scene janelaTimeTrial = new Scene(rootTimeTrial, 1000, 600);
         System.out.println("menu TIME TRIAL");
 
+        Text textEscolherOpcao = new Text("Time Trial");
+        textEscolherOpcao.setFill(Color.GREEN);
+        textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+
+        int btnSize = 150;
         Button botaoNovoJogo = new Button("Start");
-        botaoNovoJogo.setMaxWidth(250);
+        botaoNovoJogo.setMaxWidth(btnSize);
         botaoNovoJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -266,18 +313,17 @@ public class AppMindGraphsFX extends Application {
             }
         });
 
-        Button btnRecords = new Button("Recordes TT");
-        btnRecords.setMaxWidth(250);
+        Button btnRecords = new Button("Recordes");
+        btnRecords.setMaxWidth(btnSize);
         btnRecords.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                primaryStage.setScene(recordesTimeTrial());
+                primaryStage.setScene(recordesTimeTrial(primaryStage));
             }
         });
-        
-        
+
         Button botaoRegras = new Button("Regras");
-        botaoRegras.setMaxWidth(250);
+        botaoRegras.setMaxWidth(btnSize);
         botaoRegras.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -295,7 +341,7 @@ public class AppMindGraphsFX extends Application {
         });
 
         //VBOX DE BOTOES DE ESCOLHA DE TEMA
-        VBox boxBotoesTrial = new VBox(botaoNovoJogo, btnRecords, botaoRegras, botaoVoltar);
+        VBox boxBotoesTrial = new VBox(textEscolherOpcao, botaoNovoJogo, btnRecords, botaoRegras, botaoVoltar);
         boxBotoesTrial.setSpacing(10);
         boxBotoesTrial.setAlignment(Pos.CENTER);
         rootTimeTrial.setCenter(boxBotoesTrial);
@@ -314,72 +360,43 @@ public class AppMindGraphsFX extends Application {
         return janelaTimeTrial;
     }
 
-    public Scene menuRegrasTT() {
-
-        BorderPane rootRegras = new BorderPane();
-        Scene janelaRegras = new Scene(rootRegras, 1000, 600);
-        System.out.println("menu REGRAS TT");
-
-        return janelaRegras;
-    }
-    
-        public Scene menuRegrasArcade() {
-
-        BorderPane rootRegras = new BorderPane();
-        Scene janelaRegras = new Scene(rootRegras, 1000, 600);
-        System.out.println("menu REGRAS Arcade");
-
-        return janelaRegras;
-    }
-
-//CONSULTAR RECORDS 
-    public Scene recordesTimeTrial() {
-
-        BorderPane rootRecordes = new BorderPane();
-        Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
-        System.out.println("menu RECORDES TT");
-        return janelaRecordes;
-
-    }
-    
-       public Scene recordesArcade() {
-
-        BorderPane rootRecordes = new BorderPane();
-        Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
-        System.out.println("menu RECORDES Arcade");
-        return janelaRecordes;
-
-    }
-
-//MODO ARCADE
+    /**
+     * MENU ARCADE
+     *
+     * @param primaryStage
+     * @return
+     */
     public Scene menuArcade(Stage primaryStage) {
 
         BorderPane rootArcade = new BorderPane();
         Scene janelaArcade = new Scene(rootArcade, 1000, 600);
         System.out.println("menu ARCADE");
-        
-        
+
+        Text textEscolherOpcao = new Text("Arcade");
+        textEscolherOpcao.setFill(Color.GREEN);
+        textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+
+        int btnSize = 150;
         Button botaoNovoJogo = new Button("Start");
-        botaoNovoJogo.setMaxWidth(250);
+        botaoNovoJogo.setMaxWidth(btnSize);
         botaoNovoJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("criar uma grid com o pack de jogos");
+                primaryStage.setScene(menuPackArcade(primaryStage));
             }
         });
 
-        Button btnRecords = new Button("Recordes Arcade");
-        btnRecords.setMaxWidth(250);
+        Button btnRecords = new Button("Recordes");
+        btnRecords.setMaxWidth(btnSize);
         btnRecords.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                primaryStage.setScene(recordesArcade());
+                primaryStage.setScene(recordesArcade(primaryStage));
             }
         });
-        
-        
+
         Button botaoRegras = new Button("Regras");
-        botaoRegras.setMaxWidth(250);
+        botaoRegras.setMaxWidth(btnSize);
         botaoRegras.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -397,12 +414,11 @@ public class AppMindGraphsFX extends Application {
         });
 
         //VBOX DE BOTOES DE ESCOLHA DE TEMA
-        VBox boxBotoesArcade = new VBox(botaoNovoJogo, btnRecords, botaoRegras, botaoVoltar);
+        VBox boxBotoesArcade = new VBox(textEscolherOpcao, botaoNovoJogo, btnRecords, botaoRegras, botaoVoltar);
         boxBotoesArcade.setSpacing(10);
         boxBotoesArcade.setAlignment(Pos.CENTER);
         rootArcade.setCenter(boxBotoesArcade);
 
-        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
@@ -413,13 +429,178 @@ public class AppMindGraphsFX extends Application {
         rootArcade.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootArcade.setId("pane");
 
-        
-        
         return janelaArcade;
 
     }
 
-    
+    public Scene menuRegrasTT() {
+
+        BorderPane rootRegras = new BorderPane();
+        Scene janelaRegras = new Scene(rootRegras, 1000, 600);
+        System.out.println("menu REGRAS TT");
+
+        //para apresentar o nome do jogador
+        Text nomeJogador = new Text(jogador.getNome());
+        nomeJogador.setFill(Color.BLACK);
+        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        rootRegras.setTop(nomeJogador);
+        
+        return janelaRegras;
+    }
+
+    public Scene menuRegrasArcade() {
+
+        BorderPane rootRegras = new BorderPane();
+        Scene janelaRegras = new Scene(rootRegras, 1000, 600);
+        System.out.println("menu REGRAS Arcade");
+        
+        //para apresentar o nome do jogador
+        Text nomeJogador = new Text(jogador.getNome());
+        nomeJogador.setFill(Color.BLACK);
+        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        rootRegras.setTop(nomeJogador);
+
+        return janelaRegras;
+    }
+
+    /**
+     * RECORDES TT
+     *
+     * @param primaryStage
+     * @return
+     */
+    public Scene recordesTimeTrial(Stage primaryStage) {
+
+        BorderPane rootRecordes = new BorderPane();
+        Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
+        System.out.println("menu RECORDES TT");
+
+        
+        //para apresentar o nome do jogador
+        Text nomeJogador = new Text(jogador.getNome());
+        nomeJogador.setFill(Color.BLACK);
+        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        rootRecordes.setTop(nomeJogador);
+        
+        VBox vb = new VBox();
+        vb.setSpacing(80);
+        vb.setAlignment(Pos.CENTER);
+
+        //texto Nomes
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(3.0f);
+        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+        Text textoRecordes = new Text();
+        textoRecordes.setEffect(ds);
+        textoRecordes.setCache(true);
+        textoRecordes.setX(20);
+        textoRecordes.setY(10);
+
+        //meter o texto dos recordes aki
+        textoRecordes.setText(jogador.lerFicheiroRecordes("TT"));
+        textoRecordes.setFill(Color.CYAN);
+        textoRecordes.setFont(Font.font(null, FontWeight.BOLD, 30));
+        textoRecordes.setTextAlignment(TextAlignment.CENTER);
+
+        //botao Voltar
+        Button btn1 = new Button();
+        btn1.setText("Voltar");
+        btn1.setMaxWidth(250);
+        btn1.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setScene(menuTimeTrial(primaryStage));
+            }
+        });
+
+        //animacao textoNomes
+        TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRecordes).fromY(500).toY(-500).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).cycleCount(Timeline.INDEFINITE).build();
+
+        rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        rootRecordes.setId("pane");
+
+        vb.getChildren().addAll(textoRecordes, btn1);
+        rootRecordes.setCenter(vb);
+
+        translateTransition.play();
+
+        return janelaRecordes;
+
+    }
+
+    /**
+     * RECORDES ARCADE
+     *
+     * @param primaryStage
+     * @return
+     */
+    public Scene recordesArcade(Stage primaryStage) {
+
+        
+        BorderPane rootRecordes = new BorderPane();
+        Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
+        System.out.println("menu RECORDES Arcade");
+
+   
+        //para apresentar o nome do jogador
+        Text nomeJogador = new Text(jogador.getNome());
+        nomeJogador.setFill(Color.BLACK);
+        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        rootRecordes.setTop(nomeJogador);
+        
+        VBox vb = new VBox();
+        vb.setSpacing(80);
+        vb.setAlignment(Pos.CENTER);
+
+        //texto Nomes
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(3.0f);
+        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+        Text textoRecordes = new Text();
+        textoRecordes.setEffect(ds);
+        textoRecordes.setCache(true);
+        textoRecordes.setX(20);
+        textoRecordes.setY(10);
+
+        //meter o texto dos recordes aki
+        textoRecordes.setText(jogador.lerFicheiroRecordes("Arcade"));
+        textoRecordes.setFill(Color.CYAN);
+        textoRecordes.setFont(Font.font(null, FontWeight.BOLD, 30));
+        textoRecordes.setTextAlignment(TextAlignment.CENTER);
+
+        
+        //botao Voltar
+        Button btn1 = new Button();
+        btn1.setText("Voltar");
+        btn1.setMaxWidth(250);
+        btn1.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setScene(menuArcade(primaryStage));
+            }
+        });
+
+        //animacao textoNomes
+        TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRecordes).fromY(500).toY(-500).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).cycleCount(Timeline.INDEFINITE).build();
+
+        rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        rootRecordes.setId("pane");
+
+        vb.getChildren().addAll(textoRecordes, btn1);
+        rootRecordes.setCenter(vb);
+
+        translateTransition.play();
+
+        return janelaRecordes;
+
+    }
+
     //este sim realmente vai desenhar o grafo e criar o jogo trial
     public Scene criarJogoTimeTrial(Stage primaryStage) {
 
@@ -440,11 +621,10 @@ public class AppMindGraphsFX extends Application {
         nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //Para apresentar o timer
-        Text timer = new Text(novoJogo.getSeconds()+"");
+        Text timer = new Text(novoJogo.getSeconds() + "");
         timer.setFill(Color.GREEN);
         timer.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        
-        
+
         //HBOX CABECALHO
         HBox boxCabecalho = new HBox();
         boxCabecalho.setSpacing(350);
@@ -456,9 +636,7 @@ public class AppMindGraphsFX extends Application {
         MiniJogo miniJogo = novoJogo.getMiniJogo();
         GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(miniJogo.getGrafoAdaptee());
         rootJogoTT.setCenter(drawMiniJogo);
-        
-        
-        
+
         //para apresentar a dificuldade
         Text dificuldadeJogo = new Text(novoJogo.getMiniJogo().getNivel() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -471,28 +649,23 @@ public class AppMindGraphsFX extends Application {
             dificuldadeJogo.setFill(Color.RED);
         }
 
-     //   rootJogoTT.setRight(dificuldadeJogo);
+        rootJogoTT.setRight(dificuldadeJogo);
 
-     
-     
-      //para apresentar o tipo de Solucao
+        //para apresentar o tipo de Solucao
         Text tipoSolucao = new Text(jogador.getNome());
         tipoSolucao.setFill(Color.BLACK);
         tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
-     
-        
-      //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
+
+        //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
         Text vOrigem = new Text("IN");
         vOrigem.setFill(Color.YELLOW);
         vOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
-        
-        
-      //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
+
+        //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
         Text vDestino = new Text("OUT");
         vDestino.setFill(Color.YELLOW);
         vDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
-     
-        
+
         //text field com a solucao
         TextField textSolucao = new TextField();
         textSolucao.setPromptText("Introduza a solucao");
@@ -507,11 +680,11 @@ public class AppMindGraphsFX extends Application {
             @Override
             public void handle(ActionEvent e) {
                 System.out.println("calcular solucao e ir para o menu POPUP NEXTGAME se tiver certa. "
-                        + "Se tiver errado ir para o menuPOP UP Game over");
+                        + "Se tiver errado ir para o menu POPUP Game over");
             }
         });
-     
-     //HBOX RODAPE
+
+        //HBOX RODAPE
         HBox boxRodape = new HBox();
         boxRodape.setSpacing(20);
         boxRodape.setAlignment(Pos.CENTER);
@@ -525,9 +698,116 @@ public class AppMindGraphsFX extends Application {
         return janelaJogoTT;
     }
 
-    
-    
-    //VALIDA SE FOI INTRODUZIDO UM NOME ANTES DE ATIVAR O BOTÃO DE OK
+    /**
+     * Cria uma GRID com varios jogos pre definidos
+     *
+     * @param primaryStage
+     * @return
+     */
+    public Scene menuPackArcade(Stage primaryStage) {
+
+        BorderPane rootArcade = new BorderPane();
+        Scene janelaArcade = new Scene(rootArcade, 1000, 600);
+        System.out.println("Pack Arcade");
+
+        //para apresentar o nome do jogador
+        Text nomeJogador = new Text(jogador.getNome());
+        nomeJogador.setFill(Color.BLACK);
+        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        //para apresentar o nivel
+        Text nivelEstrelas = new Text("6/48");
+        nivelEstrelas.setFill(Color.YELLOW);
+        nivelEstrelas.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        //Para apresentar o timer
+        Text timer = new Text("");
+        timer.setFill(Color.GREEN);
+        timer.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        //HBOX CABECALHO
+        HBox boxCabecalho = new HBox();
+        boxCabecalho.setSpacing(350);
+        boxCabecalho.setAlignment(Pos.CENTER);
+        boxCabecalho.getChildren().addAll(nomeJogador, nivelEstrelas, timer);
+        rootArcade.setTop(boxCabecalho);
+
+        Text textEscolherOpcao = new Text("Pack 1 - Arcade");
+        textEscolherOpcao.setFill(Color.GREEN);
+        textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+
+        /**
+         * Pack de Mini Jogos
+         */
+        MiniJogo packMiniJogos[] = new MiniJogo[]{
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeFACIL()),
+            new MiniJogo(new DificuldadeMEDIO()),
+            new MiniJogo(new DificuldadeMEDIO()),
+            new MiniJogo(new DificuldadeMEDIO()),
+            new MiniJogo(new DificuldadeMEDIO()),
+            new MiniJogo(new DificuldadeMEDIO()),
+            new MiniJogo(new DificuldadeDIFICIL()),
+            new MiniJogo(new DificuldadeDIFICIL()),
+            new MiniJogo(new DificuldadeDIFICIL())
+        };
+
+        //GRID DE BOTOES
+        
+        
+        TilePane tilePane = new TilePane(Orientation.HORIZONTAL, 10, 10);
+        tilePane.setMaxWidth(500);
+
+        int NIVEL_MAX = 21;
+        Button[] arrayBotoes = new Button[NIVEL_MAX];
+
+        for (int i = 1; i < NIVEL_MAX; i++) {
+            arrayBotoes[i] = new Button(Integer.toString(i));
+            arrayBotoes[i].setPrefSize(80, 80);
+            tilePane.getChildren().add(arrayBotoes[i]);
+        }
+
+        tilePane.setAlignment(Pos.CENTER);
+
+        //botao Voltar
+        Button btn1 = new Button();
+
+        btn1.setAlignment(Pos.CENTER);
+        btn1.setText("Voltar");
+        btn1.setMaxWidth(250);
+        btn1.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event
+            ) {
+                primaryStage.setScene(menuArcade(primaryStage));
+            }
+        }
+        );
+
+        //VBOX DE BOTOES DE ESCOLHA DE TEMA
+        VBox vBoxCentro = new VBox(textEscolherOpcao, tilePane, btn1);
+        vBoxCentro.setSpacing(10);
+        vBoxCentro.setAlignment(Pos.CENTER);
+        rootArcade.setCenter(vBoxCentro);
+
+
+        //CSS
+        rootArcade.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        rootArcade.setId("pane");
+
+        return janelaArcade;
+
+    }
+
+//VALIDA SE FOI INTRODUZIDO UM NOME ANTES DE ATIVAR O BOTÃO DE OK
     private void validaIntroducaoDeNome(TextField textNomeJogador, Button btnCriarJogo) {
         textNomeJogador.textProperty().addListener(new ChangeListener<String>() {
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
@@ -540,6 +820,7 @@ public class AppMindGraphsFX extends Application {
             }
         });
     }
+
     /**
      * @param args the command line arguments
      */

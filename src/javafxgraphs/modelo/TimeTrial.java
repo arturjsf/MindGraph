@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxgraphs;
+package javafxgraphs.modelo;
 
 import javafxgraphs.modelo.DificuldadeDIFICIL;
 import javafxgraphs.modelo.DificuldadeFACIL;
@@ -29,10 +29,10 @@ public class TimeTrial {
 
         nivel++;
 
-        if (nivel <= 5) {
+        if (nivel <= 8) {
             setSeconds(120);
             jogo = new MiniJogo(new DificuldadeFACIL());
-        } else if (nivel >= 6 && nivel <= 15) {
+        } else if (nivel >= 9 && nivel <= 16) {
             setSeconds(100);
             jogo = new MiniJogo(new DificuldadeMEDIO());
         } else {
@@ -40,6 +40,10 @@ public class TimeTrial {
             jogo = new MiniJogo(new DificuldadeDIFICIL());
         }
 
+    }
+    
+    public TimeTrial(){
+        
     }
 
     public void setSeconds(int seconds) {

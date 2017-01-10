@@ -1,0 +1,4 @@
+Tiago        18
+Artur        26
+Fredo        55
+Tiago        77
