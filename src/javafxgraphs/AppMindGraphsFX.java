@@ -6,6 +6,8 @@
 package javafxgraphs;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -39,7 +41,6 @@ public class AppMindGraphsFX extends Application {
     public void start(Stage primaryStage) {
 
         BorderPane root = new BorderPane();
-
         Scene intro = new Scene(root, 1000, 600);
 
         //horizontal box inicial
@@ -60,6 +61,8 @@ public class AppMindGraphsFX extends Application {
 
 //Botao para criar o mini jogo
         Button btnCriarJogo = new Button("OK");
+        btnCriarJogo.setDisable(true);
+        validaIntroducaoDeNome(textNomeJogador, btnCriarJogo);
         btnCriarJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -522,6 +525,21 @@ public class AppMindGraphsFX extends Application {
         return janelaJogoTT;
     }
 
+    
+    
+    //VALIDA SE FOI INTRODUZIDO UM NOME ANTES DE ATIVAR O BOTÃO DE OK
+    private void validaIntroducaoDeNome(TextField textNomeJogador, Button btnCriarJogo) {
+        textNomeJogador.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+                //System.out.println(t+"====="+t1);
+                if (t1.equals("")) {
+                    btnCriarJogo.setDisable(true);
+                } else {
+                    btnCriarJogo.setDisable(false);
+                }
+            }
+        });
+    }
     /**
      * @param args the command line arguments
      */
