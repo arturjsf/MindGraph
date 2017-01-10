@@ -30,7 +30,7 @@ import javafxgraphs.ui.GraphDraw;
 
 /**
  *
- * @author brunomnsilva
+ * @author Artur e Sergio
  */
 public class AppMindGraphsFX extends Application {
 
