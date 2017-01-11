@@ -9,15 +9,8 @@ package javafxgraphs.modelo;
  *
  * @author Artur Ferreira
  */
-public abstract class MiniJogoFactory{
-
+public enum TipoSolucao {
     
+    MIN_CUSTO, MIN_DISTANCIA, MIN_MOVIMENTOS
     
-    public MiniJogoFactory() {
-        System.out.println("Fabrica geral de mini jogos");
-    }
-
-    
-    public abstract iMiniJogo buildMiniJogo(String modo);
-       
 }

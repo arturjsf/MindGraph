@@ -20,6 +20,6 @@ public interface iEstrategiaSolucao<E, V> {
      * @return int
      */
 
-    public int calcularSolucao(iEdge<E, V> edge);
+    public int getValorMinimo(iEdge<E, V> edge);
 
 }

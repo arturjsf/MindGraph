@@ -5,16 +5,13 @@
  */
 package javafxgraphs.modelo;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import static java.util.Collections.list;
 import java.util.Random;
 import javafxgraphs.tad.InvalidVertexException;
 import javafxgraphs.tad.MyGraph;
@@ -27,56 +24,204 @@ import javafxgraphs.tad.iVertex;
  *
  * @author Artur Ferreira
  */
-public class MiniJogo  extends MiniJogoFactory implements iMiniJogo, Serializable{
+public class MiniJogo implements iMiniJogo, Serializable {
 
     public MyGraph<Local, Ligacao> grafoAdaptee;
 
-    public iEstrategiaDificuldade nivel;
+    public iEstrategiaDificuldade estrategiaDificuldade;
+    public iEstrategiaSolucao estrategiaSolucao;
+
+    /**
+     * Enumerados
+     */
+    TipoJogo tipoJogo;
+    TipoSolucao tipoSolucao;
+    Dificuldade dificuldade;
+
+    Jogador jogador;
+
+    int segundos;
+    int nivel;
 
     /**
      * Construtor do MiniJogo
      *
-     * @param nivel Cria um miniJogo random consoante o nivel
+     * @param nivel Cria um miniJogo random consoante o estrategiaDificuldade
      */
-    public MiniJogo() {
-    }
+    public MiniJogo(TipoJogo modo, Jogador jogador, int nivel) {
 
-    public MiniJogo(iEstrategiaDificuldade nivel) {
+        this.jogador = jogador;
 
-        grafoAdaptee = new MyGraph<>();
-
-        this.nivel = nivel;
-        criarGrafo(nivel);
-    }
-
-    /**
-     * Construtor de MiniJogos.
-     * Consoante o modo de jogo
-     * @param modo
-     * @return 
-     */
-    public iMiniJogo buildMiniJogo(String modo) {
-        
         switch (modo) {
 
-            case "TT":
-                return new TimeTrial();
-            case "Arcade":
-                return new Arcade();
+            case ARCADE:
+                MiniJogoArcade(jogador, nivel);
+                break;
+            case TIMETRIAL:
+                MiniJogoTT(jogador, nivel, segundos);
+                break;
             default:
-                return null;
+                System.out.println("sem modo");
+
         }
     }
 
     /**
+     * construtor ARCADE
+     *
+     * @param jogador
+     * @param nivel
+     * @param dificuldade
+     */
+    
+    public void MiniJogoArcade(Jogador jogador, int nivel) {
+
+        this.jogador = jogador;
+
+        if (nivel <= 8) {
+            this.nivel = nivel;
+            criarMiniJogo(escolherDificuldade(Dificuldade.FACIL), escolherSolucao(randomSolucao()));
+        } else if (nivel >= 9 && nivel <= 16) {
+            this.nivel = nivel;
+            criarMiniJogo(escolherDificuldade(Dificuldade.MEDIO), escolherSolucao(randomSolucao()));
+        } else {
+            this.nivel = nivel;
+             criarMiniJogo(escolherDificuldade(Dificuldade.DIFICIL), escolherSolucao(randomSolucao()));
+        }
+    }
+
+    /**
+     * Construtor TIMETRIAL
+     *
+     * @param jogador
+     * @param nivel
+     * @param segundos
+     * @param dificuldade
+     */
+    
+    public void MiniJogoTT(Jogador jogador, int nivel, int segundos) {
+
+        this.jogador = jogador;
+
+        if (nivel <= 8) {
+            setSegundos(120);
+            this.nivel = nivel;
+            criarMiniJogo(escolherDificuldade(Dificuldade.FACIL), escolherSolucao(randomSolucao()));
+        } else if (nivel >= 9 && nivel <= 16) {
+            setSegundos(100);
+            this.nivel = nivel;
+            criarMiniJogo(escolherDificuldade(Dificuldade.MEDIO), escolherSolucao(randomSolucao()));
+        } else {
+            setSegundos(60);
+            this.nivel = nivel;
+            criarMiniJogo(escolherDificuldade(Dificuldade.DIFICIL), escolherSolucao(randomSolucao()));
+        }
+    }
+
+    /**
+     * Básicamente iguala o que esta no enumerado á estrategia
+     *
+     * @param dificuldade
+     */
+    public iEstrategiaDificuldade escolherDificuldade(Dificuldade dificuldade) {
+
+        switch (dificuldade) {
+
+            case FACIL:
+                this.dificuldade = dificuldade;
+                return new DificuldadeFACIL();
+            case MEDIO:
+                this.dificuldade = dificuldade;
+                return new DificuldadeMEDIO();
+            case DIFICIL:
+                this.dificuldade = dificuldade;
+                return new DificuldadeDIFICIL();
+            default:
+                System.out.println("sem dificuldade");
+                return null;
+
+        }
+    }
+
+  
+
+   
+    public iEstrategiaSolucao escolherSolucao(TipoSolucao tipoSolucao) {
+        
+    switch (tipoSolucao) {
+
+            case MIN_CUSTO:
+                this.tipoSolucao = tipoSolucao;
+                return new CalcularCustoMinimo();
+            case MIN_DISTANCIA:
+                this.tipoSolucao = tipoSolucao;
+                return new CalcularDistanciaMinima();
+            case MIN_MOVIMENTOS:
+                this.tipoSolucao = tipoSolucao;
+                return new CalcularDeslocacaoMinima();
+            default:
+                System.out.println("sem solucao");
+                return null;
+
+        
+    }
+    }
+    
+    
+    /**
+     * Faz um random do ENUM TipoSolucao
+     * @return 
+     */
+    public TipoSolucao randomSolucao(){
+        
+        TipoSolucao[] rdSolucoes = TipoSolucao.values();
+      
+        Random rdn = new Random();
+        
+        TipoSolucao tipoAux;
+        
+        tipoAux = rdSolucoes[rdn.nextInt(rdSolucoes.length)];
+        
+        return tipoAux;
+        
+        
+    }
+
+    
+    /**
+     * Devolve um array de miniJogos a ser atribuido a cada botao no javaFX
+     */
+    public void gerarPackArcade() {
+
+       
+        for (int i = 0; i < 20; i++) {
+            MiniJogoArcade(jogador, i);
+        }
+    }
+
+    public void criarMiniJogo(iEstrategiaDificuldade estrategiaDificuldade, iEstrategiaSolucao estrategiaSolucao) {
+
+        grafoAdaptee = new MyGraph<>();
+        this.estrategiaDificuldade = estrategiaDificuldade;
+        this.estrategiaSolucao = estrategiaSolucao;
+        criarGrafo(estrategiaDificuldade);
+    }
+
+    /**
+     * Construtor de MiniJogos. Consoante o modo de jogo
+     *
+     * @param modo
+     * @return
+     */
+    /**
      * Este metodo cria o grafo.
      *
-     * @param nivel Recebe a dificuldade e faz um random para o numero de
-     * vertices e arestas
+     * @param nivel Recebe a estrategiaDificuldade e faz um random para o numero
+     * de vertices e arestas
      */
     public void criarGrafo(iEstrategiaDificuldade nivel) {
 
-        //gera e cria uma lista de vertices random consoante o nivel
+        //gera e cria uma lista de vertices random consoante o estrategiaDificuldade
         gerarLocal(nivel.randomVertices());
 
         //gera e cria uma ligacao e atribui de maneira aleatoria os vertices in e out
@@ -87,8 +232,8 @@ public class MiniJogo  extends MiniJogoFactory implements iMiniJogo, Serializabl
     /**
      * gera uma ligacao random enquanto houver numArestas a serem criadas
      *
-     * @param nivel Consoante o nivel a receber, cria uma Ligacao com valores
-     * random
+     * @param nivel Consoante o estrategiaDificuldade a receber, cria uma
+     * Ligacao com valores random
      */
     public void gerarLigacao(iEstrategiaDificuldade nivel) {
 
@@ -275,29 +420,88 @@ public class MiniJogo  extends MiniJogoFactory implements iMiniJogo, Serializabl
     /**
      *
      *
-     * @return Devolve uma estrategia nivel
+     *
+     *
+     *
+     * *********************GETS E SETS********************
      */
-    public iEstrategiaDificuldade getNivel() {
-        return nivel;
-    }
-
-//    public iVertex<Local> getVerticeOrigem() {
-//        return verticeOrigem;
-//    }
-//
-//    public iVertex<Local> getVerticeDestino() {
-//        return verticeDestino;
-//    }
     /**
-     *
-     *
      * @return Devolve um grafo
      */
     public MyGraph<Local, Ligacao> getGrafoAdaptee() {
         return grafoAdaptee;
     }
 
+    public Jogador getJogador() {
+        return jogador;
+    }
+
+    public void setJogador(Jogador jogador) {
+        this.jogador = jogador;
+    }
+
+    public iEstrategiaDificuldade getEstrategiaDificuldade() {
+        return estrategiaDificuldade;
+    }
+
+    public void setEstrategiaDificuldade(iEstrategiaDificuldade estrategiaDificuldade) {
+        this.estrategiaDificuldade = estrategiaDificuldade;
+    }
+
+    public int getSegundos() {
+        return segundos;
+    }
+
+    public void setSegundos(int segundos) {
+        this.segundos = segundos;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public TipoJogo getTipoJogo() {
+        return tipoJogo;
+    }
+
+    public void setTipoJogo(TipoJogo tipoJogo) {
+        this.tipoJogo = tipoJogo;
+    }
+
+    public Dificuldade getDificuldade() {
+        return dificuldade;
+    }
+
+    public void setDificuldade(Dificuldade dificuldade) {
+        this.dificuldade = dificuldade;
+    }
+
+    public iEstrategiaSolucao getEstrategiaSolucao() {
+        return estrategiaSolucao;
+    }
+
+    public void setEstrategiaSolucao(iEstrategiaSolucao estrategiaSolucao) {
+        this.estrategiaSolucao = estrategiaSolucao;
+    }
+
+    public TipoSolucao getTipoSolucao() {
+        return tipoSolucao;
+    }
+
+    public void setTipoSolucao(TipoSolucao tipoSolucao) {
+        this.tipoSolucao = tipoSolucao;
+    }
+
+    
+    
+    
+    
     /**
+     *
      * Metodo Serialize Locais para o ficheiro dos Locais
      *
      * @param filename Recebe um ficheiro e insere a lista de Locais
@@ -345,8 +549,8 @@ public class MiniJogo  extends MiniJogoFactory implements iMiniJogo, Serializabl
     }
 
     /**
-     * Metodo que calcula a solucao conforme o nivel. Recebe o vertice de
-     * entrada e o vertice de saida (not implemented)
+     * Metodo que calcula a solucao conforme o estrategiaDificuldade. Recebe o
+     * vertice de entrada e o vertice de saida (not implemented)
      *
      * @param verticeIN verticein
      * @param verticeOUT verticeout

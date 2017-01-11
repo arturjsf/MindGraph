@@ -20,7 +20,7 @@ public class CalcularDistanciaMinima implements iEstrategiaSolucao<Ligacao, Loca
      * @return getDistancia
      */
     @Override
-    public int calcularSolucao(iEdge<Ligacao, Local> edge) {
+    public int getValorMinimo(iEdge<Ligacao, Local> edge) {
         return edge.element().getDistancia();
     }
 }

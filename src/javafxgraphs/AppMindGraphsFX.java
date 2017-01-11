@@ -5,7 +5,6 @@
  */
 package javafxgraphs;
 
-import javafxgraphs.modelo.TimeTrial;
 import javafx.animation.Interpolator;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -34,13 +33,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafxgraphs.modelo.DificuldadeDIFICIL;
-import javafxgraphs.modelo.DificuldadeFACIL;
-import javafxgraphs.modelo.DificuldadeMEDIO;
 import javafxgraphs.modelo.Jogador;
 import javafxgraphs.modelo.Ligacao;
 import javafxgraphs.modelo.Local;
 import javafxgraphs.modelo.MiniJogo;
+import javafxgraphs.modelo.TipoJogo;
 import javafxgraphs.ui.GraphDraw;
 
 /**
@@ -604,24 +601,29 @@ public class AppMindGraphsFX extends Application {
     //este sim realmente vai desenhar o grafo e criar o jogo trial
     public Scene criarJogoTimeTrial(Stage primaryStage) {
 
-        TimeTrial novoJogo = new TimeTrial(jogador);
-
+        
+        int NIVEL_MAX = 20;
+        
+        MiniJogo jogoTT = new MiniJogo(TipoJogo.TIMETRIAL, jogador, 5); 
+        
+        
+                
         BorderPane rootJogoTT = new BorderPane();
         Scene janelaJogoTT = new Scene(rootJogoTT, 1000, 600);
         System.out.println("menu JOGO TT");
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text(jogoTT.getJogador().getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar o nivel
-        Text nivelJogo = new Text(novoJogo.getNivel() + "/20");
+        Text nivelJogo = new Text(jogoTT.getNivel() + "/20");
         nivelJogo.setFill(Color.YELLOW);
         nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //Para apresentar o timer
-        Text timer = new Text(novoJogo.getSeconds() + "");
+        Text timer = new Text(jogoTT.getSegundos() + "");
         timer.setFill(Color.GREEN);
         timer.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -632,13 +634,13 @@ public class AppMindGraphsFX extends Application {
         boxCabecalho.getChildren().addAll(nomeJogador, nivelJogo, timer);
         rootJogoTT.setTop(boxCabecalho);
 
-        //Para apresentar o grafo
-        MiniJogo miniJogo = novoJogo.getMiniJogo();
-        GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(miniJogo.getGrafoAdaptee());
+
+        
+        GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(jogoTT.getGrafoAdaptee());
         rootJogoTT.setCenter(drawMiniJogo);
 
         //para apresentar a dificuldade
-        Text dificuldadeJogo = new Text(novoJogo.getMiniJogo().getNivel() + "");
+        Text dificuldadeJogo = new Text(jogoTT.getDificuldade()+ "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         if (dificuldadeJogo.equals("FACIL")) {
@@ -652,9 +654,9 @@ public class AppMindGraphsFX extends Application {
         rootJogoTT.setRight(dificuldadeJogo);
 
         //para apresentar o tipo de Solucao
-        Text tipoSolucao = new Text(jogador.getNome());
+        Text tipoSolucao = new Text(jogoTT.getTipoSolucao()+"");
         tipoSolucao.setFill(Color.BLACK);
-        tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
+        tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
         Text vOrigem = new Text("IN");
@@ -683,12 +685,25 @@ public class AppMindGraphsFX extends Application {
                         + "Se tiver errado ir para o menu POPUP Game over");
             }
         });
+        
+         //botao Voltar
+        Button btnVoltar = new Button();
+        btnVoltar.setText("Voltar");
+        btnVoltar.setMaxWidth(150);
+        btnVoltar.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setScene(menuTimeTrial(primaryStage));
+            }
+        });
 
         //HBOX RODAPE
         HBox boxRodape = new HBox();
         boxRodape.setSpacing(20);
         boxRodape.setAlignment(Pos.CENTER);
-        boxRodape.getChildren().addAll(tipoSolucao, vOrigem, vDestino, textSolucao, btnCalcularSolucao);
+        boxRodape.getChildren().addAll(tipoSolucao, vOrigem, vDestino, textSolucao, btnCalcularSolucao, btnVoltar);
         rootJogoTT.setBottom(boxRodape);
 
         //CSS
@@ -696,6 +711,118 @@ public class AppMindGraphsFX extends Application {
         rootJogoTT.setId("pane");
 
         return janelaJogoTT;
+    }
+    
+    
+    public Scene criarJogoArcade(Stage primaryStage, int nivel){
+        
+         int NIVEL_MAX = 20;
+        
+        MiniJogo jogoArcade = new MiniJogo(TipoJogo.ARCADE, jogador, nivel); 
+        
+          
+        BorderPane rootJogoArcade = new BorderPane();
+        Scene janelaJogoArcade = new Scene(rootJogoArcade, 1000, 600);
+        System.out.println("menu JOGO ARCADE");
+
+        //para apresentar o nome do jogador
+        Text nomeJogador = new Text(jogoArcade.getJogador().getNome());
+        nomeJogador.setFill(Color.BLACK);
+        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        //para apresentar o nivel
+        Text nivelJogo = new Text(jogoArcade.getNivel() + "/20");
+        nivelJogo.setFill(Color.YELLOW);
+        nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        
+         //para apresentar a dificuldade
+        Text dificuldadeJogo = new Text(jogoArcade.getDificuldade()+ "");
+        dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        if (dificuldadeJogo.equals("FACIL")) {
+            dificuldadeJogo.setFill(Color.GREEN);
+        } else if (dificuldadeJogo.equals("MEDIO")) {
+            dificuldadeJogo.setFill(Color.YELLOW);
+        } else {
+            dificuldadeJogo.setFill(Color.RED);
+        }
+        
+        
+        //HBOX CABECALHO
+        HBox boxCabecalho = new HBox();
+        boxCabecalho.setSpacing(350);
+        boxCabecalho.setAlignment(Pos.CENTER);
+        boxCabecalho.getChildren().addAll(nomeJogador, nivelJogo, dificuldadeJogo);
+        rootJogoArcade.setTop(boxCabecalho);
+
+
+        
+        GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(jogoArcade.getGrafoAdaptee());
+        rootJogoArcade.setCenter(drawMiniJogo);
+        
+        
+        
+        
+        //para apresentar o tipo de Solucao
+        Text tipoSolucao = new Text(jogoArcade.getTipoSolucao()+"");
+        tipoSolucao.setFill(Color.BLACK);
+        tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
+        Text vOrigem = new Text("IN");
+        vOrigem.setFill(Color.YELLOW);
+        vOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+
+        //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
+        Text vDestino = new Text("OUT");
+        vDestino.setFill(Color.YELLOW);
+        vDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+
+        //text field com a solucao
+        TextField textSolucao = new TextField();
+        textSolucao.setPromptText("Introduza a solucao");
+        textSolucao.setAlignment(Pos.CENTER);
+        textSolucao.setFocusTraversable(false);
+        textSolucao.getText();
+        textSolucao.setMaxWidth(210);
+
+//Botao para criar o mini jogo
+        Button btnCalcularSolucao = new Button("Calcular");
+        btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("calcular solucao e ir para o menu POPUP NEXTGAME se tiver certa. "
+                        + "Se tiver errado ir para o menu POPUP Game over");
+            }
+        });
+        
+         //botao Voltar
+        Button btnVoltar = new Button();
+        btnVoltar.setText("Voltar");
+        btnVoltar.setMaxWidth(150);
+        btnVoltar.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setScene(menuTimeTrial(primaryStage));
+            }
+        });
+
+        //HBOX RODAPE
+        HBox boxRodape = new HBox();
+        boxRodape.setSpacing(20);
+        boxRodape.setAlignment(Pos.CENTER);
+        boxRodape.getChildren().addAll(tipoSolucao, vOrigem, vDestino, textSolucao, btnCalcularSolucao, btnVoltar);
+        rootJogoArcade.setBottom(boxRodape);
+
+        //CSS
+        rootJogoArcade.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        rootJogoArcade.setId("pane");
+
+        
+        return janelaJogoArcade;
     }
 
     /**
@@ -736,29 +863,9 @@ public class AppMindGraphsFX extends Application {
         textEscolherOpcao.setFill(Color.GREEN);
         textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
 
-        /**
-         * Pack de Mini Jogos
-         */
-        MiniJogo packMiniJogos[] = new MiniJogo[]{
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeFACIL()),
-            new MiniJogo(new DificuldadeMEDIO()),
-            new MiniJogo(new DificuldadeMEDIO()),
-            new MiniJogo(new DificuldadeMEDIO()),
-            new MiniJogo(new DificuldadeMEDIO()),
-            new MiniJogo(new DificuldadeMEDIO()),
-            new MiniJogo(new DificuldadeDIFICIL()),
-            new MiniJogo(new DificuldadeDIFICIL()),
-            new MiniJogo(new DificuldadeDIFICIL())
-        };
 
-        //GRID DE BOTOES
+
+
         
         
         TilePane tilePane = new TilePane(Orientation.HORIZONTAL, 10, 10);

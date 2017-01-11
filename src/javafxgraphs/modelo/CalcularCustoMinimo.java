@@ -19,7 +19,7 @@ public class CalcularCustoMinimo implements iEstrategiaSolucao<Ligacao, Local> {
  * @return getCusto
  */
     @Override
-    public int calcularSolucao(iEdge<Ligacao, Local> edge){
+    public int getValorMinimo(iEdge<Ligacao, Local> edge){
         return edge.element().getCusto();
     }
 
