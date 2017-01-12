@@ -81,7 +81,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
         if (nivel <= 8) {
             this.nivel = nivel;
             criarMiniJogo(escolherDificuldade(Dificuldade.FACIL), escolherSolucao(randomSolucao()));
-        } else if (nivel >= 9 && nivel <= 16) {
+        } else if (nivel >= 9 && nivel <= 15) {
             this.nivel = nivel;
             criarMiniJogo(escolherDificuldade(Dificuldade.MEDIO), escolherSolucao(randomSolucao()));
         } else {
@@ -107,7 +107,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
             setSegundos(120);
             this.nivel = nivel;
             criarMiniJogo(escolherDificuldade(Dificuldade.FACIL), escolherSolucao(randomSolucao()));
-        } else if (nivel >= 9 && nivel <= 16) {
+        } else if (nivel >= 9 && nivel <= 15) {
             setSegundos(100);
             this.nivel = nivel;
             criarMiniJogo(escolherDificuldade(Dificuldade.MEDIO), escolherSolucao(randomSolucao()));

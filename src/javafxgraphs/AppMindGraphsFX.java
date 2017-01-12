@@ -657,14 +657,20 @@ public class AppMindGraphsFX extends Application {
         Text tipoSolucao = new Text(jogoTT.getTipoSolucao()+"");
         tipoSolucao.setFill(Color.BLACK);
         tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        
+        Local arrayLocaisTemp[] = jogoTT.randomVertices2();
+        
+        String vIN = arrayLocaisTemp[0].getId();
+        String vOUT = arrayLocaisTemp[1].getId();
 
         //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
-        Text vOrigem = new Text("IN");
+        Text vOrigem = new Text(vIN+"");
         vOrigem.setFill(Color.YELLOW);
         vOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
         //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
-        Text vDestino = new Text("OUT");
+        Text vDestino = new Text(vOUT+"");
         vDestino.setFill(Color.YELLOW);
         vDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
@@ -768,14 +774,20 @@ public class AppMindGraphsFX extends Application {
         Text tipoSolucao = new Text(jogoArcade.getTipoSolucao()+"");
         tipoSolucao.setFill(Color.BLACK);
         tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        
+        Local arrayLocaisTemp[] = jogoArcade.randomVertices2();
+        
+        String vIN = arrayLocaisTemp[0].getId();
+        String vOUT = arrayLocaisTemp[1].getId();
 
         //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
-        Text vOrigem = new Text("IN");
+        Text vOrigem = new Text(vIN+"");
         vOrigem.setFill(Color.YELLOW);
         vOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
         //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
-        Text vDestino = new Text("OUT");
+        Text vDestino = new Text(vOUT+"");
         vDestino.setFill(Color.YELLOW);
         vDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
@@ -792,8 +804,8 @@ public class AppMindGraphsFX extends Application {
         btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("calcular solucao e ir para o menu POPUP NEXTGAME se tiver certa. "
-                        + "Se tiver errado ir para o menu POPUP Game over");
+                System.out.println("calcular solucao e ir para o menu POPUP CORRETO+botao voltar menuARcade se tiver certa. "
+                        + "Se tiver errado ir para o menu POPUP Game over+botao voltar menuArcade");
             }
         });
         
@@ -806,7 +818,7 @@ public class AppMindGraphsFX extends Application {
 
             @Override
             public void handle(MouseEvent event) {
-                primaryStage.setScene(menuTimeTrial(primaryStage));
+                primaryStage.setScene(menuPackArcade(primaryStage));
             }
         });
 
@@ -820,8 +832,8 @@ public class AppMindGraphsFX extends Application {
         //CSS
         rootJogoArcade.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootJogoArcade.setId("pane");
-
         
+    
         return janelaJogoArcade;
     }
 
@@ -831,17 +843,21 @@ public class AppMindGraphsFX extends Application {
      * @param primaryStage
      * @return
      */
+    
     public Scene menuPackArcade(Stage primaryStage) {
 
+        
         BorderPane rootArcade = new BorderPane();
         Scene janelaArcade = new Scene(rootArcade, 1000, 600);
         System.out.println("Pack Arcade");
 
+        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
+        
         //para apresentar o nivel
         Text nivelEstrelas = new Text("6/48");
         nivelEstrelas.setFill(Color.YELLOW);
@@ -877,6 +893,14 @@ public class AppMindGraphsFX extends Application {
         for (int i = 1; i < NIVEL_MAX; i++) {
             arrayBotoes[i] = new Button(Integer.toString(i));
             arrayBotoes[i].setPrefSize(80, 80);
+            int f = i;         
+            arrayBotoes[i].setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+               
+                primaryStage.setScene(criarJogoArcade(primaryStage, f));
+            }
+        });
             tilePane.getChildren().add(arrayBotoes[i]);
         }
 
