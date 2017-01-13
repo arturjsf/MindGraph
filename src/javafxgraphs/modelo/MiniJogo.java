@@ -266,6 +266,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
      *
      * @return Local random
      */
+    
     public Local randomVertices() {
 
         //fazer um random de uma lista de vertices e devolve o

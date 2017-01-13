@@ -16,7 +16,7 @@ import javafxgraphs.ui.DrawableGraphElement;
 
 public class Local implements DrawableGraphElement {
 
-    private String id;
+    public String id;
     boolean selected;
 
     /**
@@ -33,6 +33,12 @@ public class Local implements DrawableGraphElement {
     public String getId() {
         return this.id;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    
 
     @Override
     public boolean isSelected() {

@@ -20,8 +20,8 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
     private int nEdges;
     private HashMap<V, iVertex<V>> listVertices;
+  
     
-    private iEstrategiaSolucao estrategiaSolucao;
 
     public MyGraph() {
         this.nEdges = 0;
@@ -199,7 +199,7 @@ public class MyGraph<V, E> implements iGraph<V, E> {
     
     private void execute(iVertex<V> s, iEstrategiaSolucao estrategiaSolucao) {
         int value;
-        ArrayList<MyVertex> queue = new ArrayList<>();
+        ArrayList<MyVertex> queueVisitados = new ArrayList<>();
         for (iVertex<V> v : vertices()) {
             MyVertex vertex = checkVertex(v);
             if (vertex.equals(s)) {
@@ -209,15 +209,15 @@ public class MyGraph<V, E> implements iGraph<V, E> {
                 vertex.distance = Integer.MAX_VALUE;
             }
             vertex.visited = false;
-            queue.add(vertex);
+            queueVisitados.add(vertex);
         }
 
-        while (!queue.isEmpty()) {
-            MyVertex vertexMin = removeMin(queue);
+        while (!queueVisitados.isEmpty()) {
+            MyVertex vertexMin = removeMin(queueVisitados);
             for (iEdge<E, V> edge : incidentEdges(vertexMin)) {
                 MyVertex verticeAdj = checkVertex(opposite(vertexMin, edge));
                 if (!verticeAdj.visited) {
-                        value = (vertexMin.distance + estrategiaSolucao.calcularValorMinimo((iEdge) edge.element()));
+                        value = (vertexMin.distance + estrategiaSolucao.calcularValorMinimo(edge));
                         
                     if (value < verticeAdj.distance) {
                         verticeAdj.distance = value;
@@ -260,7 +260,7 @@ public class MyGraph<V, E> implements iGraph<V, E> {
         iVertex<V> actualVertex = checkVertex(destino);
         iVertex<V> actualAux = actualVertex;
         
-        caminho += actualAux.element().toString() + "-";
+        caminho += actualAux.element().toString();
         
         while (actualVertex != origem) {
             actualVertex = checkVertex(actualVertex).parent;

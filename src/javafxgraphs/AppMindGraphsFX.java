@@ -666,19 +666,23 @@ public class AppMindGraphsFX extends Application {
         String vIN = arrayLocaisTemp[0].getId();
         String vOUT = arrayLocaisTemp[1].getId();
         
-        iVertex verticeIN, verticeOUT;
-        verticeIN = (iVertex) arrayLocaisTemp[0];
-        verticeOUT = (iVertex) arrayLocaisTemp[1];
+        iVertex<Local> verticeIN = jogoTT.findVertice(vIN);
+        iVertex<Local> verticeOUT = jogoTT.findVertice(vOUT);
+        
+       // verticeIN.element().setId(vIN+"");
+       // verticeOUT.element().setId(vOUT+"");
+       
+       
 
         //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
-        Text vOrigem = new Text(vIN+"");
-        vOrigem.setFill(Color.YELLOW);
-        vOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        Text textOrigem = new Text(vIN+"");
+        textOrigem.setFill(Color.YELLOW);
+        textOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
         //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
-        Text vDestino = new Text(vOUT+"");
-        vDestino.setFill(Color.YELLOW);
-        vDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        Text textDestino = new Text(vOUT+"");
+        textDestino.setFill(Color.YELLOW);
+        textDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
         //text field com a solucao
         TextField textSolucao = new TextField();
@@ -691,8 +695,9 @@ public class AppMindGraphsFX extends Application {
         
         
         //devolve uma string com o caminho consoante a estrategia
-        System.out.println(jogoTT.getGrafoAdaptee().dijkstra(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao()));
         System.out.println(jogoTT.getGrafoAdaptee().calcularSolucao(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao()));
+        System.out.println(jogoTT.getGrafoAdaptee().dijkstra(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao()));
+        
         
         //depois temos de calcular o caminho através desta string
         
@@ -723,7 +728,7 @@ public class AppMindGraphsFX extends Application {
         HBox boxRodape = new HBox();
         boxRodape.setSpacing(20);
         boxRodape.setAlignment(Pos.CENTER);
-        boxRodape.getChildren().addAll(tipoSolucao, vOrigem, vDestino, textSolucao, btnCalcularSolucao, btnVoltar);
+        boxRodape.getChildren().addAll(tipoSolucao, textOrigem, textDestino, textSolucao, btnCalcularSolucao, btnVoltar);
         rootJogoTT.setBottom(boxRodape);
 
         //CSS
