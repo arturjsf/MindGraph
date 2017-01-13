@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javafxgraphs.modelo.iEstrategiaSolucao;
 
 /**
  *
@@ -19,6 +20,8 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
     private int nEdges;
     private HashMap<V, iVertex<V>> listVertices;
+    
+    private iEstrategiaSolucao estrategiaSolucao;
 
     public MyGraph() {
         this.nEdges = 0;
@@ -100,10 +103,9 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
     @Override
     public Iterable<iEdge<E, V>> incidentEdges(iVertex<V> v) throws InvalidEdgeException {
-           return checkVertex(v).listaEdges;
+        return checkVertex(v).listaEdges;
     }
 
-    
     @Override
     public iVertex<V> opposite(iVertex<V> v, iEdge<E, V> e) throws InvalidVertexException, InvalidEdgeException {
         iVertex<V>[] vertices = checkEdge(e).vertices();
@@ -141,7 +143,7 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
     @Override
     public iEdge<E, V> insertEdge(iVertex<V> u, iVertex<V> v, E elem) throws InvalidVertexException {
-             
+
         MyEdge edge = new MyEdge(elem, u, v);
         // coloca-lo nos vertices.
         checkVertex(u).listaEdges.add(edge);
@@ -177,7 +179,7 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
     @Override
     public E removeEdge(iEdge<E, V> e) throws InvalidEdgeException {
-     
+
         iVertex<V>[] vertices = checkEdge(e).vertices();
         checkVertex(vertices[0]).listaEdges.remove(e);
         checkVertex(vertices[1]).listaEdges.remove(e);
@@ -186,6 +188,107 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
     }
 
+    /**
+     *
+     *
+     * ALTERACAO DIJSTRA
+     *
+     * @param s
+     */
+    
+    
+    private void execute(iVertex<V> s, iEstrategiaSolucao estrategiaSolucao) {
+        int value;
+        ArrayList<MyVertex> queue = new ArrayList<>();
+        for (iVertex<V> v : vertices()) {
+            MyVertex vertex = checkVertex(v);
+            if (vertex.equals(s)) {
+                vertex.distance = 0;
+                vertex.parent = null;
+            } else {
+                vertex.distance = Integer.MAX_VALUE;
+            }
+            vertex.visited = false;
+            queue.add(vertex);
+        }
+
+        while (!queue.isEmpty()) {
+            MyVertex vertexMin = removeMin(queue);
+            for (iEdge<E, V> edge : incidentEdges(vertexMin)) {
+                MyVertex verticeAdj = checkVertex(opposite(vertexMin, edge));
+                if (!verticeAdj.visited) {
+                        value = (vertexMin.distance + estrategiaSolucao.calcularValorMinimo((iEdge) edge.element()));
+                        
+                    if (value < verticeAdj.distance) {
+                        verticeAdj.distance = value;
+                        verticeAdj.parent = vertexMin;
+                    }
+                }
+            }
+            checkVertex(vertexMin).visited = true;
+        }
+    }
+    
+    
+    /**
+     * Devolve um inteiro com o custo mais baixo
+     * @param origem
+     * @param destino
+     * @param estrategiaSolucao
+     * @return 
+     */
+    public int calcularSolucao(iVertex<V> origem, iVertex<V> destino, iEstrategiaSolucao estrategiaSolucao) {
+        int value = 0;
+        execute(origem, estrategiaSolucao);
+        iVertex<V> actualVertex = checkVertex(destino);
+        value += actualVertex.getDistance();
+        return value;
+    }
+    
+    /**
+     * Devolve uma String com o caminho + curto (consoante a estrategia)
+     * @param origem
+     * @param destino
+     * @param estrategiaSolucao
+     * @return 
+     */
+    public String dijkstra(iVertex<V> origem, iVertex<V> destino, iEstrategiaSolucao estrategiaSolucao) {
+        
+        String caminho ="";
+        
+        execute(origem, estrategiaSolucao);
+        iVertex<V> actualVertex = checkVertex(destino);
+        iVertex<V> actualAux = actualVertex;
+        
+        caminho += actualAux.element().toString() + "-";
+        
+        while (actualVertex != origem) {
+            actualVertex = checkVertex(actualVertex).parent;
+            
+            caminho += actualVertex.element().toString();
+        }
+
+        return caminho;
+    }
+
+    private MyVertex removeMin(ArrayList<MyVertex> queue) {
+        int minValue = 0;
+        iVertex v1;
+        iVertex v2;
+        for (int i = 1; i < queue.size(); i++) {
+            v1 = queue.get(minValue);
+            v2 = queue.get(i);
+            if ((v1.getDistance() - v2.getDistance()) > 0) {
+                minValue = i;
+            }
+        }
+        return queue.remove(minValue);
+    }
+
+    
+    
+  
+    
     
     
     private class MyVertex implements iVertex<V> {
@@ -193,9 +296,22 @@ public class MyGraph<V, E> implements iGraph<V, E> {
         private V elem;
         private List<iEdge<E, V>> listaEdges;
 
+        /**
+         * Alteração para o Dijtstra
+         */
+        private boolean visited;
+        private int distance;
+        private iVertex<V> parent;
+
         public MyVertex(V elem) {
             this.elem = elem;
             this.listaEdges = new ArrayList<>();
+
+            //alteracao Dijtstra
+            this.distance = 0;
+            this.visited = false;
+            this.parent = null;
+
         }
 
         @Override
@@ -204,6 +320,14 @@ public class MyGraph<V, E> implements iGraph<V, E> {
                 throw new InvalidVertexException("vertex null");
             }
             return elem;
+        }
+
+        public int getDistance() {
+            return distance;
+        }
+
+        public boolean isVisited() {
+            return visited;
         }
 
     }
@@ -229,10 +353,10 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
         @Override
         public iVertex<V>[] vertices() {
-            iVertex[] vertices= new iVertex[2];
-            vertices[0]=vertexIn;
-            vertices[1]=vertexOut;
-            return vertices;      
+            iVertex[] vertices = new iVertex[2];
+            vertices[0] = vertexIn;
+            vertices[1] = vertexOut;
+            return vertices;
         }
 
     }

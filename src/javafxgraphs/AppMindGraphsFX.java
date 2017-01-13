@@ -38,6 +38,7 @@ import javafxgraphs.modelo.Ligacao;
 import javafxgraphs.modelo.Local;
 import javafxgraphs.modelo.MiniJogo;
 import javafxgraphs.modelo.TipoJogo;
+import javafxgraphs.tad.iVertex;
 import javafxgraphs.ui.GraphDraw;
 
 /**
@@ -607,6 +608,7 @@ public class AppMindGraphsFX extends Application {
         MiniJogo jogoTT = new MiniJogo(TipoJogo.TIMETRIAL, jogador, 5); 
         
         
+        
                 
         BorderPane rootJogoTT = new BorderPane();
         Scene janelaJogoTT = new Scene(rootJogoTT, 1000, 600);
@@ -682,6 +684,14 @@ public class AppMindGraphsFX extends Application {
         textSolucao.getText();
         textSolucao.setMaxWidth(210);
 
+        
+        
+        //devolve uma string com o caminho consoante a estrategia
+        jogoTT.getGrafoAdaptee().dijkstra(vIN, vOUT, jogoTT.getEstrategiaSolucao());
+        jogoTT.getGrafoAdaptee().calcularSolucao(origem, destino, jogoTT.getEstrategiaSolucao());
+        
+        //depois temos de calcular o caminho através desta string
+        
 //Botao para criar o mini jogo
         Button btnCalcularSolucao = new Button("Calcular");
         btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {

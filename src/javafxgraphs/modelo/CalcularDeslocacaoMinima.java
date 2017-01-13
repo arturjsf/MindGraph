@@ -19,7 +19,7 @@ public class CalcularDeslocacaoMinima implements iEstrategiaSolucao<Ligacao, Loc
      * @return 1-iteracao
      */
      @Override
-    public int getValorMinimo(iEdge<Ligacao, Local> edge){
+    public int calcularValorMinimo(iEdge<Ligacao, Local> edge){
         return 1;
     }
 }

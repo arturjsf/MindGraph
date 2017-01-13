@@ -11,4 +11,6 @@ package javafxgraphs.tad;
  */
 public interface iVertex<V> {
     public V element()throws InvalidEdgeException;
+
+    public int getDistance();
 }
