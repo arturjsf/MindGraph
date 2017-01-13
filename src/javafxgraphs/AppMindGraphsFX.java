@@ -665,6 +665,10 @@ public class AppMindGraphsFX extends Application {
         
         String vIN = arrayLocaisTemp[0].getId();
         String vOUT = arrayLocaisTemp[1].getId();
+        
+        iVertex verticeIN, verticeOUT;
+        verticeIN = (iVertex) arrayLocaisTemp[0];
+        verticeOUT = (iVertex) arrayLocaisTemp[1];
 
         //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
         Text vOrigem = new Text(vIN+"");
@@ -687,8 +691,8 @@ public class AppMindGraphsFX extends Application {
         
         
         //devolve uma string com o caminho consoante a estrategia
-        jogoTT.getGrafoAdaptee().dijkstra(vIN, vOUT, jogoTT.getEstrategiaSolucao());
-        jogoTT.getGrafoAdaptee().calcularSolucao(origem, destino, jogoTT.getEstrategiaSolucao());
+        System.out.println(jogoTT.getGrafoAdaptee().dijkstra(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao()));
+        System.out.println(jogoTT.getGrafoAdaptee().calcularSolucao(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao()));
         
         //depois temos de calcular o caminho através desta string
         
