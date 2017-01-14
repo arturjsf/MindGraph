@@ -235,14 +235,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
      * @param nivel Consoante o estrategiaDificuldade a receber, cria uma
      * Ligacao com valores random
      */
-    public void gerarLigacao(iEstrategiaDificuldade nivel) {
+    public void gerarLigacao2(iEstrategiaDificuldade nivel) {
 
         for (int i = 0; i < nivel.randomArestas(); i++) {
-            //Percorre a lista de Vertices criados e faz um random
-            //  for (iVertex<Local> listaVertices : grafoAdaptee.vertices()) {
-            //  só cria o destino se for diferente da origem
-            //  Local origemTemp = new Local("" + randomVertices());
-            //  Local destinoTemp = new Local("" + randomVertices());
 
             Local[] listaLocais = randomVertices2();
 
@@ -251,11 +246,44 @@ public class MiniJogo implements iMiniJogo, Serializable {
 
             Ligacao ligacaoTemp = new Ligacao(nivel.randomTipo(), origemTemp.getId() + destinoTemp.getId(), nivel.randomDistancia(), nivel.randomCusto());
 
-            //Só insere se a origem e destino forem diferentes
-            // if (!origemTemp.toString().equals(destinoTemp.toString())) {
+    
             grafoAdaptee.insertEdge(origemTemp, destinoTemp, ligacaoTemp);
-            // System.out.println(ligacaoTemp.toString());
-            //  }
+          
+
+        }
+    }
+    
+    
+    
+    
+    public void gerarLigacao(iEstrategiaDificuldade nivel) {
+
+        //SIZE da listaVertices
+        int nVertices = grafoAdaptee.numVertices();
+        Ligacao ligacaoTemp;
+        
+        int nArestas = nivel.randomArestas();
+        
+        //System.out.println(""+nArestas);
+
+        for (iVertex<Local> listaVertices : grafoAdaptee.vertices()) {
+            Local temp = listaVertices.element();
+            Local[] listaLocais = randomVertices2();
+            if (!temp.equals(listaLocais[0])) {
+                listaLocais[1] = temp;
+            }
+            ligacaoTemp = new Ligacao(nivel.randomTipo(), listaLocais[0].getId() + listaLocais[1].getId(), nivel.randomDistancia(), nivel.randomCusto());
+            grafoAdaptee.insertEdge(listaLocais[0], listaLocais[1], ligacaoTemp);
+
+//            for (int i = 0; i < nArestas-nVertices; i++) {
+//                
+//  
+//                Local origemTemp = listaLocais[0];
+//                Local destinoTemp = listaLocais[1];
+//
+//                ligacaoTemp = new Ligacao(nivel.randomTipo(), origemTemp.getId() + destinoTemp.getId(), nivel.randomDistancia(), nivel.randomCusto());
+//                grafoAdaptee.insertEdge(origemTemp, destinoTemp, ligacaoTemp);
+//            }
 
         }
     }

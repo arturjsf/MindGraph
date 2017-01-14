@@ -254,21 +254,21 @@ public class MyGraph<V, E> implements iGraph<V, E> {
      */
     public String dijkstra(iVertex<V> origem, iVertex<V> destino, iEstrategiaSolucao estrategiaSolucao) {
         
-        String caminho ="";
+        String caminho =" ";
         
         execute(origem, estrategiaSolucao);
         iVertex<V> actualVertex = checkVertex(destino);
         iVertex<V> actualAux = actualVertex;
         
-        caminho += actualAux.element().toString();
+        caminho += " "+actualAux.element().toString();
         
         while (actualVertex != origem) {
             actualVertex = checkVertex(actualVertex).parent;
             
-            caminho += actualVertex.element().toString();
+            caminho += " "+actualVertex.element().toString();
         }
 
-        return caminho;
+        return new StringBuilder(caminho).reverse().toString();
     }
 
     private MyVertex removeMin(ArrayList<MyVertex> queue) {

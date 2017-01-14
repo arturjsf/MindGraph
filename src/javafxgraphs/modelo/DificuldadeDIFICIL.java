@@ -14,6 +14,9 @@ import java.util.Random;
 public class DificuldadeDIFICIL implements iEstrategiaDificuldade{
     
      Random xRandom = new Random();
+     
+      int minVertices;
+        int maxVertices;
 
     /**
      * 
@@ -24,8 +27,8 @@ public class DificuldadeDIFICIL implements iEstrategiaDificuldade{
     @Override
     public int randomVertices() {
 
-        int minVertices = 9;
-        int maxVertices = 12;
+        minVertices = 9;
+        maxVertices = 12;
 
         int numVertices = xRandom.nextInt((maxVertices - minVertices) + 1) + minVertices;
 
@@ -51,8 +54,8 @@ public class DificuldadeDIFICIL implements iEstrategiaDificuldade{
    
     @Override
      public int randomDistancia(){
-         int minDistancia = 1000;
-        int maxdistancia = 10000;
+         int minDistancia = 100;
+        int maxdistancia = 1000;
 
         int nDistancia = xRandom.nextInt((maxdistancia - minDistancia) + 1) + minDistancia;
 
@@ -70,8 +73,9 @@ public class DificuldadeDIFICIL implements iEstrategiaDificuldade{
     
      @Override
      public int randomArestas(){
-        int minArestas = 15;
-        int maxArestas = 25;
+         
+        int minArestas = maxVertices;
+        int maxArestas = maxVertices+(maxVertices/2);
 
         int numArestas = xRandom.nextInt((maxArestas - minArestas) + 1) + minArestas;
 

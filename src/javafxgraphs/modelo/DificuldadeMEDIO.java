@@ -15,6 +15,9 @@ public class DificuldadeMEDIO implements iEstrategiaDificuldade {
 
     Random xRandom = new Random();
 
+    
+      int minVertices;
+      int maxVertices;
     /**
      *
      * @return numero de vertices a ser gerado no nivel1 É um valor random entre
@@ -23,8 +26,8 @@ public class DificuldadeMEDIO implements iEstrategiaDificuldade {
     @Override
     public int randomVertices() {
 
-        int minVertices = 6;
-        int maxVertices = 8;
+        minVertices = 6;
+        maxVertices = 8;
 
         int numVertices = xRandom.nextInt((maxVertices - minVertices) + 1) + minVertices;
 
@@ -47,8 +50,8 @@ public class DificuldadeMEDIO implements iEstrategiaDificuldade {
 
     @Override
     public int randomDistancia() {
-        int minDistancia = 100;
-        int maxdistancia = 1000;
+        int minDistancia = 10;
+        int maxdistancia = 100;
 
         int nDistancia = xRandom.nextInt((maxdistancia - minDistancia) + 1) + minDistancia;
 
@@ -66,8 +69,9 @@ public class DificuldadeMEDIO implements iEstrategiaDificuldade {
     
     @Override
      public int randomArestas(){
-        int minArestas = 5;
-        int maxArestas = 15;
+         
+        int minArestas = maxVertices;
+        int maxArestas = maxVertices+(maxVertices/2);
 
         int numArestas = xRandom.nextInt((maxArestas - minArestas) + 1) + minArestas;
 

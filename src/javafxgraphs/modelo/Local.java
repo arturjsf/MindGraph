@@ -51,7 +51,7 @@ public class Local implements DrawableGraphElement {
 
     @Override
     public String toString() {
-        return String.format("{%s}", this.id);
+        return String.format(this.id);
     }
 
 }
