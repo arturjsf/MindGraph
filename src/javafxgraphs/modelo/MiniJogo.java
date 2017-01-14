@@ -345,7 +345,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
      */
     public void gerarLocal(int numVertices) {
 
-        CharSequence alphabet = "ABCDEFGHIJKLM";
+        CharSequence alphabet = "ABCDEFGHIJKLMNOPQRSTUVYWXZ";
 
         /**
          * cria os Locais e atribui uma letra do alfabeto a cada numVertice
