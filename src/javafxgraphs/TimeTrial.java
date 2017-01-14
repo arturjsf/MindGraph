@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 import javafxgraphs.modelo.Ligacao;
 import javafxgraphs.modelo.Local;
@@ -112,9 +113,9 @@ public class TimeTrial {
         rootTimeTrial.setTop(nomeJogador);
 
         //CSS
-        rootTimeTrial.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootTimeTrial.setId("pane");
-        // primaryStage.setScene(janelaMenu);
+        rootTimeTrial.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());  
+        rootTimeTrial.setId(painel);
+     
         return janelaTimeTrial;
     }
     
@@ -231,8 +232,8 @@ public class TimeTrial {
         rootJogoTT.setBottom(boxRodape);
 
         //CSS
-        rootJogoTT.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootJogoTT.setId("pane");
+        rootJogoTT.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootJogoTT.setId(painel);
 
         return janelaJogoTT;
     }

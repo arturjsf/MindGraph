@@ -35,6 +35,8 @@ public class AppMindGraphsFX extends Application{
     //preciso de criar o jogador aki e vou ter de o enviar sempre dentro dos metodos
     Jogador jogador = null;
     
+    static String painel = "";
+    
     @Override
     public void start(Stage primaryStage) {
 
@@ -78,7 +80,8 @@ public class AppMindGraphsFX extends Application{
 
         //CSS
         root.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        root.setId("pane");
+        painel="pane";
+        root.setId(painel);
 
         //propriedades da janela
         //primaryStage.initStyle(StageStyle.TRANSPARENT);
@@ -177,8 +180,9 @@ public class AppMindGraphsFX extends Application{
         rootMenu.setTop(nomeJogador);
 
         //CSS
-        //rootMenu.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootMenu.setId("pane");
+        rootMenu.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        painel="pane";
+        rootMenu.setId(painel);
 
         // primaryStage.setScene(janelaMenu);
         return janelaMenu;
@@ -188,7 +192,6 @@ public class AppMindGraphsFX extends Application{
 
 
 
-    
     
     
 

@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 
 /**
@@ -96,8 +97,9 @@ public class Recordes{
         TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRecordes).fromY(500).toY(-500).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).cycleCount(Timeline.INDEFINITE).build();
        
 
-        // rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootRecordes.setId("pane");
+        rootRecordes.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootRecordes.setId(painel);
+        
         vb.getChildren().addAll(textoRecordes, btn1);
         rootRecordes.setCenter(vb);
         translateTransition.play();
@@ -168,8 +170,8 @@ public class Recordes{
         TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRecordes).fromY(500).toY(-500).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).cycleCount(Timeline.INDEFINITE).build();
         
 
-        //rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootRecordes.setId("pane");
+        rootRecordes.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootRecordes.setId(painel);
         
         vb.getChildren().addAll(textoRecordes, btn1);
         rootRecordes.setCenter(vb);

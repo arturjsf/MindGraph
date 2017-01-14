@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 
 /**
@@ -61,8 +62,9 @@ public class Regras{
             }
         });
         
-        // rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootRegras.setId("pane");
+        rootRegras.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootRegras.setId(painel);
+        
         vb.getChildren().addAll(btn1);
         rootRegras.setCenter(vb);
         
@@ -106,8 +108,9 @@ public class Regras{
             }
         });
         
-        // rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootRegras.setId("pane");
+        rootRegras.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootRegras.setId(painel);
+        
         vb.getChildren().addAll(btn1);
         rootRegras.setCenter(vb);
         

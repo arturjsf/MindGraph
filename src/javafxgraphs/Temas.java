@@ -36,21 +36,26 @@ public class Temas{
      */
     
     public static Scene menuTemas(Stage primaryStage, Jogador jogador) {
+        
         BorderPane rootTemas = new BorderPane();
         Scene janelaTemas = new Scene(rootTemas, 1000, 600);
         System.out.println("menu TEMAS");
         int btnSize = 150;
+        
         // BOTOES DE ESCOLHA DE TEMA
         Text textEscolherTema = new Text("Escolha o tema");
         textEscolherTema.setFill(Color.GREEN);
         textEscolherTema.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+        
         Button btnSurf = new Button("Surf");
         btnSurf.setMaxWidth(btnSize);
         btnSurf.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-                rootTemas.setId("surfPane");
+                
+                rootTemas.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+                AppMindGraphsFX.painel="surfPane";
+                rootTemas.setId(AppMindGraphsFX.painel);
                 
                 Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
                 primaryStage.setScene(scene);
@@ -64,8 +69,9 @@ public class Temas{
         btnCycling.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-                rootTemas.setId("cyclingPane");
+                 rootTemas.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+                 AppMindGraphsFX.painel="cyclingPane";
+                 rootTemas.setId(AppMindGraphsFX.painel);
                 
                 Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
                 primaryStage.setScene(scene);
@@ -77,8 +83,9 @@ public class Temas{
         btnRugby.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-                rootTemas.setId("rugbyPane");
+                rootTemas.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+                AppMindGraphsFX.painel="rugbyPane";
+                rootTemas.setId(AppMindGraphsFX.painel);
                 
                 Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
                 primaryStage.setScene(scene);
@@ -90,8 +97,9 @@ public class Temas{
         btnFootball.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-                rootTemas.setId("footballPane");
+                rootTemas.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+                AppMindGraphsFX.painel="footballPane";
+                rootTemas.setId(AppMindGraphsFX.painel);
                 
                 Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
                 primaryStage.setScene(scene);

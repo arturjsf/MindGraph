@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 import javafxgraphs.modelo.Ligacao;
 import javafxgraphs.modelo.Local;
@@ -110,9 +111,11 @@ public class Arcade{
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootArcade.setTop(nomeJogador);
+        
         //CSS
-       // rootArcade.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootArcade.setId("pane");
+        rootArcade.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootArcade.setId(painel);
+        
         return janelaArcade;
     }
 
@@ -201,9 +204,11 @@ public class Arcade{
         vBoxCentro.setSpacing(10);
         vBoxCentro.setAlignment(Pos.CENTER);
         rootArcade.setCenter(vBoxCentro);
+        
         //CSS
-        //rootArcade.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootArcade.setId("pane");
+        rootArcade.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootArcade.setId(painel);
+        
         return janelaArcade;
     }
     
@@ -237,9 +242,9 @@ public class Arcade{
         //para apresentar a dificuldade
         Text dificuldadeJogo = new Text(jogoArcade.getDificuldade() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        if (dificuldadeJogo.equals("FACIL")) {
+        if (dificuldadeJogo.getText().equals("FACIL")) {
             dificuldadeJogo.setFill(Color.GREEN);
-        } else if (dificuldadeJogo.equals("MEDIO")) {
+        } else if (dificuldadeJogo.getText().equals("MEDIO")) {
             dificuldadeJogo.setFill(Color.YELLOW);
         } else {
             dificuldadeJogo.setFill(Color.RED);
@@ -320,8 +325,8 @@ public class Arcade{
         rootJogoArcade.setBottom(boxRodape);
         
         //CSS
-        //rootJogoArcade.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootJogoArcade.setId("pane");
+        rootJogoArcade.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        rootJogoArcade.setId(painel);
         
         return janelaJogoArcade;
     }
