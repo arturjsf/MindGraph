@@ -26,12 +26,15 @@ import javafxgraphs.modelo.Jogador;
  */
 public class Temas{
     
+    
     /**
      * MENU TEMAS
      *
      * @param primaryStage
+     * @param jogador
      * @return
      */
+    
     public static Scene menuTemas(Stage primaryStage, Jogador jogador) {
         BorderPane rootTemas = new BorderPane();
         Scene janelaTemas = new Scene(rootTemas, 1000, 600);
@@ -48,7 +51,12 @@ public class Temas{
             public void handle(ActionEvent e) {
                 rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
                 rootTemas.setId("surfPane");
-                primaryStage.setScene(menuPrincipal(primaryStage));
+                
+                Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
+                primaryStage.setScene(scene);
+                primaryStage.show();
+                
+                //primaryStage.setScene(menuPrincipal(primaryStage));
             }
         });
         Button btnCycling = new Button("Cycling");
@@ -58,7 +66,10 @@ public class Temas{
             public void handle(ActionEvent e) {
                 rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
                 rootTemas.setId("cyclingPane");
-                primaryStage.setScene(menuPrincipal(primaryStage));
+                
+                Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
+                primaryStage.setScene(scene);
+                primaryStage.show();
             }
         });
         Button btnRugby = new Button("Rugby");
@@ -68,7 +79,10 @@ public class Temas{
             public void handle(ActionEvent e) {
                 rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
                 rootTemas.setId("rugbyPane");
-                primaryStage.setScene(menuPrincipal(primaryStage));
+                
+                Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
+                primaryStage.setScene(scene);
+                primaryStage.show();
             }
         });
         Button btnFootball = new Button("Football");
@@ -78,7 +92,10 @@ public class Temas{
             public void handle(ActionEvent e) {
                 rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
                 rootTemas.setId("footballPane");
-                primaryStage.setScene(menuPrincipal(primaryStage));
+                
+                Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
+                primaryStage.setScene(scene);
+                primaryStage.show();
             }
         });
         Button btnVoltar = new Button("Voltar");
@@ -87,21 +104,28 @@ public class Temas{
             @Override
             public void handle(ActionEvent e) {
                 System.out.println("Voltar menu");
-                primaryStage.setScene(menuPrincipal(primaryStage));
+                
+                Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
+                primaryStage.setScene(scene);
+                primaryStage.show();
             }
         });
+        
+        
         //VBOX DE BOTOES DE ESCOLHA DE TEMA
         VBox boxBotoesTema = new VBox(textEscolherTema, btnSurf, btnFootball, btnRugby, btnCycling, btnVoltar);
         boxBotoesTema.setSpacing(10);
         boxBotoesTema.setAlignment(Pos.CENTER);
         rootTemas.setCenter(boxBotoesTema);
+        
+        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootTemas.setTop(nomeJogador);
         //CSS
-        rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        //rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootTemas.setId("pane");
         // primaryStage.setScene(janelaMenu);
         return janelaTemas;

@@ -39,6 +39,7 @@ public class TimeTrial {
      * MENU TT
      *
      * @param primaryStage
+     * @param jogador
      * @return
      */
     public static Scene menuTimeTrial(Stage primaryStage, Jogador jogador) {
@@ -46,18 +47,26 @@ public class TimeTrial {
         BorderPane rootTimeTrial = new BorderPane();
         Scene janelaTimeTrial = new Scene(rootTimeTrial, 1000, 600);
         System.out.println("menu TIME TRIAL");
+        
         Text textEscolherOpcao = new Text("Time Trial");
         textEscolherOpcao.setFill(Color.GREEN);
         textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+        
+        
         int btnSize = 150;
+          
         Button botaoNovoJogo = new Button("Start");
         botaoNovoJogo.setMaxWidth(btnSize);
         botaoNovoJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                gerarTimeTrial(primaryStage, 1, jogador);
+                
+                primaryStage.setScene(criarJogoTimeTrial(primaryStage, 1, jogador));
+                //gerarTimeTrial(primaryStage, 1, jogador);
             }
         });
+        
+        
         Button btnRecords = new Button("Recordes");
         btnRecords.setMaxWidth(btnSize);
         btnRecords.setOnAction(new EventHandler<ActionEvent>() {
@@ -73,7 +82,7 @@ public class TimeTrial {
         botaoRegras.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                Scene scene = Regras.menuRegrasTT(jogador);
+                Scene scene = Regras.menuRegrasTT(primaryStage, jogador);
                 primaryStage.setScene(scene);
                 primaryStage.show();
             }
@@ -88,18 +97,23 @@ public class TimeTrial {
                 primaryStage.show();
             }
         });
+        
+        
         //VBOX DE BOTOES DE ESCOLHA DE TEMA
         VBox boxBotoesTrial = new VBox(textEscolherOpcao, botaoNovoJogo, btnRecords, botaoRegras, botaoVoltar);
         boxBotoesTrial.setSpacing(10);
         boxBotoesTrial.setAlignment(Pos.CENTER);
         rootTimeTrial.setCenter(boxBotoesTrial);
+        
+        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootTimeTrial.setTop(nomeJogador);
+        
         //CSS
-        rootTimeTrial.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        //rootTimeTrial.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootTimeTrial.setId("pane");
         // primaryStage.setScene(janelaMenu);
         return janelaTimeTrial;
@@ -111,43 +125,62 @@ public class TimeTrial {
      *
      * @param primaryStage
      * @param nivel
+     * @param jogador
      */
-    public static void gerarTimeTrial(Stage primaryStage, int nivel, Jogador jogador) {
-        int NIVEL_MAX = 21;
-        for (int i = 0; i < NIVEL_MAX; i++) {
-            criarJogoTimeTrial(primaryStage, i, jogador);
-        }
-        System.out.println("VENCEDOR");
-    }
+//    public static void gerarTimeTrial(Stage primaryStage, int nivel, Jogador jogador) {
+//        int NIVEL_MAX = 21;
+//        for (int i = 0; i < NIVEL_MAX; i++) {
+//            criarJogoTimeTrial(primaryStage, i, jogador);
+//        }
+//        System.out.println("VENCEDOR");
+//    }
 
     
-    //este sim realmente vai desenhar o grafo e criar o jogo trial
+    /**
+     * Desenha a janela Jogo TT
+     * @param primaryStage
+     * @param nivel
+     * @param jogador
+     * @return 
+     */
     public static Scene criarJogoTimeTrial(Stage primaryStage, int nivel, Jogador jogador) {
         
         MiniJogo jogoTT = new MiniJogo(TipoJogo.TIMETRIAL, jogador, nivel);
+        
         BorderPane rootJogoTT = new BorderPane();
         Scene janelaJogoTT = new Scene(rootJogoTT, 1000, 600);
         System.out.println("menu JOGO TT");
+        
+        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogoTT.getJogador().getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        
         //para apresentar o nivel
         Text nivelJogo = new Text(jogoTT.getNivel() + "/20");
         nivelJogo.setFill(Color.YELLOW);
         nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        
         //Para apresentar o timer
         Text timer = new Text(jogoTT.getSegundos() + "");
         timer.setFill(Color.GREEN);
         timer.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        
         //HBOX CABECALHO
         HBox boxCabecalho = new HBox();
         boxCabecalho.setSpacing(350);
         boxCabecalho.setAlignment(Pos.CENTER);
         boxCabecalho.getChildren().addAll(nomeJogador, nivelJogo, timer);
         rootJogoTT.setTop(boxCabecalho);
+        
         GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(jogoTT.getGrafoAdaptee());
         rootJogoTT.setCenter(drawMiniJogo);
+        
+        
         //para apresentar a dificuldade
         Text dificuldadeJogo = new Text(jogoTT.getDificuldade() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -159,25 +192,33 @@ public class TimeTrial {
             dificuldadeJogo.setFill(Color.RED);
         }
         rootJogoTT.setRight(dificuldadeJogo);
+        
+        
         //para apresentar o tipo de Solucao
         Text tipoSolucao = new Text(jogoTT.getTipoSolucao() + "");
         tipoSolucao.setFill(Color.BLACK);
         tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        
         Local[] arrayLocaisTemp = jogoTT.randomVertices2();
+        
         String vIN = arrayLocaisTemp[0].getId();
         String vOUT = arrayLocaisTemp[1].getId();
+        
         iVertex<Local> verticeIN = jogoTT.findVertice(vIN);
         iVertex<Local> verticeOUT = jogoTT.findVertice(vOUT);
-        // verticeIN.element().setId(vIN+"");
-        // verticeOUT.element().setId(vOUT+"");
+        
+        
         //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
         Text textOrigem = new Text(vIN + "");
         textOrigem.setFill(Color.YELLOW);
         textOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        
         //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
         Text textDestino = new Text(vOUT + "");
         textDestino.setFill(Color.YELLOW);
         textDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        
         //text field com a solucao
         TextField textSolucao = new TextField();
         textSolucao.setPromptText("Introduza a solucao");
@@ -185,9 +226,13 @@ public class TimeTrial {
         textSolucao.setFocusTraversable(false);
         textSolucao.getText();
         textSolucao.setMaxWidth(210);
+        
+        
         //devolve uma string com o caminho consoante a estrategia
         System.out.println(jogoTT.getGrafoAdaptee().calcularSolucao(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao()));
         System.out.println(jogoTT.getGrafoAdaptee().dijkstra(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao()));
+        
+        
         //depois temos de calcular o caminho através desta string
         //Botao para criar o mini jogo
         Button btnCalcularSolucao = new Button("Calcular");
@@ -197,6 +242,8 @@ public class TimeTrial {
                 System.out.println("calcular solucao e ir para o menu POPUP NEXTGAME se tiver certa. " + "Se tiver errado ir para o menu POPUP Game over");
             }
         });
+        
+        
         //botao Voltar
         Button btnVoltar = new Button();
         btnVoltar.setText("Voltar");
@@ -204,9 +251,11 @@ public class TimeTrial {
         btnVoltar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                menuTimeTrial(primaryStage, jogador);
+                primaryStage.setScene(menuTimeTrial(primaryStage, jogador));
             }
         });
+        
+        
         //HBOX RODAPE
         HBox boxRodape = new HBox();
         boxRodape.setSpacing(20);
@@ -215,8 +264,9 @@ public class TimeTrial {
         rootJogoTT.setBottom(boxRodape);
         
         //CSS
-        rootJogoTT.getStylesheets().addAll(appMindGraphsFX.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        //rootJogoTT.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootJogoTT.setId("pane");
+        
         return janelaJogoTT;
     }
 

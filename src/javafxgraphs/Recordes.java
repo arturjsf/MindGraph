@@ -37,20 +37,29 @@ public class Recordes{
      * RECORDES TT
      *
      * @param primaryStage
+     * @param jogador
      * @return
      */
     public static Scene recordesTimeTrial(Stage primaryStage, Jogador jogador) {
+        
+        
         BorderPane rootRecordes = new BorderPane();
         Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
         System.out.println("menu RECORDES TT");
+        
+        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRecordes.setTop(nomeJogador);
+        
+        
         VBox vb = new VBox();
         vb.setSpacing(80);
         vb.setAlignment(Pos.CENTER);
+        
+        
         //texto Nomes
         DropShadow ds = new DropShadow();
         ds.setOffsetY(3.0f);
@@ -60,11 +69,15 @@ public class Recordes{
         textoRecordes.setCache(true);
         textoRecordes.setX(20);
         textoRecordes.setY(10);
+        
+        
         //meter o texto dos recordes aki
         textoRecordes.setText(jogador.lerFicheiroRecordes("TT"));
         textoRecordes.setFill(Color.CYAN);
         textoRecordes.setFont(Font.font(null, FontWeight.BOLD, 30));
         textoRecordes.setTextAlignment(TextAlignment.CENTER);
+        
+        
         //botao Voltar
         Button btn1 = new Button();
         btn1.setText("Voltar");
@@ -77,9 +90,13 @@ public class Recordes{
                 primaryStage.show();
             }
         });
+        
+        
         //animacao textoNomes
         TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRecordes).fromY(500).toY(-500).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).cycleCount(Timeline.INDEFINITE).build();
-        rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+       
+
+        // rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootRecordes.setId("pane");
         vb.getChildren().addAll(textoRecordes, btn1);
         rootRecordes.setCenter(vb);
@@ -91,20 +108,30 @@ public class Recordes{
      * RECORDES ARCADE
      *
      * @param primaryStage
+     * @param jogador
      * @return
      */
     public static Scene recordesArcade(Stage primaryStage, Jogador jogador) {
+        
+        
         BorderPane rootRecordes = new BorderPane();
         Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
+        
         System.out.println("menu RECORDES Arcade");
+        
+        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRecordes.setTop(nomeJogador);
+        
+        
         VBox vb = new VBox();
         vb.setSpacing(80);
         vb.setAlignment(Pos.CENTER);
+        
+        
         //texto Nomes
         DropShadow ds = new DropShadow();
         ds.setOffsetY(3.0f);
@@ -114,11 +141,15 @@ public class Recordes{
         textoRecordes.setCache(true);
         textoRecordes.setX(20);
         textoRecordes.setY(10);
+        
+        
         //meter o texto dos recordes aki
         textoRecordes.setText(jogador.lerFicheiroRecordes("Arcade"));
         textoRecordes.setFill(Color.CYAN);
         textoRecordes.setFont(Font.font(null, FontWeight.BOLD, 30));
         textoRecordes.setTextAlignment(TextAlignment.CENTER);
+        
+        
         //botao Voltar
         Button btn1 = new Button();
         btn1.setText("Voltar");
@@ -131,12 +162,18 @@ public class Recordes{
                 primaryStage.show();
             }
         });
+        
+        
         //animacao textoNomes
         TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRecordes).fromY(500).toY(-500).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).cycleCount(Timeline.INDEFINITE).build();
-        rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        
+
+        //rootRecordes.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootRecordes.setId("pane");
+        
         vb.getChildren().addAll(textoRecordes, btn1);
         rootRecordes.setCenter(vb);
+        
         translateTransition.play();
         return janelaRecordes;
     }

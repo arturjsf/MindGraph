@@ -5,26 +5,18 @@
  */
 package javafxgraphs;
 
-import javafx.animation.Interpolator;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
-import javafx.animation.TranslateTransitionBuilder;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Reflection;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -32,14 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafxgraphs.modelo.Jogador;
-import javafxgraphs.modelo.Ligacao;
-import javafxgraphs.modelo.Local;
-import javafxgraphs.modelo.MiniJogo;
-import javafxgraphs.modelo.TipoJogo;
-import javafxgraphs.tad.iVertex;
-import javafxgraphs.ui.GraphDraw;
 
 /**
  *
@@ -47,7 +32,7 @@ import javafxgraphs.ui.GraphDraw;
  */
 public class AppMindGraphsFX extends Application{
 
-    //preciso de criar o jogador aki e vou ter de o enviar sempre dentro dos metodos?
+    //preciso de criar o jogador aki e vou ter de o enviar sempre dentro dos metodos
     Jogador jogador = null;
     
     @Override
@@ -192,7 +177,7 @@ public class AppMindGraphsFX extends Application{
         rootMenu.setTop(nomeJogador);
 
         //CSS
-        rootMenu.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
+        //rootMenu.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootMenu.setId("pane");
 
         // primaryStage.setScene(janelaMenu);
