@@ -92,11 +92,12 @@ public class AppMindGraphsFX extends Application{
         primaryStage.show();
     }
 
-    /**
-     * MENU PRINCIPAL
-     *
-     * @return
-     */
+   /**
+    * 
+    * @param primaryStage
+    * @param jogador
+    * @return 
+    */
     public static Scene menuPrincipal(Stage primaryStage, Jogador jogador) {
 
         BorderPane rootMenu = new BorderPane();

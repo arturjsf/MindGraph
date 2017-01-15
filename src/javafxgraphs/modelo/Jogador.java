@@ -97,5 +97,33 @@ public class Jogador {
         }
             return str;
         }
+    
+    
+        //Metodo para ler do ficheiro o nome e os pontos do jogador 
+    public String lerFicheiroRegras(String tipoJogo) {
+
+        String str = "";
+        String linhas = "";
+
+        BufferedReader fLeitura;
+
+        try {
+            if (tipoJogo.equals("TT")) {
+                fLeitura = new BufferedReader(new FileReader("regrasTT.txt"));
+            }else{
+                fLeitura = new BufferedReader(new FileReader("regrasArcade.txt"));
+            }
+                
+                while (fLeitura.ready()) {
+                    linhas = fLeitura.readLine();
+                    str += "\n" + linhas;
+                }
+                fLeitura.close();
+            }catch (IOException e) {
+            System.out.println("Impossivel ler ficheiro!");
+
+        }
+            return str;
+        }
 
     }

@@ -5,11 +5,15 @@
  */
 package javafxgraphs;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +24,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 import javafxgraphs.modelo.Ligacao;
@@ -127,6 +133,9 @@ public class TimeTrial {
 
         MiniJogo jogoTT = new MiniJogo(TipoJogo.TIMETRIAL, jogador, nivel);
 
+        Integer seconds = jogoTT.getSegundos();
+        count(seconds);
+
         BorderPane rootJogoTT = new BorderPane();
         Scene janelaJogoTT = new Scene(rootJogoTT, 1000, 600);
         System.out.println("menu JOGO TT: " + nivel);
@@ -180,7 +189,12 @@ public class TimeTrial {
         btnGenerate.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                
+                System.out.println("entrou no generate");
+                fecharContdown();
                 primaryStage.setScene(criarJogoTimeTrial(primaryStage, nivel, jogador));
+                
+
             }
         });
 
@@ -213,8 +227,10 @@ public class TimeTrial {
             @Override
             public void handle(ActionEvent e) {
                 String strSolucao = textSolucao.getText();
+                fecharContdown();
                 calcularSolucao(primaryStage, jogador, nivel, strSolucao, vIN, vOUT, jogoTT);
             }
+
         });
 
         //botao Voltar
@@ -226,8 +242,10 @@ public class TimeTrial {
             public void handle(MouseEvent event) {
                 if (nivel > 1) {
                     jogador.escreverFicheiroRecordes("TT");
+                    fecharContdown();
                     primaryStage.setScene(menuTimeTrial(primaryStage, jogador));
                 } else {
+                    fecharContdown();
                     primaryStage.setScene(menuTimeTrial(primaryStage, jogador));
                 }
             }
@@ -245,6 +263,18 @@ public class TimeTrial {
         rootJogoTT.setId(painel);
 
         return janelaJogoTT;
+    }
+
+    public static void fecharContdown() {
+        
+        System.out.println("entrou no fechar ct");
+
+        Stage stage1;
+
+        stage1 = count(0);
+
+        stage1.close();
+
     }
 
     public static void calcularSolucao(Stage primaryStage, Jogador jogador, int nivel, String solucaoUtilizador, String vIN, String vOUT, MiniJogo jogoTT) {
@@ -361,6 +391,67 @@ public class TimeTrial {
 
         return solucaoINT == Integer.parseInt(solucaoUtilizador);
 
+    }
+
+    static Integer seconds = 0;
+    static Label label = null;
+
+   
+    
+
+    public static Stage count(int temp) {
+        
+     
+        int tempo = temp;
+        BorderPane root = new BorderPane();
+        Stage stage = new Stage();
+        
+        label = new Label();
+        label.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
+        VBox layout = new VBox();
+        layout.getChildren().add(label);
+        layout.setAlignment(Pos.CENTER);
+//        root.getChildren().add(layout);
+        root.setCenter(layout);
+        doTime(stage, tempo);
+
+        stage.setScene(new Scene(root, 60, 60));
+        stage.setTitle("Tempo");
+
+        stage.setAlwaysOnTop(true);
+        stage.setX(1100.0);
+        stage.setY(120.0);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        stage.show();
+
+        return stage;
+    }
+
+//
+    static void doTime(Stage stage, int tempo) {
+        seconds = tempo;
+        Timeline time = new Timeline();
+        time.setCycleCount(Timeline.INDEFINITE);
+        if (time != null) {
+            time.stop();
+        }
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                seconds--;
+                label.setText(seconds.toString());
+                System.out.println(seconds);
+                if (seconds <= 0) {
+                    stage.close();
+                    time.stop();
+                }
+            }
+        });
+        time.getKeyFrames().add(frame);
+        time.playFromStart();
     }
 
 }

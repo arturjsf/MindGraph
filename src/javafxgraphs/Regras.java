@@ -5,11 +5,15 @@
  */
 package javafxgraphs;
 
-import javafx.application.Application;
+import javafx.animation.Interpolator;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.animation.TranslateTransitionBuilder;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -17,7 +21,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 
@@ -42,12 +48,33 @@ public class Regras{
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
-        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        nomeJogador.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
         rootRegras.setTop(nomeJogador);
         
         VBox vb = new VBox();
         vb.setSpacing(80);
         vb.setAlignment(Pos.CENTER);
+        
+                //texto Regras
+        DropShadow ds = new DropShadow();
+        Text textoRegras = new Text();
+        textoRegras.setEffect(ds);
+        textoRegras.setCache(true);
+        textoRegras.setX(20);
+        textoRegras.setY(10);
+        
+                
+        //Texto das regras
+        textoRegras.setText(jogador.lerFicheiroRegras("TT"));
+        textoRegras.setFill(Color.BLACK);
+        textoRegras.setFont(Font.font(null, FontWeight.BOLD, 20));
+        textoRegras.setTextAlignment(TextAlignment.CENTER);
+        
+        
+                //animacao textoNomes
+        TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRegras).fromY(500).toY(20).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).build();
+       
+
         
         //botao Voltar
         Button btn1 = new Button();
@@ -65,9 +92,10 @@ public class Regras{
         rootRegras.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
         rootRegras.setId(painel);
         
-        vb.getChildren().addAll(btn1);
-        rootRegras.setCenter(vb);
         
+        vb.getChildren().addAll(textoRegras, btn1);
+        rootRegras.setCenter(vb);
+        translateTransition.play();        
         return janelaRegras;
     }
 
@@ -94,7 +122,28 @@ public class Regras{
         VBox vb = new VBox();
         vb.setSpacing(80);
         vb.setAlignment(Pos.CENTER);
+
+            //texto Regras
+        DropShadow ds = new DropShadow();
+        Text textoRegras = new Text();
+        textoRegras.setEffect(ds);
+        textoRegras.setCache(true);
+        textoRegras.setX(20);
+        textoRegras.setY(10);
         
+                
+        //Texto das regras
+        textoRegras.setText(jogador.lerFicheiroRegras("Arcade"));
+        textoRegras.setFill(Color.BLACK);
+        textoRegras.setFont(Font.font(null, FontWeight.BOLD, 20));
+        textoRegras.setTextAlignment(TextAlignment.CENTER);
+        
+        
+                //animacao textoNomes
+        TranslateTransition translateTransition = TranslateTransitionBuilder.create().node(textoRegras).fromY(500).toY(20).duration(new Duration(8000)).interpolator(Interpolator.LINEAR).build();
+       
+
+                
         //botao Voltar
         Button btn1 = new Button();
         btn1.setText("Voltar");
@@ -111,10 +160,11 @@ public class Regras{
         rootRegras.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
         rootRegras.setId(painel);
         
-        vb.getChildren().addAll(btn1);
+
+        
+        vb.getChildren().addAll(textoRegras, btn1);
         rootRegras.setCenter(vb);
-        
-        
+        translateTransition.play();         
         return janelaRegras;
         
         
