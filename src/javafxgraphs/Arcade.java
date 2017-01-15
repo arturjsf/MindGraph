@@ -5,7 +5,7 @@
  */
 package javafxgraphs;
 
-import javafx.application.Application;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -54,7 +55,7 @@ public class Arcade{
         
         Text textEscolherOpcao = new Text("Arcade");
         textEscolherOpcao.setFill(Color.GREEN);
-        textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+        textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
         
         int btnSize = 150;
         
@@ -63,7 +64,8 @@ public class Arcade{
         botaoNovoJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                primaryStage.setScene(menuPackArcade(primaryStage, jogador));
+                             
+                primaryStage.setScene(menuPackArcade(primaryStage, jogador, gerarPackMiniJogosArcade(jogador)));
             }
         });
         
@@ -126,9 +128,13 @@ public class Arcade{
      *
      * @param primaryStage
      * @param jogador
+     * @param nivel
+     * @param packMiniJogosArcade
+     * @param nEstrelas
      * @return
      */
-    public static Scene menuPackArcade(Stage primaryStage, Jogador jogador) {
+    public static Scene menuPackArcade(Stage primaryStage, Jogador jogador, ArrayList<MiniJogo> packMiniJogosArcade) {
+        
         
         
         BorderPane rootArcade = new BorderPane();
@@ -142,8 +148,10 @@ public class Arcade{
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         
         
-        //para apresentar o nivel
-        Text nivelEstrelas = new Text("6/48");
+        int somaEstrelas = somaEstrelas(packMiniJogosArcade);
+        jogador.setPontuacao(somaEstrelas);
+        
+        Text nivelEstrelas = new Text(somaEstrelas+"/60");
         nivelEstrelas.setFill(Color.YELLOW);
         nivelEstrelas.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         
@@ -169,17 +177,22 @@ public class Arcade{
         TilePane tilePane = new TilePane(Orientation.HORIZONTAL, 10, 10);
         tilePane.setMaxWidth(500);
         
-        int NIVEL_MAX = 21;
+       // int NIVEL_MAX = 21;
         
-        Button[] arrayBotoes = new Button[NIVEL_MAX];
-        for (int i = 1; i < NIVEL_MAX; i++) {
+        Button[] arrayBotoes = new Button[packMiniJogosArcade.size()];
+        
+        
+        
+        for (int i = 1; i < packMiniJogosArcade.size(); i++) {
             arrayBotoes[i] = new Button(Integer.toString(i));
             arrayBotoes[i].setPrefSize(80, 80);
             int f = i;
-            arrayBotoes[i].setOnAction(new EventHandler<ActionEvent>() {
+            arrayBotoes[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(ActionEvent e) {
-                    primaryStage.setScene(criarJogoArcade(primaryStage, f, jogador));
+                public void handle(MouseEvent event) {
+                    MiniJogo jogoArcade;
+                    jogoArcade = packMiniJogosArcade.get(f);
+                    primaryStage.setScene(criarJogoArcade(primaryStage, f, jogador, jogoArcade, packMiniJogosArcade));
                 }
             });
             tilePane.getChildren().add(arrayBotoes[i]);
@@ -188,19 +201,20 @@ public class Arcade{
         tilePane.setAlignment(Pos.CENTER);
         
         //botao Voltar
-        Button btn1 = new Button();
-        btn1.setAlignment(Pos.CENTER);
-        btn1.setText("Voltar");
-        btn1.setMaxWidth(250);
-        btn1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        Button btnVoltar = new Button();
+        btnVoltar.setAlignment(Pos.CENTER);
+        btnVoltar.setText("Voltar");
+        btnVoltar.setMaxWidth(250);
+        btnVoltar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                jogador.escreverFicheiroRecordes("Arcade");
                 primaryStage.setScene(menuArcade(primaryStage, jogador));
             }
         });
         
         //VBOX DE BOTOES DE ESCOLHA DE TEMA
-        VBox vBoxCentro = new VBox(textEscolherOpcao, tilePane, btn1);
+        VBox vBoxCentro = new VBox(textEscolherOpcao, tilePane, btnVoltar);
         vBoxCentro.setSpacing(10);
         vBoxCentro.setAlignment(Pos.CENTER);
         rootArcade.setCenter(vBoxCentro);
@@ -217,13 +231,13 @@ public class Arcade{
     
     
     
-    public static Scene criarJogoArcade(Stage primaryStage, int nivel, Jogador jogador) {
+    
+    
+    public static Scene criarJogoArcade(Stage primaryStage, int nivel, Jogador jogador, 
+            MiniJogo jogoArcade, ArrayList<MiniJogo> packMiniJogosArcade) {
         
-        int NIVEL_MAX = 20;
-        
-        
-        MiniJogo jogoArcade = new MiniJogo(TipoJogo.ARCADE, jogador, nivel);
-        
+ 
+    
         BorderPane rootJogoArcade = new BorderPane();
         Scene janelaJogoArcade = new Scene(rootJogoArcade, 1000, 600);
         
@@ -256,6 +270,7 @@ public class Arcade{
         boxCabecalho.setAlignment(Pos.CENTER);
         boxCabecalho.getChildren().addAll(nomeJogador, nivelJogo, dificuldadeJogo);
         rootJogoArcade.setTop(boxCabecalho);
+        
         GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(jogoArcade.getGrafoAdaptee());
         rootJogoArcade.setCenter(drawMiniJogo);
         
@@ -270,9 +285,7 @@ public class Arcade{
         String vIN = arrayLocaisTemp[0].getId();    
         String vOUT = arrayLocaisTemp[1].getId();
         
-        iVertex<Local> verticeIN = jogoArcade.findVertice(vIN);
-        iVertex<Local> verticeOUT = jogoArcade.findVertice(vOUT);
-        
+            
         //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
         Text vOrigem = new Text(vIN + "");
         vOrigem.setFill(Color.YELLOW);
@@ -290,19 +303,15 @@ public class Arcade{
         textSolucao.setFocusTraversable(false);
         textSolucao.getText();
         textSolucao.setMaxWidth(210);
-        
-        
-         //devolve uma string com o caminho consoante a estrategia
-        System.out.println(jogoArcade.getGrafoAdaptee().calcularSolucao(verticeIN, verticeOUT, jogoArcade.getEstrategiaSolucao()));
-        System.out.println(jogoArcade.getGrafoAdaptee().dijkstra(verticeIN, verticeOUT, jogoArcade.getEstrategiaSolucao()));
-        
+                 
         
         //Botao para criar o mini jogo
         Button btnCalcularSolucao = new Button("Calcular");
         btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("calcular solucao e ir para o menu POPUP CORRETO+botao voltar menuARcade se tiver certa. " + "Se tiver errado ir para o menu POPUP Game over+botao voltar menuArcade");
+                String strSolucao = textSolucao.getText();
+                calcularSolucao(primaryStage, jogador, nivel, strSolucao, vIN, vOUT, jogoArcade, packMiniJogosArcade);
             }
         });
         
@@ -313,7 +322,7 @@ public class Arcade{
         btnVoltar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                primaryStage.setScene(menuPackArcade(primaryStage, jogador));
+                primaryStage.setScene(menuPackArcade(primaryStage, jogador, packMiniJogosArcade));
             }
         });
         
@@ -330,6 +339,199 @@ public class Arcade{
         
         return janelaJogoArcade;
     }
+    
+    
+    public static void calcularSolucao(Stage primaryStage, Jogador jogador, int nivel, String solucaoUtilizador, 
+            String vIN, String vOUT, MiniJogo jogoArcade, ArrayList<MiniJogo> packMiniJogosArcade) {
+
+        
+        iVertex<Local> verticeIN = jogoArcade.findVertice(vIN);
+        iVertex<Local> verticeOUT = jogoArcade.findVertice(vOUT);
+    
+        //devolve uma string com o caminho consoante a estrategia
+        int solucaoINT = jogoArcade.getGrafoAdaptee().
+                calcularSolucao(verticeIN, verticeOUT, jogoArcade.getEstrategiaSolucao());
+
+        String solucaoSTR = jogoArcade.getGrafoAdaptee().
+                dijkstra(verticeIN, verticeOUT, jogoArcade.getEstrategiaSolucao());
+        
+        int nEstrelas = atribuirEstrelas(solucaoINT, solucaoUtilizador);
+
+        Stage stagePOPUP = new Stage();
+        BorderPane rootPOPUP = new BorderPane();
+        Scene janelaPOPUP = new Scene(rootPOPUP, 300, 200);
+        System.out.println("menuPOPUP");
+
+        Text txtCabecalho = new Text();
+        txtCabecalho.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+
+        
+        
+        if (verificaSolucao(solucaoINT, solucaoUtilizador)) {
+            
+
+        } else {
+            txtCabecalho.setText("ERRADO");
+            txtCabecalho.setFill(Color.RED);
+        }
+        
+        Text txtEstrelas = new Text();
+        txtEstrelas.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        txtEstrelas.setFill(Color.YELLOW);
+        
+        
+        switch (nEstrelas) {
+            case 3:
+                txtEstrelas.setText("* * *");
+                txtCabecalho.setText("PERFEITO");
+                txtCabecalho.setFill(Color.GREEN);
+                break;
+            case 2:
+                txtEstrelas.setText("* *");
+                txtCabecalho.setText("QUASE LA");
+                txtCabecalho.setFill(Color.YELLOWGREEN);
+                break;
+            case 1:
+                txtEstrelas.setText("*");
+                txtCabecalho.setText("BAH");
+                txtCabecalho.setFill(Color.YELLOW);
+                break;
+            default:
+                txtEstrelas.setText(" ");
+                txtCabecalho.setText("ERRADO");
+                txtCabecalho.setFill(Color.RED);
+                break;
+        }
+            
+ 
+
+        //para apresentar a solucao
+        Text txtSolucaoINT = new Text("Solucao: " + solucaoINT);
+        txtSolucaoINT.setFill(Color.BLACK);
+        txtSolucaoINT.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        //para apresentar o nivel
+        Text txtSolucaoSTR = new Text("Caminho: " + solucaoSTR);
+        txtSolucaoSTR.setFill(Color.GREEN);
+        txtSolucaoSTR.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
+        
+        
+        Button btnCalcularSolucao = new Button();
+        btnCalcularSolucao.setMaxWidth(150);
+        btnCalcularSolucao.setText("Voltar");
+       
+        
+        
+        btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                int f = nivel;
+
+                if (verificaSolucao(solucaoINT, solucaoUtilizador)) {
+                    //f++;
+                    packMiniJogosArcade.get(f).setEstrelas(nEstrelas);
+                    primaryStage.setScene(menuPackArcade(primaryStage, jogador, packMiniJogosArcade));
+                    stagePOPUP.close();
+                } else {
+                    primaryStage.setScene(menuPackArcade(primaryStage, jogador, packMiniJogosArcade));
+                    stagePOPUP.close();
+                }
+
+            }
+        });
+
+        //VBOX 
+        VBox boxPOPUP = new VBox();
+        boxPOPUP.setSpacing(10);
+        boxPOPUP.setAlignment(Pos.CENTER);
+        boxPOPUP.getChildren().addAll(txtCabecalho, txtEstrelas, txtSolucaoINT, txtSolucaoSTR, btnCalcularSolucao);
+        boxPOPUP.setStyle("-fx-background-color: #808080;");
+        rootPOPUP.setCenter(boxPOPUP);
+
+        //css
+        rootPOPUP.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+        
+
+        //propriedades da nova stage
+        stagePOPUP.setScene(janelaPOPUP);
+        stagePOPUP.centerOnScreen();
+        stagePOPUP.setResizable(false);
+        stagePOPUP.show();
+
+    }
+    
+    /**
+     * Verifica se esta correto e atribui estrelas
+     * @param solucaoINT
+     * @param solucaoUtilizador
+     * @return 
+     */
+    public static int atribuirEstrelas(int solucaoINT, String solucaoUtilizador) {
+      
+        int intSolucaoUtilizador = Integer.parseInt(solucaoUtilizador);
+               
+        if (solucaoINT == intSolucaoUtilizador) {
+            return 3;
+        } else if((intSolucaoUtilizador > (solucaoINT-(solucaoINT*0.25))) || (intSolucaoUtilizador < (solucaoINT*1.25))){
+            return 2;
+        }else if((intSolucaoUtilizador > (solucaoINT-(solucaoINT*0.50))) || (intSolucaoUtilizador < (solucaoINT*1.50))){
+            return 1;
+        }else{
+            return 0;
+        }
+
+    }
+    
+    
+    /**
+     * Verifica se acertou ou nao
+     * @param solucaoINT
+     * @param solucaoUtilizador
+     * @return 
+     */
+    public static boolean verificaSolucao(int solucaoINT, String solucaoUtilizador){
+        
+        return ((atribuirEstrelas(solucaoINT, solucaoUtilizador) <= 3)|| (atribuirEstrelas(solucaoINT, solucaoUtilizador) > 0));
+    }
+        
+        
+        
+        /**
+     * Gera uma ArrayList de Minijogos
+     * @param jogador
+     * @return 
+     */
+    public static ArrayList<MiniJogo> gerarPackMiniJogosArcade(Jogador jogador){
+        
+        ArrayList<MiniJogo> packMiniJogos = new ArrayList<> ();
+        
+        for (int i = 0; i <= 20; i++) {
+            packMiniJogos.add(new MiniJogo(TipoJogo.ARCADE, jogador, i));
+        }
+        
+                
+        return packMiniJogos;
+    }
+    
+    
+    /**
+     * Recebe um pack de miniJogosArcade e devolve a soma das estrelas
+     * @param packMiniJogos
+     * @return 
+     */
+    public static int somaEstrelas(ArrayList<MiniJogo> packMiniJogos){
+        
+        int somaEstrelas = 0;
+        for (int i = 0; i < packMiniJogos.size(); i++) {
+            somaEstrelas += packMiniJogos.get(i).getEstrelas();
+        }
+        
+        return somaEstrelas;
+    }
+    
+    }
+  
 
     
-}
+

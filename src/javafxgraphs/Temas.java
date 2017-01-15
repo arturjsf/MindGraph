@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 
 /**
@@ -132,10 +133,11 @@ public class Temas{
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootTemas.setTop(nomeJogador);
+        
         //CSS
-        //rootTemas.getStylesheets().addAll(this.getClass().getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        rootTemas.setId("pane");
-        // primaryStage.setScene(janelaMenu);
+         rootTemas.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
+         rootTemas.setId(painel);
+        
         return janelaTemas;
     }
     

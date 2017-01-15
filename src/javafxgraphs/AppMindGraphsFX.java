@@ -111,7 +111,7 @@ public class AppMindGraphsFX extends Application{
         textoTitulo.setCache(true);
         textoTitulo.setText("Mind Graph");
         textoTitulo.setFill(Color.GREEN);
-        textoTitulo.setFont(Font.font(null, FontWeight.BOLD, 70));
+        textoTitulo.setFont(Font.font(null, FontWeight.BOLD, 90));
         textoTitulo.setTextAlignment(TextAlignment.CENTER);
 
         Reflection r = new Reflection();
@@ -181,7 +181,6 @@ public class AppMindGraphsFX extends Application{
 
         //CSS
         rootMenu.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
-        painel="pane";
         rootMenu.setId(painel);
 
         // primaryStage.setScene(janelaMenu);

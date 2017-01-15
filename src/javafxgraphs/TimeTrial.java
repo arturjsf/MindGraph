@@ -54,7 +54,7 @@ public class TimeTrial {
 
         Text textEscolherOpcao = new Text("Time Trial");
         textEscolherOpcao.setFill(Color.GREEN);
-        textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+        textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
 
         int btnSize = 150;
 
@@ -200,8 +200,7 @@ public class TimeTrial {
         textSolucao.setMaxWidth(210);
         textSolucao.getText();
 
-        //  int solucaoUtilizador = Integer.parseInt(strSolucao);
-        //depois temos de calcular o caminho através desta string
+ 
         //Botao para criar o mini jogo
         Button btnCalcularSolucao = new Button("Calcular");
         btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {
@@ -235,6 +234,7 @@ public class TimeTrial {
         rootJogoTT.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
         rootJogoTT.setId(painel);
 
+        
         return janelaJogoTT;
     }
 
@@ -252,7 +252,7 @@ public class TimeTrial {
 
         Stage stagePOPUP = new Stage();
         BorderPane rootPOPUP = new BorderPane();
-        Scene janelaPOPUP = new Scene(rootPOPUP, 400, 200);
+        Scene janelaPOPUP = new Scene(rootPOPUP, 300, 200);
         System.out.println("menuPOPUP");
 
         Text txtCabecalho = new Text();
@@ -267,8 +267,6 @@ public class TimeTrial {
             txtCabecalho.setFill(Color.RED);
         }
 
-        rootPOPUP.setTop(txtCabecalho);
-
         //para apresentar a solucao
         Text txtSolucaoINT = new Text("Solucao: " + solucaoINT);
         txtSolucaoINT.setFill(Color.BLACK);
@@ -282,7 +280,7 @@ public class TimeTrial {
         
         
         Button btnCalcularSolucao = new Button();
-
+        btnCalcularSolucao.setMaxWidth(150);  
         if(verificaSolucao(solucaoINT, solucaoUtilizador)){
             btnCalcularSolucao.setText("Next");
         }else{
@@ -296,8 +294,8 @@ public class TimeTrial {
                 int f = nivel;
 
                 if (verificaSolucao(solucaoINT, solucaoUtilizador)) {
-                    f++;
-                    primaryStage.setScene(criarJogoTimeTrial(primaryStage, f, jogador));
+                    //f++;
+                    gerarTimeTrial(primaryStage, f, jogador);
                     stagePOPUP.close();
                 } else {
                     primaryStage.setScene(menuTimeTrial(primaryStage, jogador));
@@ -307,12 +305,16 @@ public class TimeTrial {
             }
         });
 
-        //VBOX DE BOTOES DE ESCOLHA DE TEMA
+        //VBOX DE BOTOES
         VBox boxPOPUP = new VBox();
         boxPOPUP.setSpacing(10);
         boxPOPUP.setAlignment(Pos.CENTER);
-        boxPOPUP.getChildren().addAll(txtSolucaoINT, txtSolucaoSTR, btnCalcularSolucao);
+        boxPOPUP.getChildren().addAll(txtCabecalho, txtSolucaoINT, txtSolucaoSTR, btnCalcularSolucao);
+        boxPOPUP.setStyle("-fx-background-color: #808080;");
         rootPOPUP.setCenter(boxPOPUP);
+        
+        //css
+        rootPOPUP.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());  
 
         //propriedades da nova stage
         stagePOPUP.setScene(janelaPOPUP);
@@ -337,7 +339,46 @@ public class TimeTrial {
         for (int i = 0; i <= NIVEL_MAX; i++) {
             primaryStage.setScene(criarJogoTimeTrial(primaryStage, i, jogador));
         }
-        System.out.println("VENCEDOR");
+        
+        Stage stagePOPUP = new Stage();
+        BorderPane rootPOPUP = new BorderPane();
+        Scene janelaPOPUP = new Scene(rootPOPUP, 250, 150);
+        System.out.println("menuPOPUP");
+
+        Text txtCabecalho = new Text("VENCEDOR!");
+        txtCabecalho.setFill(Color.GREEN);
+        txtCabecalho.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        
+        
+        //botao Voltar
+        Button btnVoltar = new Button();
+        btnVoltar.setText("Voltar");
+        btnVoltar.setMaxWidth(150);
+        btnVoltar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setScene(menuTimeTrial(primaryStage, jogador));
+            }
+        });
+        
+        
+        //VBOX DE BOTOES
+        VBox boxPOPUP = new VBox();
+        boxPOPUP.setSpacing(20);
+        boxPOPUP.setAlignment(Pos.CENTER);
+        boxPOPUP.getChildren().addAll(txtCabecalho, btnVoltar);
+        boxPOPUP.setStyle("-fx-background-color: #808080;");
+        rootPOPUP.setCenter(boxPOPUP);
+
+        
+        //css
+        rootPOPUP.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());  
+        
+        //propriedades da nova stage
+        stagePOPUP.setScene(janelaPOPUP);
+        stagePOPUP.centerOnScreen();
+        stagePOPUP.setResizable(false);
+        stagePOPUP.show();
     }
     
 

@@ -42,6 +42,8 @@ public class MiniJogo implements iMiniJogo, Serializable {
 
     int segundos;
     int nivel;
+    
+    int estrelas;
 
     /**
      * Construtor do MiniJogo
@@ -55,7 +57,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
         switch (modo) {
 
             case ARCADE:
-                MiniJogoArcade(jogador, nivel);
+                MiniJogoArcade(jogador, nivel, estrelas);
                 break;
             case TIMETRIAL:
                 MiniJogoTT(jogador, nivel, segundos);
@@ -74,9 +76,10 @@ public class MiniJogo implements iMiniJogo, Serializable {
      * @param dificuldade
      */
     
-    public void MiniJogoArcade(Jogador jogador, int nivel) {
+    public void MiniJogoArcade(Jogador jogador, int nivel, int estrelas) {
 
         this.jogador = jogador;
+        this.estrelas = estrelas;
 
         if (nivel <= 8) {
             this.nivel = nivel;
@@ -89,6 +92,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
              criarMiniJogo(escolherDificuldade(Dificuldade.DIFICIL), escolherSolucao(randomSolucao()));
         }
     }
+    
+    
+    
 
     /**
      * Construtor TIMETRIAL
@@ -96,7 +102,6 @@ public class MiniJogo implements iMiniJogo, Serializable {
      * @param jogador
      * @param nivel
      * @param segundos
-     * @param dificuldade
      */
     
     public void MiniJogoTT(Jogador jogador, int nivel, int segundos) {
@@ -188,16 +193,6 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     
-    /**
-     * Devolve um array de miniJogos a ser atribuido a cada botao no javaFX
-     */
-    public void gerarPackArcade() {
-
-       
-        for (int i = 0; i < 20; i++) {
-            MiniJogoArcade(jogador, i);
-        }
-    }
 
     public void criarMiniJogo(iEstrategiaDificuldade estrategiaDificuldade, iEstrategiaSolucao estrategiaSolucao) {
 
@@ -259,10 +254,10 @@ public class MiniJogo implements iMiniJogo, Serializable {
     public void gerarLigacao(iEstrategiaDificuldade nivel) {
 
         //SIZE da listaVertices
-        int nVertices = grafoAdaptee.numVertices();
+       // int nVertices = grafoAdaptee.numVertices();
         Ligacao ligacaoTemp;
         
-        int nArestas = nivel.randomArestas();
+        //int nArestas = nivel.randomArestas();
         
         //System.out.println(""+nArestas);
 
@@ -436,21 +431,15 @@ public class MiniJogo implements iMiniJogo, Serializable {
         return null;
     }
 
-    /**
-     * (Not implemented)
-     *
-     * @return devolve o caminho percorrido em String. ex: A-C-D-F
-     */
-    // @Override
-    public String mostrarCaminho() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  
+    
+    
 
     /**
      *
      *
      *
-     *
+     
      *
      * *********************GETS E SETS********************
      */
@@ -525,8 +514,14 @@ public class MiniJogo implements iMiniJogo, Serializable {
         this.tipoSolucao = tipoSolucao;
     }
 
-    
-    
+    public int getEstrelas() {
+        return estrelas;
+    }
+
+    public void setEstrelas(int estrelas) {
+        this.estrelas = estrelas;
+    }
+        
     
     
     /**
@@ -577,17 +572,5 @@ public class MiniJogo implements iMiniJogo, Serializable {
         }
     }
 
-    /**
-     * Metodo que calcula a solucao conforme o estrategiaDificuldade. Recebe o
-     * vertice de entrada e o vertice de saida (not implemented)
-     *
-     * @param verticeIN verticein
-     * @param verticeOUT verticeout
-     * @return solucao
-     */
-    @Override
-    public int calcularSolucao(iVertex<Local> verticeIN, iVertex<Local> verticeOUT) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
 }

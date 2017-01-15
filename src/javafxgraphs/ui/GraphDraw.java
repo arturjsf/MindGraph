@@ -63,8 +63,8 @@ public class GraphDraw<V extends DrawableGraphElement, E extends DrawableGraphEl
     public static String CONFIG_NODE_FILL = "yellow"; 
     public static Font CONFIG_NODE_FONT = new Font("sans", 12);
 
-    public static double CONFIG_EDGE_STROKE_WIDTH = 0.5;
-    public static double CONFIG_EDGE_STROKE_WIDTH_SELECTED = 1;
+    public static double CONFIG_EDGE_STROKE_WIDTH = 1;
+    public static double CONFIG_EDGE_STROKE_WIDTH_SELECTED = 1.5;
     public static String CONFIG_EDGE_DRAW = "black";
     public static String CONFIG_EDGE_DRAW_SELECTED = "red";
     public static Font CONFIG_EDGE_FONT = new Font("sans", 10);

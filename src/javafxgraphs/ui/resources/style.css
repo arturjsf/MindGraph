@@ -55,6 +55,12 @@ and open the template in the editor.
 .button {
     -fx-background-color: radial-gradient(center 50% -40%, radius 200%, #cccccc 45%, #aaaaaa 50%);
     -fx-text-fill: black;
-    -fx-font-size: 18px;
-    -fx-padding: 5 5 5 5;       
+    -fx-padding: 5 5 5 5;
+    -fx-border-width: 1pt;
+    -fx-border-color: black;
+    -fx-font: 12pt "Arial";
+}
+
+.button:hover {
+    -fx-border-color: aquamarine;
 }

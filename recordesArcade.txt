@@ -1,4 +1,2 @@
-MAria        18
-Miguel       20
-Sofia        1
-
+er        3
+er        0
