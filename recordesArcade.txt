@@ -1,2 +1,6 @@
+Jogador|Estrelas
 er        3
-er        0
+fghj        15
+wert        3
+ert        5
+wert        3

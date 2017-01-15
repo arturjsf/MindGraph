@@ -1,4 +1,8 @@
-Tiago        18
-Artur        26
-Fredo        55
-Tiago        77
+Jogador | Nivel
+rui        1
+rui        1
+rui        1
+rui        2
+rui        2
+rui        21
+zsxcv        20
