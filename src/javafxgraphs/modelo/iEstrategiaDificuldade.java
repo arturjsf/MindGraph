@@ -6,7 +6,7 @@
 package javafxgraphs.modelo;
 
 /**
- *
+ * Interface Dificuldade. Todas as classes Dificuldade terão de implementar estes metodos obrigatoriamente.
  * @author Artur Ferreira
  */
 public interface iEstrategiaDificuldade {

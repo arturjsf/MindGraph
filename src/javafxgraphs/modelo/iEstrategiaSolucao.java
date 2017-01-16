@@ -8,18 +8,17 @@ package javafxgraphs.modelo;
 import javafxgraphs.tad.iEdge;
 
 /**
- *
+ * Interface Solucao. Todas as classes deste tipo terão de implementar o metodo calcularValorMinimo
  * @author Artur Ferreira
  */
 public interface iEstrategiaSolucao<E, V> {
 
+    
     /**
-     * vai calcular a solucao conforme a estrategia. Devolve em inteiro:
-     *
+     * Dependendo da estrategia de calculo, devolve um inteiro com o valor a calcular.
      * @param edge aresta
      * @return int
      */
-
     public int calcularValorMinimo(iEdge<E, V> edge);
 
 }

@@ -51,8 +51,8 @@ public interface iGraph<V, E> {
      * Replaces the element of a given edge with a new element and returns the
      * old element.
      *
-     * @param e
-     * @param o
+     * @param e e
+     * @param o o
      * @return old element stored in edge
      * @throws InvalidEdgeException if edge does not exist
      */

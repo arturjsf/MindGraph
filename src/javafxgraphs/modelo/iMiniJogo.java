@@ -5,10 +5,8 @@
  */
 package javafxgraphs.modelo;
 
-import javafxgraphs.tad.iVertex;
-
 /**
- *
+ * Interface MiniJogo. A clase MiniJogo terá de implementar obrigatoriamente estes metodos, entre outros...
  * @author Artur Ferreira
  */
 public interface iMiniJogo {

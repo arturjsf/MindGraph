@@ -6,7 +6,6 @@
 package javafxgraphs;
 
 import javafx.animation.Interpolator;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.event.EventHandler;
@@ -28,22 +27,21 @@ import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 
 /**
- *
+ * CLASSE REGRAS
  * @author Artur Ferreira
  */
 public class Regras{
     
     /**
      * 
-     * @param jogador
-     * @return 
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @return Devolve uma cena com um texto de regras sobre o tipo de jogo Time Trial
      */
     public static Scene menuRegrasTT(Stage primaryStage, Jogador jogador) {
         
         BorderPane rootRegras = new BorderPane();
         Scene janelaRegras = new Scene(rootRegras, 1000, 600);
-        
-        System.out.println("menu REGRAS TT");
         
         //para apresentar o nome do jogador
         Text nomeJogador = new Text("Jogador "+jogador.getNome());
@@ -102,16 +100,15 @@ public class Regras{
     
     /**
      * 
-     * @param jogador
-     * @return 
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @return Devolve uma cena com um texto de regras sobre o tipo de jogo Arcade
      */
     public static Scene menuRegrasArcade(Stage primaryStage, Jogador jogador) {
         
         
         BorderPane rootRegras = new BorderPane();
         Scene janelaRegras = new Scene(rootRegras, 1000, 600);
-        System.out.println("menu REGRAS Arcade");
-        
         
         //para apresentar o nome do jogador
         Text nomeJogador = new Text("Jogador "+jogador.getNome());

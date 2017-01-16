@@ -1,22 +1,2 @@
 Jogador | Nivel
 rui        1
-rui        1
-rui        1
-rui        2
-rui        2
-rui        21
-zsxcv        20
-fdf        1
-fdasf        2
-ds        1
-dsd        2
-dfs        4
-qwerty        1
-e3e        10
-sdf        1
-sf        1
-fd        1
-ef        1
-grg        1
-grg        2
-wrw        3

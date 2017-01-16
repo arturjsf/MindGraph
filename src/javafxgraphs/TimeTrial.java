@@ -10,7 +10,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,7 +36,7 @@ import javafxgraphs.tad.iVertex;
 import javafxgraphs.ui.GraphDraw;
 
 /**
- *
+ * Classe onde são gerados os miniJogos do tipo TimeTrial
  * @author Artur Ferreira
  */
 public class TimeTrial {
@@ -46,16 +45,15 @@ public class TimeTrial {
 
     /**
      * MENU TT
-     *
-     * @param primaryStage
-     * @param jogador
-     * @return
+     * 
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @return Devolve uma cena com 4 Botoes(Start, Recordes, Regras, Sair)
      */
     public static Scene menuTimeTrial(Stage primaryStage, Jogador jogador) {
 
         BorderPane rootTimeTrial = new BorderPane();
         Scene janelaTimeTrial = new Scene(rootTimeTrial, 1000, 600);
-        System.out.println("menu TIME TRIAL");
 
         Text textEscolherOpcao = new Text("Time Trial");
         textEscolherOpcao.setFill(Color.GREEN);
@@ -126,12 +124,12 @@ public class TimeTrial {
     }
 
     /**
-     * Desenha a janela Jogo TT
+     * 
      *
-     * @param primaryStage
-     * @param nivel
-     * @param jogador
-     * @return
+     * @param primaryStage stage inicial
+     * @param nivel nivel do miniJogo a ser criado
+     * @param jogador jogador
+     * @return Desenha a janela Jogo TT
      */
     public static Scene criarJogoTimeTrial(Stage primaryStage, int nivel, Jogador jogador) {
 
@@ -142,7 +140,6 @@ public class TimeTrial {
 
         BorderPane rootJogoTT = new BorderPane();
         Scene janelaJogoTT = new Scene(rootJogoTT, 1000, 600);
-        System.out.println("menu JOGO TT: " + nivel);
 
         //para apresentar o nome do jogador
         Text nomeJogador = new Text("Jogador "+jogoTT.getJogador().getNome());
@@ -162,6 +159,7 @@ public class TimeTrial {
         //para apresentar a dificuldade
         Text dificuldadeJogo = new Text(jogoTT.getDificuldade() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        
         if (dificuldadeJogo.getText().equals("FACIL")) {
             dificuldadeJogo.setFill(Color.GREEN);
         } else if (dificuldadeJogo.getText().equals("MEDIO")) {
@@ -182,8 +180,8 @@ public class TimeTrial {
 
      //   rootJogoTT.setRight(dificuldadeJogo);
 
+        //Gera 2 vertices origem e destino
         Local[] arrayLocaisTemp = jogoTT.randomVertices2();
-
         String vIN = arrayLocaisTemp[0].getId();
         String vOUT = arrayLocaisTemp[1].getId();
 
@@ -222,8 +220,10 @@ public class TimeTrial {
         textSolucao.setMaxWidth(210);
         textSolucao.getText();
 
-        //Botao para criar o mini jogo
+        //Botao para calcular solucao
         Button btnCalcularSolucao = new Button("Calcular");
+        btnCalcularSolucao.setDisable(true);
+        AppMindGraphsFX.verificaTextField(textSolucao, btnCalcularSolucao);
         btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -272,34 +272,38 @@ public class TimeTrial {
         return janelaJogoTT;
     }
 
-    public static void fecharContdown() {
-        
-        System.out.println("entrou no fechar ct");
-
-        Stage stage1;
-
-        stage1 = count(0);
-
-        stage1.close();
-
-    }
-
+    /**
+     * 
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @param nivel nivel a ser passado para o nivel seguinte
+     * @param solucaoUtilizador solucao introduzida pelo utilizador
+     * @param vIN vertice origem
+     * @param vOUT vertice destino
+     * @param jogoTT minJogo gerado
+     * 
+     * Este metodo cria uma Stage popUP. 
+     * Se a solucao introduzida pelo utilizador estiver correta passa para o nivel seguinte.
+     * Senao volta para o menu anterior
+     */
     public static void calcularSolucao(Stage primaryStage, Jogador jogador, int nivel, String solucaoUtilizador, String vIN, String vOUT, MiniJogo jogoTT) {
 
+        //Tenho de converter para iVertex<Local> para enviar para o metodo calcularSolucao e dijkstra
         iVertex<Local> verticeIN = jogoTT.findVertice(vIN);
         iVertex<Local> verticeOUT = jogoTT.findVertice(vOUT);
 
-        //devolve uma string com o caminho consoante a estrategia
+        //devolve um int com a solucao consoante a estrategia
         int solucaoINT = jogoTT.getGrafoAdaptee().
                 calcularSolucao(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao());
 
+        //devolve uma string com o caminho consoante a estrategia
         String solucaoSTR = jogoTT.getGrafoAdaptee().
                 dijkstra(verticeIN, verticeOUT, jogoTT.getEstrategiaSolucao());
 
+        
         Stage stagePOPUP = new Stage();
         BorderPane rootPOPUP = new BorderPane();
         Scene janelaPOPUP = new Scene(rootPOPUP, 300, 200);
-        System.out.println("menuPOPUP");
 
         Text txtCabecalho = new Text();
         txtCabecalho.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
@@ -327,6 +331,7 @@ public class TimeTrial {
         txtSolucaoSTR.setFill(Color.GREEN);
         txtSolucaoSTR.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
+        
         Button btnCalcularSolucao = new Button();
         btnCalcularSolucao.setMaxWidth(150);
 
@@ -390,25 +395,42 @@ public class TimeTrial {
         stagePOPUP.setScene(janelaPOPUP);
         stagePOPUP.centerOnScreen();
         stagePOPUP.setResizable(false);
+        stagePOPUP.initStyle(StageStyle.TRANSPARENT);
         stagePOPUP.show();
 
     }
 
+    /**
+     * @param solucaoINT solucao correta
+     * @param solucaoUtilizador solucao introduzida pelo utilizador
+     * @return Devolve um booleano true se a solucao do utilizador estiver correta
+     */
     public static boolean verificaSolucao(int solucaoINT, String solucaoUtilizador) {
 
         return solucaoINT == Integer.parseInt(solucaoUtilizador);
 
     }
 
+    
+    
+    /**
+     * *******************************COUNTDOWN***************************************
+     */
+    
+    
+    
     static Integer seconds = 0;
     static Label label = null;
 
    
-    
-
+  
+    /**
+     * 
+     * @param temp
+     * @return 
+     */
     public static Stage count(int temp) {
         
-     
         int tempo = temp;
         BorderPane root = new BorderPane();
         Stage stage = new Stage();
@@ -438,7 +460,12 @@ public class TimeTrial {
         return stage;
     }
 
-//
+    
+    /**
+     * 
+     * @param stage
+     * @param tempo 
+     */
     static void doTime(Stage stage, int tempo) {
         seconds = tempo;
         Timeline time = new Timeline();
@@ -462,6 +489,17 @@ public class TimeTrial {
         });
         time.getKeyFrames().add(frame);
         time.playFromStart();
+    }
+    
+      /**
+     * fecha a janela dos segundos
+     */
+    public static void fecharContdown() {
+        
+        System.out.println("entrou no fechar ct");
+        Stage stage1;
+        stage1 = count(0);
+        stage1.close();
     }
 
 }

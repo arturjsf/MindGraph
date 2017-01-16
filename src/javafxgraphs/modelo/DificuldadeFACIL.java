@@ -8,7 +8,7 @@ package javafxgraphs.modelo;
 import java.util.Random;
 
 /**
- * Estrategia de dificuldade NIVEL1. Cada dificuldade tem a sua maneira de criar o jogo
+ * Estrategia de dificuldade FACIL
  *
  * @author Artur Ferreira
  */
@@ -19,10 +19,12 @@ public class DificuldadeFACIL implements iEstrategiaDificuldade {
      int minVertices;
      int maxVertices;
 
+     
     /**
      *
-     * @return numero de vertices a ser gerado no nivel1 É um valor random entre
-     * 2 e 5. Para haver uma ligação é necessário pelo menos 2 vertices
+     * @return numero de vertices a ser gerado no nivel FACIL
+     * É um valor random entre 2 e 5. 
+     * Para haver uma ligação é necessário pelo menos 2 vertices
      */
     @Override
     public int randomVertices() {
@@ -37,7 +39,7 @@ public class DificuldadeFACIL implements iEstrategiaDificuldade {
 
     /**
      *
-     * @return O custo é um random entre 10 e 100 no nivel 1
+     * @return O custo é um random entre 1 e 10
      */
     @Override
     public int randomCusto() {
@@ -53,7 +55,7 @@ public class DificuldadeFACIL implements iEstrategiaDificuldade {
 
     /**
      *
-     * @return A distancia é um random entre 1 e 8 no nivel 1
+     * @return A distancia é um random entre 1 e 10
      */
     @Override
     public int randomDistancia() {
@@ -70,20 +72,16 @@ public class DificuldadeFACIL implements iEstrategiaDificuldade {
     /**
      *
      *
-     * @return Devolve um tipo consoante o nivel. Neste caso T1
+     * @return tipo de ligacao T1
      */
     @Override
     public TipoLigacao randomTipo() {
-
-        //  return TipoLigacao.valueOf("T" + (xRandom.nextInt(2) + 1));
         return TipoLigacao.T1;
     }
 
     /**
-     * O numero de arestas a criar tambem é random conforme a dificuldade Para
-     * haver um grafo tem de haver pelo menos 1 aresta
      *
-     * @return numArestas
+     * @return um valor de arestas a serem geradas
      */
     @Override
     public int randomArestas() {

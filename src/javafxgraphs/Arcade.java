@@ -15,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Reflection;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -25,6 +24,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 import javafxgraphs.modelo.Ligacao;
@@ -35,7 +35,9 @@ import javafxgraphs.tad.iVertex;
 import javafxgraphs.ui.GraphDraw;
 
 /**
- *
+ * Classe onde são gerados os packs de jogos Arcade.
+ * Nesta classe são criados os menus e submenus Arcade
+ * 
  * @author Artur Ferreira
  */
 public class Arcade {
@@ -43,15 +45,14 @@ public class Arcade {
     /**
      * MENU ARCADE
      *
-     * @param primaryStage
-     * @param jogador
-     * @return
+     * @param primaryStage Stage inicial
+     * @param jogador jogador
+     * @return Retorna uma cena com o subMenu Arcade. Contem 4 botoes (Start, recordes, regras e voltar)
      */
     public static Scene menuArcade(Stage primaryStage, Jogador jogador) {
 
         BorderPane rootArcade = new BorderPane();
         Scene janelaArcade = new Scene(rootArcade, 1000, 600);
-        System.out.println("menu ARCADE");
 
         Text textEscolherOpcao = new Text("Arcade");
         textEscolherOpcao.setFill(Color.GREEN);
@@ -67,7 +68,6 @@ public class Arcade {
         botaoNovoJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
                 primaryStage.setScene(menuPackArcade(primaryStage, jogador, gerarPackMiniJogosArcade(jogador)));
             }
         });
@@ -123,20 +123,17 @@ public class Arcade {
     }
 
     /**
-     * Cria uma GRID com varios jogos pre definidos
+     * 
      *
-     * @param primaryStage
-     * @param jogador
-     * @param nivel
-     * @param packMiniJogosArcade
-     * @param nEstrelas
-     * @return
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @param packMiniJogosArcade recebe um arrayList do tipo MiniJogo. A cada botao é atribuido um Minijogo consoante a dificuldade.
+     * @return Devolve uma TilePane com varios jogos pre definidos
      */
     public static Scene menuPackArcade(Stage primaryStage, Jogador jogador, ArrayList<MiniJogo> packMiniJogosArcade) {
 
         BorderPane rootArcade = new BorderPane();
         Scene janelaArcade = new Scene(rootArcade, 1000, 600);
-        System.out.println("Pack Arcade");
 
         //para apresentar o nome do jogador
         Text nomeJogador = new Text("Jogador "+jogador.getNome());
@@ -169,7 +166,7 @@ public class Arcade {
         TilePane tilePane = new TilePane(Orientation.HORIZONTAL, 10, 10);
         tilePane.setMaxWidth(500);
 
-        // int NIVEL_MAX = 21;
+        
         Button[] arrayBotoes = new Button[packMiniJogosArcade.size()];
 
         for (int i = 1; i < packMiniJogosArcade.size(); i++) {
@@ -207,7 +204,7 @@ public class Arcade {
             }
         });
 
-        //VBOX DE BOTOES DE ESCOLHA DE TEMA
+        //VBOX
         VBox vBoxCentro = new VBox(textEscolherOpcao, tilePane, btnVoltar);
         vBoxCentro.setSpacing(10);
         vBoxCentro.setAlignment(Pos.CENTER);
@@ -220,14 +217,22 @@ public class Arcade {
         return janelaArcade;
     }
 
+    /**
+     * 
+     * @param primaryStage stage inicial
+     * @param nivel nivel do MiniJogo gerado
+     * @param jogador jogador
+     * @param jogoArcade MiniJogo gerado
+     * @param packMiniJogosArcade ArrayList de MiniJogos
+     * @return Este metodo cria a cena do MiniJogo.
+     */
     public static Scene criarJogoArcade(Stage primaryStage, int nivel, Jogador jogador,
             MiniJogo jogoArcade, ArrayList<MiniJogo> packMiniJogosArcade) {
 
         BorderPane rootJogoArcade = new BorderPane();
         Scene janelaJogoArcade = new Scene(rootJogoArcade, 1000, 600);
 
-        System.out.println("menu JOGO ARCADE");
-
+        
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogoArcade.getJogador().getNome());
         nomeJogador.setFill(Color.BLACK);
@@ -256,6 +261,7 @@ public class Arcade {
         boxCabecalho.getChildren().addAll(nomeJogador, nivelJogo, dificuldadeJogo);
         rootJogoArcade.setTop(boxCabecalho);
 
+        //desenho do grafo
         GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(jogoArcade.getGrafoAdaptee());
         rootJogoArcade.setCenter(drawMiniJogo);
 
@@ -263,18 +269,19 @@ public class Arcade {
         Text tipoSolucao = new Text(jogoArcade.getTipoSolucao() + "");
         tipoSolucao.setFill(Color.BLACK);
         tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-
+    
+         //Gera 2 vertices origem e destino
         Local[] arrayLocaisTemp = jogoArcade.randomVertices2();
 
         String vIN = arrayLocaisTemp[0].getId();
         String vOUT = arrayLocaisTemp[1].getId();
 
-        //para apresentar o vertice de entrada (Fazer um random para devolver um vertice)
+        //para apresentar o vertice de origem
         Text vOrigem = new Text(vIN + "");
         vOrigem.setFill(Color.YELLOW);
         vOrigem.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
-        //para apresentar o vertice de saida (Faer um random para devolver um vertice diferente do outro)
+        //para apresentar o vertice de destino
         Text vDestino = new Text(vOUT + "");
         vDestino.setFill(Color.YELLOW);
         vDestino.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
@@ -289,6 +296,8 @@ public class Arcade {
 
         //Botao para criar o mini jogo
         Button btnCalcularSolucao = new Button("Calcular");
+        btnCalcularSolucao.setDisable(true);
+        AppMindGraphsFX.verificaTextField(textSolucao, btnCalcularSolucao);
         btnCalcularSolucao.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -327,25 +336,41 @@ public class Arcade {
         return janelaJogoArcade;
     }
 
+    /**
+     * 
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @param nivel nivel do minijogo gerado
+     * @param solucaoUtilizador solucao recebida pelo utilizador
+     * @param vIN vertice de entrada
+     * @param vOUT vertice de destino
+     * @param jogoArcade minijogo gerado
+     * @param packMiniJogosArcade pack de miniJogos gerados
+     * 
+     * Este metodo cria uma Stage popUP. 
+     * Atribui estrelas consoante o nivel de acerto do utilizador
+     */
     public static void calcularSolucao(Stage primaryStage, Jogador jogador, int nivel, String solucaoUtilizador,
             String vIN, String vOUT, MiniJogo jogoArcade, ArrayList<MiniJogo> packMiniJogosArcade) {
 
+        //Tenho de converter para iVertex<Local> para enviar para o metodo calcularSolucao e dijkstra
         iVertex<Local> verticeIN = jogoArcade.findVertice(vIN);
         iVertex<Local> verticeOUT = jogoArcade.findVertice(vOUT);
 
-        //devolve uma string com o caminho consoante a estrategia
+        //devolve um int com a solucao consoante a estrategia
         int solucaoINT = jogoArcade.getGrafoAdaptee().
                 calcularSolucao(verticeIN, verticeOUT, jogoArcade.getEstrategiaSolucao());
 
+        //devolve uma string com o caminho consoante a estrategia
         String solucaoSTR = jogoArcade.getGrafoAdaptee().
                 dijkstra(verticeIN, verticeOUT, jogoArcade.getEstrategiaSolucao());
 
+        //Numero de estrelas consoante o nivel de acerto
         int nEstrelas = atribuirEstrelas(solucaoINT, solucaoUtilizador);
 
         Stage stagePOPUP = new Stage();
         BorderPane rootPOPUP = new BorderPane();
         Scene janelaPOPUP = new Scene(rootPOPUP, 300, 200);
-        System.out.println("menuPOPUP");
 
         Text txtCabecalho = new Text();
         txtCabecalho.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
@@ -390,7 +415,7 @@ public class Arcade {
             txtSolucaoINT.setFill(Color.BLACK);
             txtSolucaoINT.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-            //para apresentar o nivel
+            //para apresentar o caminho
             Text txtSolucaoSTR = new Text("Caminho: " + solucaoSTR);
             txtSolucaoSTR.setFill(Color.GREEN);
             txtSolucaoSTR.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -406,7 +431,6 @@ public class Arcade {
                 int f = nivel;
 
                 if (verificaSolucao(solucaoINT, solucaoUtilizador)) {
-                    //f++;
                     packMiniJogosArcade.get(f).setEstrelas(nEstrelas);
                     primaryStage.setScene(menuPackArcade(primaryStage, jogador, packMiniJogosArcade));
                     stagePOPUP.close();
@@ -438,16 +462,17 @@ public class Arcade {
         stagePOPUP.setScene(janelaPOPUP);
         stagePOPUP.centerOnScreen();
         stagePOPUP.setResizable(false);
+        stagePOPUP.initStyle(StageStyle.TRANSPARENT);
         stagePOPUP.show();
 
     }
 
     /**
-     * Verifica se esta correto e atribui estrelas
+     * 
      *
-     * @param solucaoINT
-     * @param solucaoUtilizador
-     * @return
+     * @param solucaoINT solucao correta
+     * @param solucaoUtilizador solucao do utilizador
+     * @return Verifica se esta correto e atribui estrelas 3,2,1 ou 0 estrelas consoante o nivel de acerto
      */
     public static int atribuirEstrelas(int solucaoINT, String solucaoUtilizador) {
 
@@ -466,11 +491,10 @@ public class Arcade {
     }
 
     /**
-     * Verifica se acertou ou nao
      *
-     * @param solucaoINT
-     * @param solucaoUtilizador
-     * @return
+     * @param solucaoINT solucao correta
+     * @param solucaoUtilizador solucao do utilizador
+     * @return Devolve um booleano true se a solucao do utilizador estiver correta
      */
     public static boolean verificaSolucao(int solucaoINT, String solucaoUtilizador) {
 
@@ -478,10 +502,9 @@ public class Arcade {
     }
 
     /**
-     * Gera uma ArrayList de Minijogos
-     *
-     * @param jogador
-     * @return
+     * 
+     * @param jogador jogador
+     * @return Gera uma ArrayList de Minijogos
      */
     public static ArrayList<MiniJogo> gerarPackMiniJogosArcade(Jogador jogador) {
 
@@ -496,9 +519,8 @@ public class Arcade {
 
     /**
      * Recebe um pack de miniJogosArcade e devolve a soma das estrelas
-     *
-     * @param packMiniJogos
-     * @return
+     * @param packMiniJogos ArrayList de miniJogos
+     * @return soma das estrelas de todos os minijogos
      */
     public static int somaEstrelas(ArrayList<MiniJogo> packMiniJogos) {
 
