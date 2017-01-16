@@ -12,5 +12,5 @@ package javafxgraphs.modelo;
 public enum TipoSolucao {
     
     MIN_CUSTO, MIN_DISTANCIA, MIN_MOVIMENTOS
-    
+  
 }

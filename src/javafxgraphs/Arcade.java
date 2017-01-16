@@ -35,9 +35,9 @@ import javafxgraphs.tad.iVertex;
 import javafxgraphs.ui.GraphDraw;
 
 /**
- * Classe onde são gerados os packs de jogos Arcade.
- * Nesta classe são criados os menus e submenus Arcade
- * 
+ * Classe onde são gerados os packs de jogos Arcade. Nesta classe são criados os
+ * menus e submenus Arcade
+ *
  * @author Artur Ferreira
  */
 public class Arcade {
@@ -47,7 +47,8 @@ public class Arcade {
      *
      * @param primaryStage Stage inicial
      * @param jogador jogador
-     * @return Retorna uma cena com o subMenu Arcade. Contem 4 botoes (Start, recordes, regras e voltar)
+     * @return Retorna uma cena com o subMenu Arcade. Contem 4 botoes (Start,
+     * recordes, regras e voltar)
      */
     public static Scene menuArcade(Stage primaryStage, Jogador jogador) {
 
@@ -57,6 +58,7 @@ public class Arcade {
         Text textEscolherOpcao = new Text("Arcade");
         textEscolherOpcao.setFill(Color.GREEN);
         textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+        
         Reflection r = new Reflection();
         r.setFraction(0.7f);
         textEscolherOpcao.setEffect(r);
@@ -110,7 +112,7 @@ public class Arcade {
         rootArcade.setCenter(boxBotoesArcade);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n" + jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootArcade.setTop(nomeJogador);
@@ -123,11 +125,12 @@ public class Arcade {
     }
 
     /**
-     * 
+     *
      *
      * @param primaryStage stage inicial
      * @param jogador jogador
-     * @param packMiniJogosArcade recebe um arrayList do tipo MiniJogo. A cada botao é atribuido um Minijogo consoante a dificuldade.
+     * @param packMiniJogosArcade recebe um arrayList do tipo MiniJogo. A cada
+     * botao é atribuido um Minijogo consoante a dificuldade.
      * @return Devolve uma TilePane com varios jogos pre definidos
      */
     public static Scene menuPackArcade(Stage primaryStage, Jogador jogador, ArrayList<MiniJogo> packMiniJogosArcade) {
@@ -136,14 +139,14 @@ public class Arcade {
         Scene janelaArcade = new Scene(rootArcade, 1000, 600);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n" + jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         int somaEstrelas = somaEstrelas(packMiniJogosArcade);
         jogador.setPontuacao(somaEstrelas);
 
-        Text nivelEstrelas = new Text("Estrelas\n"+somaEstrelas + "/60");
+        Text nivelEstrelas = new Text("Estrelas\n" + somaEstrelas + "/60");
         nivelEstrelas.setFill(Color.YELLOW);
         nivelEstrelas.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -169,7 +172,6 @@ public class Arcade {
         TilePane tilePane = new TilePane(Orientation.HORIZONTAL, 10, 10);
         tilePane.setMaxWidth(500);
 
-        
         Button[] arrayBotoes = new Button[packMiniJogosArcade.size()];
 
         for (int i = 1; i < packMiniJogosArcade.size(); i++) {
@@ -221,7 +223,7 @@ public class Arcade {
     }
 
     /**
-     * 
+     *
      * @param primaryStage stage inicial
      * @param nivel nivel do MiniJogo gerado
      * @param jogador jogador
@@ -235,23 +237,22 @@ public class Arcade {
         BorderPane rootJogoArcade = new BorderPane();
         Scene janelaJogoArcade = new Scene(rootJogoArcade, 1000, 600);
 
-        
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador\n"+jogoArcade.getJogador().getNome());
+        Text nomeJogador = new Text("Jogador\n" + jogoArcade.getJogador().getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar o nivel
-        Text nivelJogo = new Text("Nivel\n"+jogoArcade.getNivel() + "/20");
+        Text nivelJogo = new Text("Nivel\n" + jogoArcade.getNivel() + "/20");
         nivelJogo.setFill(Color.YELLOW);
         nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar a dificuldade
-        Text dificuldadeJogo = new Text("Dificuldade\n"+jogoArcade.getDificuldade() + "");
+        Text dificuldadeJogo = new Text("Dificuldade\n" + jogoArcade.getDificuldade() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        if (dificuldadeJogo.getText().equals("FACIL")) {
+        if (dificuldadeJogo.getText().equals("Dificuldade\nFACIL")) {
             dificuldadeJogo.setFill(Color.GREEN);
-        } else if (dificuldadeJogo.getText().equals("MEDIO")) {
+        } else if (dificuldadeJogo.getText().equals("Dificuldade\nMEDIO")) {
             dificuldadeJogo.setFill(Color.YELLOW);
         } else {
             dificuldadeJogo.setFill(Color.RED);
@@ -272,8 +273,8 @@ public class Arcade {
         Text tipoSolucao = new Text(jogoArcade.getTipoSolucao() + "");
         tipoSolucao.setFill(Color.BLACK);
         tipoSolucao.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-    
-         //Gera 2 vertices origem e destino
+
+        //Gera 2 vertices origem e destino
         Local[] arrayLocaisTemp = jogoArcade.randomVertices2();
 
         String vIN = arrayLocaisTemp[0].getId();
@@ -303,13 +304,12 @@ public class Arcade {
         AppMindGraphsFX.verificaTextField(textSolucao, btnCalcularSolucao);
         btnCalcularSolucao.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                try{
-                String strSolucao = textSolucao.getText();
-                calcularSolucao(primaryStage, jogador, nivel, strSolucao, vIN, vOUT, jogoArcade, packMiniJogosArcade);
-                                }catch (NumberFormatException ex){
-
-                System.out.println("Erro de entrada");
+            public void handle(MouseEvent event) throws NumberFormatException{
+                try {
+                    String strSolucao = textSolucao.getText();
+                    calcularSolucao(primaryStage, jogador, nivel, strSolucao, vIN, vOUT, jogoArcade, packMiniJogosArcade);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Erro de entrada: " + ex.getMessage());
                 }
             }
         });
@@ -340,7 +340,7 @@ public class Arcade {
     }
 
     /**
-     * 
+     *
      * @param primaryStage stage inicial
      * @param jogador jogador
      * @param nivel nivel do minijogo gerado
@@ -349,9 +349,9 @@ public class Arcade {
      * @param vOUT vertice de destino
      * @param jogoArcade minijogo gerado
      * @param packMiniJogosArcade pack de miniJogos gerados
-     * 
-     * Este metodo cria uma Stage popUP. 
-     * Atribui estrelas consoante o nivel de acerto do utilizador
+     *
+     * Este metodo cria uma Stage popUP. Atribui estrelas consoante o nivel de
+     * acerto do utilizador
      */
     public static void calcularSolucao(Stage primaryStage, Jogador jogador, int nivel, String solucaoUtilizador,
             String vIN, String vOUT, MiniJogo jogoArcade, ArrayList<MiniJogo> packMiniJogosArcade) {
@@ -412,17 +412,15 @@ public class Arcade {
                 break;
         }
 
-    
-            //para apresentar a solucao
-            Text txtSolucaoINT = new Text("Solucao: " + solucaoINT);
-            txtSolucaoINT.setFill(Color.BLACK);
-            txtSolucaoINT.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        //para apresentar a solucao
+        Text txtSolucaoINT = new Text("Solucao: " + solucaoINT);
+        txtSolucaoINT.setFill(Color.BLACK);
+        txtSolucaoINT.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-            //para apresentar o caminho
-            Text txtSolucaoSTR = new Text("Caminho: " + solucaoSTR);
-            txtSolucaoSTR.setFill(Color.GREEN);
-            txtSolucaoSTR.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        
+        //para apresentar o caminho
+        Text txtSolucaoSTR = new Text("Caminho: " + solucaoSTR);
+        txtSolucaoSTR.setFill(Color.GREEN);
+        txtSolucaoSTR.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         Button btnCalcularSolucao = new Button();
         btnCalcularSolucao.setMaxWidth(150);
@@ -449,12 +447,12 @@ public class Arcade {
         VBox boxPOPUP = new VBox();
         boxPOPUP.setSpacing(10);
         boxPOPUP.setAlignment(Pos.CENTER);
-        
-            if (nEstrelas == 3) {
-        boxPOPUP.getChildren().addAll(txtCabecalho, txtEstrelas, txtSolucaoINT, txtSolucaoSTR, btnCalcularSolucao);
-            }else{
-              boxPOPUP.getChildren().addAll(txtCabecalho, txtEstrelas, btnCalcularSolucao);  
-            }
+
+        if (nEstrelas == 3) {
+            boxPOPUP.getChildren().addAll(txtCabecalho, txtEstrelas, txtSolucaoINT, txtSolucaoSTR, btnCalcularSolucao);
+        } else {
+            boxPOPUP.getChildren().addAll(txtCabecalho, txtEstrelas, btnCalcularSolucao);
+        }
         boxPOPUP.setStyle("-fx-background-color: #808080;");
         rootPOPUP.setCenter(boxPOPUP);
 
@@ -471,11 +469,12 @@ public class Arcade {
     }
 
     /**
-     * 
+     *
      *
      * @param solucaoINT solucao correta
      * @param solucaoUtilizador solucao do utilizador
-     * @return Verifica se esta correto e atribui estrelas 3,2,1 ou 0 estrelas consoante o nivel de acerto
+     * @return Verifica se esta correto e atribui estrelas 3,2,1 ou 0 estrelas
+     * consoante o nivel de acerto
      */
     public static int atribuirEstrelas(int solucaoINT, String solucaoUtilizador) {
 
@@ -497,7 +496,8 @@ public class Arcade {
      *
      * @param solucaoINT solucao correta
      * @param solucaoUtilizador solucao do utilizador
-     * @return Devolve um booleano true se a solucao do utilizador estiver correta
+     * @return Devolve um booleano true se a solucao do utilizador estiver
+     * correta
      */
     public static boolean verificaSolucao(int solucaoINT, String solucaoUtilizador) {
 
@@ -505,7 +505,7 @@ public class Arcade {
     }
 
     /**
-     * 
+     *
      * @param jogador jogador
      * @return Gera uma ArrayList de Minijogos
      */
@@ -522,6 +522,7 @@ public class Arcade {
 
     /**
      * Recebe um pack de miniJogosArcade e devolve a soma das estrelas
+     *
      * @param packMiniJogos ArrayList de miniJogos
      * @return soma das estrelas de todos os minijogos
      */

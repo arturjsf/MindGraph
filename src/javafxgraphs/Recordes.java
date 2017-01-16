@@ -113,8 +113,7 @@ public class Recordes{
      * @return Este metodo devolve uma "cena" com os recordes do tipo de jogo Time Trial
      */
     public static Scene recordesArcade(Stage primaryStage, Jogador jogador) {
-        
-        
+         
         BorderPane rootRecordes = new BorderPane();
         Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
               
