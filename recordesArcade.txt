@@ -1,2 +1,4 @@
 Jogador|Estrelas
 Artur      3
+sdrf        3
+wer        3

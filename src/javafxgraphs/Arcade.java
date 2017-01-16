@@ -70,7 +70,7 @@ public class Arcade {
         botaoNovoJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                primaryStage.setScene(menuPackArcade(primaryStage, jogador, gerarPackMiniJogosArcade(jogador)));
+                primaryStage.setScene(menuPackArcade(primaryStage, jogador, 1, gerarPackMiniJogosArcade(jogador)));
             }
         });
 
@@ -133,7 +133,7 @@ public class Arcade {
      * botao é atribuido um Minijogo consoante a dificuldade.
      * @return Devolve uma TilePane com varios jogos pre definidos
      */
-    public static Scene menuPackArcade(Stage primaryStage, Jogador jogador, ArrayList<MiniJogo> packMiniJogosArcade) {
+    public static Scene menuPackArcade(Stage primaryStage, Jogador jogador, int nBotoes, ArrayList<MiniJogo> packMiniJogosArcade) {
 
         BorderPane rootArcade = new BorderPane();
         Scene janelaArcade = new Scene(rootArcade, 1000, 600);
@@ -177,6 +177,7 @@ public class Arcade {
         for (int i = 1; i < packMiniJogosArcade.size(); i++) {
             arrayBotoes[i] = new Button(Integer.toString(i));
             arrayBotoes[i].setPrefSize(80, 80);
+            arrayBotoes[i].setDisable(true);
             int f = i;
             arrayBotoes[i].setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -186,6 +187,12 @@ public class Arcade {
                     primaryStage.setScene(criarJogoArcade(primaryStage, f, jogador, jogoArcade, packMiniJogosArcade));
                 }
             });
+            
+            for (int j = 0; j <= nBotoes; j++) {
+                arrayBotoes[j].setDisable(false);
+            }
+            
+            
             tilePane.getChildren().add(arrayBotoes[i]);
         }
 
@@ -321,7 +328,7 @@ public class Arcade {
         btnVoltar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                primaryStage.setScene(menuPackArcade(primaryStage, jogador, packMiniJogosArcade));
+                primaryStage.setScene(menuPackArcade(primaryStage, jogador, nivel, packMiniJogosArcade));
             }
         });
 
@@ -433,10 +440,11 @@ public class Arcade {
 
                 if (verificaSolucao(solucaoINT, solucaoUtilizador)) {
                     packMiniJogosArcade.get(f).setEstrelas(nEstrelas);
-                    primaryStage.setScene(menuPackArcade(primaryStage, jogador, packMiniJogosArcade));
+                    f++;
+                    primaryStage.setScene(menuPackArcade(primaryStage, jogador, f, packMiniJogosArcade));
                     stagePOPUP.close();
                 } else {
-                    primaryStage.setScene(menuPackArcade(primaryStage, jogador, packMiniJogosArcade));
+                    primaryStage.setScene(menuPackArcade(primaryStage, jogador, f, packMiniJogosArcade));
                     stagePOPUP.close();
                 }
 
