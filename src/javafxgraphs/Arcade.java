@@ -193,8 +193,7 @@ public class Arcade {
         
         int nBotoesAux = nBotoes;
         for (int j = 1; j <= nBotoesAux; j++) {
-        System.out.println("for"+arrayBotoes[j].getText().toString());
-                    arrayBotoes[j].setDisable(false);
+             arrayBotoes[j].setDisable(false);
            }
         
         tilePane.setAlignment(Pos.CENTER);
@@ -445,8 +444,6 @@ public class Arcade {
                     primaryStage.setScene(menuPackArcade(primaryStage, jogador, f, packMiniJogosArcade));
                     stagePOPUP.close();
                 } else {
-                    System.out.println("erradoF"+f);
-                    System.out.println("erradoNivel"+nivel);
                     primaryStage.setScene(menuPackArcade(primaryStage, jogador, f, packMiniJogosArcade));
                     stagePOPUP.close();
                 }
