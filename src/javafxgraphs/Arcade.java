@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Reflection;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -55,6 +56,9 @@ public class Arcade {
         Text textEscolherOpcao = new Text("Arcade");
         textEscolherOpcao.setFill(Color.GREEN);
         textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        textEscolherOpcao.setEffect(r);
 
         int btnSize = 150;
 
@@ -106,7 +110,7 @@ public class Arcade {
         rootArcade.setCenter(boxBotoesArcade);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text("Jogador "+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootArcade.setTop(nomeJogador);
@@ -135,7 +139,7 @@ public class Arcade {
         System.out.println("Pack Arcade");
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text("Jogador "+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -288,9 +292,13 @@ public class Arcade {
         btnCalcularSolucao.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                try{
                 String strSolucao = textSolucao.getText();
                 calcularSolucao(primaryStage, jogador, nivel, strSolucao, vIN, vOUT, jogoArcade, packMiniJogosArcade);
+                                }catch (NumberFormatException ex){
+
+                System.out.println("Erro de entrada");
+                }
             }
         });
 

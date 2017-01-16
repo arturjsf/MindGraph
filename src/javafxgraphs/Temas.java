@@ -129,7 +129,7 @@ public class Temas{
         
         
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text("Jogador "+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootTemas.setTop(nomeJogador);

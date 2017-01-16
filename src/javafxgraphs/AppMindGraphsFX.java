@@ -47,8 +47,12 @@ public class AppMindGraphsFX extends Application{
         VBox boxNomeJogador = new VBox();
         boxNomeJogador.setAlignment(Pos.CENTER);
         Text textBemVindo = new Text("Bem vindo ao jogo MIND GRAPHS! ");
-        textBemVindo.setFill(Color.LIGHTSALMON);
-        textBemVindo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        textBemVindo.setFill(Color.GREEN);
+        textBemVindo.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        textBemVindo.setEffect(r);
+        
         boxNomeJogador.getChildren().add(textBemVindo);
 
 //text field com o nome do jogador
@@ -174,7 +178,7 @@ public class AppMindGraphsFX extends Application{
         rootMenu.setCenter(boxBotoes);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text("Jogador "+jogador.getNome());
 
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));

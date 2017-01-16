@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Reflection;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -59,6 +60,9 @@ public class TimeTrial {
         Text textEscolherOpcao = new Text("Time Trial");
         textEscolherOpcao.setFill(Color.GREEN);
         textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 60));
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        textEscolherOpcao.setEffect(r);
 
         int btnSize = 150;
 
@@ -109,7 +113,7 @@ public class TimeTrial {
         rootTimeTrial.setCenter(boxBotoesTrial);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text("Jogador "+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootTimeTrial.setTop(nomeJogador);
@@ -132,7 +136,7 @@ public class TimeTrial {
     public static Scene criarJogoTimeTrial(Stage primaryStage, int nivel, Jogador jogador) {
 
         MiniJogo jogoTT = new MiniJogo(TipoJogo.TIMETRIAL, jogador, nivel);
-
+        fecharContdown();
         Integer seconds = jogoTT.getSegundos();
         count(seconds);
 
@@ -141,7 +145,7 @@ public class TimeTrial {
         System.out.println("menu JOGO TT: " + nivel);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogoTT.getJogador().getNome());
+        Text nomeJogador = new Text("Jogador "+jogoTT.getJogador().getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -151,19 +155,9 @@ public class TimeTrial {
         nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //Para apresentar o timer
-        Text timer = new Text(jogoTT.getSegundos() + "");
-        timer.setFill(Color.GREEN);
-        timer.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-
-        //HBOX CABECALHO
-        HBox boxCabecalho = new HBox();
-        boxCabecalho.setSpacing(350);
-        boxCabecalho.setAlignment(Pos.CENTER);
-        boxCabecalho.getChildren().addAll(nomeJogador, nivelJogo, timer);
-        rootJogoTT.setTop(boxCabecalho);
-
-        GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(jogoTT.getGrafoAdaptee());
-        rootJogoTT.setCenter(drawMiniJogo);
+//        Text timer = new Text(jogoTT.getSegundos() + "");
+//        timer.setFill(Color.GREEN);
+//        timer.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar a dificuldade
         Text dificuldadeJogo = new Text(jogoTT.getDificuldade() + "");
@@ -175,7 +169,18 @@ public class TimeTrial {
         } else {
             dificuldadeJogo.setFill(Color.RED);
         }
-        rootJogoTT.setRight(dificuldadeJogo);
+        //HBOX CABECALHO
+        HBox boxCabecalho = new HBox();
+        boxCabecalho.setSpacing(350);
+        boxCabecalho.setAlignment(Pos.CENTER);
+        boxCabecalho.getChildren().addAll(nomeJogador, nivelJogo,dificuldadeJogo);
+        rootJogoTT.setTop(boxCabecalho);
+
+        GraphDraw<Local, Ligacao> drawMiniJogo = new GraphDraw(jogoTT.getGrafoAdaptee());
+        rootJogoTT.setCenter(drawMiniJogo);
+
+
+     //   rootJogoTT.setRight(dificuldadeJogo);
 
         Local[] arrayLocaisTemp = jogoTT.randomVertices2();
 
@@ -188,13 +193,9 @@ public class TimeTrial {
         btnGenerate.setMaxWidth(150);
         btnGenerate.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                
+            public void handle(MouseEvent event) {               
                 System.out.println("entrou no generate");
-                fecharContdown();
                 primaryStage.setScene(criarJogoTimeTrial(primaryStage, nivel, jogador));
-                
-
             }
         });
 
@@ -226,9 +227,15 @@ public class TimeTrial {
         btnCalcularSolucao.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                try{
                 String strSolucao = textSolucao.getText();
-                fecharContdown();
-                calcularSolucao(primaryStage, jogador, nivel, strSolucao, vIN, vOUT, jogoTT);
+                calcularSolucao(primaryStage, jogador, nivel, strSolucao, vIN, vOUT, jogoTT);             
+                }catch (NumberFormatException ex){
+
+                System.out.println("Erro de entrada");
+                }
+                
+
             }
 
         });
@@ -372,7 +379,7 @@ public class TimeTrial {
         } else {
             boxPOPUP.getChildren().addAll(txtCabecalho, btnCalcularSolucao);
         }
-
+                        fecharContdown();
         boxPOPUP.setStyle("-fx-background-color: #808080;");
         rootPOPUP.setCenter(boxPOPUP);
 
@@ -416,14 +423,16 @@ public class TimeTrial {
         root.setCenter(layout);
         doTime(stage, tempo);
 
+        
         stage.setScene(new Scene(root, 60, 60));
         stage.setTitle("Tempo");
 
         stage.setAlwaysOnTop(true);
-        stage.setX(1100.0);
-        stage.setY(120.0);
+        stage.setX(1090.0);
+        stage.setY(100.0);
         stage.initStyle(StageStyle.TRANSPARENT);
-
+        
+        
         stage.show();
 
         return stage;
@@ -447,6 +456,7 @@ public class TimeTrial {
                 if (seconds <= 0) {
                     stage.close();
                     time.stop();
+                    
                 }
             }
         });

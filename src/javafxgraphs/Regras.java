@@ -46,7 +46,7 @@ public class Regras{
         System.out.println("menu REGRAS TT");
         
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text("Jogador "+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
         rootRegras.setTop(nomeJogador);
@@ -114,7 +114,7 @@ public class Regras{
         
         
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogador.getNome());
+        Text nomeJogador = new Text("Jogador "+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRegras.setTop(nomeJogador);
