@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -50,7 +51,9 @@ public class AppMindGraphsFX extends Application{
 
         //horizontal box inicial
         VBox boxNomeJogador = new VBox();
+        boxNomeJogador.setSpacing(10);
         boxNomeJogador.setAlignment(Pos.CENTER);
+        
         Text textBemVindo = new Text("Bem vindo ao jogo MIND GRAPHS! ");
         textBemVindo.setFill(Color.GREEN);
         textBemVindo.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
@@ -67,12 +70,21 @@ public class AppMindGraphsFX extends Application{
         textNomeJogador.setFocusTraversable(false);
         textNomeJogador.getText();
         textNomeJogador.setMaxWidth(210);
+        
+             
+        //HBOX RODAPE
+        HBox boxBotoes = new HBox();
+        boxBotoes.setSpacing(10);
+        boxBotoes.setAlignment(Pos.CENTER);
+        
+        
         //Botao de saida
         Button btnSair = new Button("Sair");
-        btnSair.setMaxWidth(150);        
+        btnSair.setPrefSize(100, 30);     
+        
         //Botao para criar o mini jogo
         Button btnCriarJogo = new Button("OK");
-        btnCriarJogo.setMaxWidth(150);
+        btnCriarJogo.setPrefSize(100, 30);
         btnCriarJogo.setDisable(true);
         verificaTextField(textNomeJogador, btnCriarJogo);
         btnCriarJogo.setOnAction(new EventHandler<ActionEvent>() {
@@ -90,9 +102,11 @@ public class AppMindGraphsFX extends Application{
             }
         });
 
+       
         //vamos adicionar as coisas á hbox
-        boxNomeJogador.getChildren().addAll(textNomeJogador, btnCriarJogo,btnSair);
-        boxNomeJogador.setSpacing(10);
+        boxBotoes.getChildren().addAll(btnCriarJogo, btnSair);
+        boxNomeJogador.getChildren().addAll(textNomeJogador, boxBotoes);
+        
 
         //vamos adicionar a hbox ao border pane
         root.setCenter(boxNomeJogador);

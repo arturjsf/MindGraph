@@ -41,7 +41,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
 
     int segundos;
     int nivel;
-    
+
     int estrelas;
 
     /**
@@ -88,12 +88,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
             criarMiniJogo(escolherDificuldade(Dificuldade.MEDIO), escolherSolucao(randomSolucao()));
         } else {
             this.nivel = nivel;
-             criarMiniJogo(escolherDificuldade(Dificuldade.DIFICIL), escolherSolucao(randomSolucao()));
+            criarMiniJogo(escolherDificuldade(Dificuldade.DIFICIL), escolherSolucao(randomSolucao()));
         }
     }
-    
-    
-    
 
     /**
      * Construtor do tipo de jogo TIMETRIAL
@@ -102,7 +99,6 @@ public class MiniJogo implements iMiniJogo, Serializable {
      * @param nivel nivel do minijogo(0-20)
      * @param segundos cada minijogo Time trial contem segundos(120-60)
      */
-    
     public void MiniJogoTT(Jogador jogador, int nivel, int segundos) {
 
         this.jogador = jogador;
@@ -124,6 +120,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
 
     /**
      * Recebe um enumerado e indica a sua estrategia (FACIL, MEDIO, DIFICIL)
+     *
      * @param dificuldade enumerado
      * @return estrategia da dificuldade
      */
@@ -147,17 +144,16 @@ public class MiniJogo implements iMiniJogo, Serializable {
         }
     }
 
-  
-
-   /**
-    * Recebe um enumerado e indica a sua solucao (CUSTO, DISTANCIA, MOVIMENTOS)
-    * @param tipoSolucao TipoSolucao
-    * @return estrategia de solucao
-    */
+    /**
+     * Recebe um enumerado e indica a sua solucao (CUSTO, DISTANCIA, MOVIMENTOS)
+     *
+     * @param tipoSolucao TipoSolucao
+     * @return estrategia de solucao
+     */
     @Override
     public iEstrategiaSolucao escolherSolucao(TipoSolucao tipoSolucao) {
-        
-    switch (tipoSolucao) {
+
+        switch (tipoSolucao) {
 
             case MIN_CUSTO:
                 this.tipoSolucao = tipoSolucao;
@@ -172,37 +168,15 @@ public class MiniJogo implements iMiniJogo, Serializable {
                 System.out.println("sem solucao");
                 return null;
 
-        
-    }
-    }
-    
-    
-    /**
-     * Faz um random do ENUM TipoSolucao
-     * @return tipo de solucao
-     */
-    @Override
-    public TipoSolucao randomSolucao(){
-        
-        TipoSolucao[] rdSolucoes = TipoSolucao.values();
-      
-        Random rdn = new Random();
-        
-        TipoSolucao tipoAux;
-        
-        tipoAux = rdSolucoes[rdn.nextInt(rdSolucoes.length)];
-        
-        return tipoAux;
-        
-        
+        }
     }
 
-    
-/**
- * Recebe uma estrategia de dificuldade e de solucao e cria o grafo
- * @param estrategiaDificuldade estrategiaDificuldade
- * @param estrategiaSolucao estrategiaSolucao
- */
+    /**
+     * Recebe uma estrategia de dificuldade e de solucao e cria o grafo
+     *
+     * @param estrategiaDificuldade estrategiaDificuldade
+     * @param estrategiaSolucao estrategiaSolucao
+     */
     @Override
     public void criarMiniJogo(iEstrategiaDificuldade estrategiaDificuldade, iEstrategiaSolucao estrategiaSolucao) {
 
@@ -212,9 +186,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
         criarGrafo(estrategiaDificuldade);
     }
 
-
     /**
      * Este metodo cria o grafo consoante o nivel de dificuldade
+     *
      * @param nivel Recebe nivel de dificuldade
      */
     @Override
@@ -225,12 +199,33 @@ public class MiniJogo implements iMiniJogo, Serializable {
 
         //gera e cria uma ligacao e atribui de maneira aleatoria os vertices in e out
         gerarLigacao(nivel);
+        
+        serializeLocais("fileListaLocais.txt");
+        serializeLigacoes("fileListaLigacoes.txt");
 
     }
 
     /**
-     * Gera uma ligacao random, consoante o nivel, enquanto houver numArestas a serem criadas.
-     * Para criar uma Ligacao e necessário 2 Locais
+     * Faz um random do ENUM TipoSolucao
+     *
+     * @return tipo de solucao
+     */
+    @Override
+    public TipoSolucao randomSolucao() {
+
+        TipoSolucao[] rdSolucoes = TipoSolucao.values();
+        Random rdn = new Random();
+
+        TipoSolucao tipoAux;
+        tipoAux = rdSolucoes[rdn.nextInt(rdSolucoes.length)];
+
+        return tipoAux;
+    }
+
+    /**
+     * Gera uma ligacao random, consoante o nivel, enquanto houver numArestas a
+     * serem criadas. Para criar uma Ligacao e necessário 2 Locais
+     *
      * @param nivel nivel de dificuldade
      */
     public void gerarLigacao2(iEstrategiaDificuldade nivel) {
@@ -244,17 +239,16 @@ public class MiniJogo implements iMiniJogo, Serializable {
             Local destinoTemp = listaLocais[1];
 
             Ligacao ligacaoTemp = new Ligacao(nivel.randomTipo(), origemTemp.getId() + destinoTemp.getId(), nivel.randomDistancia(), nivel.randomCusto());
- 
-            grafoAdaptee.insertEdge(origemTemp, destinoTemp, ligacaoTemp);         
+
+            grafoAdaptee.insertEdge(origemTemp, destinoTemp, ligacaoTemp);
         }
     }
-    
-    
-    
+
     /**
      * Gera uma ligacao random, consoante o nivel, enquanto houver listaVertices
-     * Este metodo é uma versão melhorada do metodo acima. 
-     * Todos os vertices estão conectados
+     * Este metodo é uma versão melhorada do metodo acima. Todos os vertices
+     * estão conectados
+     *
      * @param nivel nivel de dificuldade
      */
     public void gerarLigacao(iEstrategiaDificuldade nivel) {
@@ -265,7 +259,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
             if (!temp.equals(listaLocais[0])) {
                 listaLocais[1] = temp;
             }
-            
+
             Ligacao ligacaoTemp = new Ligacao(nivel.randomTipo(), listaLocais[0].getId() + listaLocais[1].getId(), nivel.randomDistancia(), nivel.randomCusto());
             grafoAdaptee.insertEdge(listaLocais[0], listaLocais[1], ligacaoTemp);
 
@@ -273,7 +267,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * Recebe uma lista de vertices e percorre a devolvendo um local random a ser inserido
+     * Recebe uma lista de vertices e percorre a devolvendo um local random a
+     * ser inserido
+     *
      * @return Local random
      */
     public Local randomVertices() {
@@ -293,9 +289,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
 
     /**
      *
-     * @return Devolve um array de Locais de 2 posicoes random. 
-     * A posicao 0 irá servir para o verticeIN e a posicao 1 para o verticeOUT.
-     * São sempre vertices diferentes
+     * @return Devolve um array de Locais de 2 posicoes random. A posicao 0 irá
+     * servir para o verticeIN e a posicao 1 para o verticeOUT. São sempre
+     * vertices diferentes
      */
     public Local[] randomVertices2() {
 
@@ -317,6 +313,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
 
     /**
      * Gera um Local através do numero de vertices recebido
+     *
      * @param numVertices Recebe um numVertices e atribui uma letra a cada Local
      *
      */
@@ -364,8 +361,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
-     * @return Devolve a lista completa de Ligacoes em forma de String concatenada
+     *
+     * @return Devolve a lista completa de Ligacoes em forma de String
+     * concatenada
      */
     public String listaLigacoesToString() {
         String str = "";
@@ -400,16 +398,10 @@ public class MiniJogo implements iMiniJogo, Serializable {
         return null;
     }
 
-  
-    
-    
-
     /**
      *
      * *********************GETS E SETS********************
      */
-    
-    
     /**
      * @return Devolve um grafo
      */
@@ -418,7 +410,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @return jogador
      */
     public Jogador getJogador() {
@@ -426,7 +418,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param jogador jogador a alterar
      */
     public void setJogador(Jogador jogador) {
@@ -434,7 +426,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @return estrategia de dificuldade
      */
     public iEstrategiaDificuldade getEstrategiaDificuldade() {
@@ -442,7 +434,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param estrategiaDificuldade estrategiaDificuldade
      */
     public void setEstrategiaDificuldade(iEstrategiaDificuldade estrategiaDificuldade) {
@@ -450,7 +442,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @return segundos do minijogo
      */
     public int getSegundos() {
@@ -458,7 +450,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param segundos segundos a alterar
      */
     public void setSegundos(int segundos) {
@@ -466,7 +458,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @return nivel do minijogo
      */
     public int getNivel() {
@@ -474,7 +466,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param nivel nivel a alterar
      */
     public void setNivel(int nivel) {
@@ -482,7 +474,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @return modo de jogo
      */
     public TipoJogo getTipoJogo() {
@@ -490,7 +482,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param tipoJogo tipo de jogo a alterar
      */
     public void setTipoJogo(TipoJogo tipoJogo) {
@@ -498,7 +490,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @return dificuldade do minijogo
      */
     public Dificuldade getDificuldade() {
@@ -506,15 +498,15 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param dificuldade dificuldade a alterar
      */
     public void setDificuldade(Dificuldade dificuldade) {
         this.dificuldade = dificuldade;
     }
-    
+
     /**
-     * 
+     *
      * @return estrategia solucao
      */
     public iEstrategiaSolucao getEstrategiaSolucao() {
@@ -522,7 +514,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param estrategiaSolucao estrategia solucao a alterar
      */
     public void setEstrategiaSolucao(iEstrategiaSolucao estrategiaSolucao) {
@@ -530,7 +522,7 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @return tipo solucao
      */
     public TipoSolucao getTipoSolucao() {
@@ -538,34 +530,33 @@ public class MiniJogo implements iMiniJogo, Serializable {
     }
 
     /**
-     * 
+     *
      * @param tipoSolucao tipo de solucao a alterar
      */
     public void setTipoSolucao(TipoSolucao tipoSolucao) {
         this.tipoSolucao = tipoSolucao;
     }
 
-   /**
-    * 
-    * @return numero de estrelas
-    */
+    /**
+     *
+     * @return numero de estrelas
+     */
     public int getEstrelas() {
         return estrelas;
     }
 
     /**
-     * 
+     *
      * @param estrelas numero de estrelas a alterar
      */
     public void setEstrelas(int estrelas) {
         this.estrelas = estrelas;
     }
-        
-    
-    
+
     /**
      *
      * Metodo Serialize Locais para o ficheiro dos Locais
+     *
      * @param filename Recebe um ficheiro e insere a lista de Locais
      */
     public void serializeLocais(String filename) {
@@ -593,10 +584,9 @@ public class MiniJogo implements iMiniJogo, Serializable {
 //            e.printStackTrace();
 //        }
 //    }
-    
-    
     /**
      * Metodo Serialize Ligacoes para o ficheiro Ligacoes
+     *
      * @param filename Recebe um ficheiro e insere a lista de Ligacoes
      */
     public void serializeLigacoes(String filename) {
@@ -611,5 +601,4 @@ public class MiniJogo implements iMiniJogo, Serializable {
         }
     }
 
-   
 }

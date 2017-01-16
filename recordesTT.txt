@@ -1,4 +1,3 @@
 Jogador | Nivel
 rui        1
-dw        9
-Oscar        1
+edrt        20

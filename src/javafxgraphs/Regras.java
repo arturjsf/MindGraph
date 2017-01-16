@@ -47,7 +47,7 @@ public class Regras{
         //para apresentar o nome do jogador
         Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
-        nomeJogador.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
+        nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRegras.setTop(nomeJogador);
         
         VBox vb = new VBox();
