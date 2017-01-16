@@ -27,16 +27,20 @@ import javafx.stage.Stage;
 import javafxgraphs.modelo.Jogador;
 
 /**
- *
+ * classe MAIN
  * @author Artur e Sergio
  */
 public class AppMindGraphsFX extends Application{
 
-    //preciso de criar o jogador aki e vou ter de o enviar sempre dentro dos metodos
-    Jogador jogador = null;
     
+    Jogador jogador = null;    
     static String painel = "";
     
+    /**
+     * Metodo que cria uma Stage que será a stage principal. Todas as cenas são montadas nesta stage.
+     * Para começar é pedido o nome do Jogador.
+     * @param primaryStage stage inicial
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -51,7 +55,7 @@ public class AppMindGraphsFX extends Application{
         textBemVindo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         boxNomeJogador.getChildren().add(textBemVindo);
 
-//text field com o nome do jogador
+        //text field com o nome do jogador
         TextField textNomeJogador = new TextField();
         textNomeJogador.setPromptText("Introduza o seu nome");
         textNomeJogador.setAlignment(Pos.CENTER);
@@ -59,10 +63,10 @@ public class AppMindGraphsFX extends Application{
         textNomeJogador.getText();
         textNomeJogador.setMaxWidth(210);
 
-//Botao para criar o mini jogo
+        //Botao para criar o mini jogo
         Button btnCriarJogo = new Button("OK");
         btnCriarJogo.setDisable(true);
-        validaIntroducaoDeNome(textNomeJogador, btnCriarJogo);
+        verificaTextField(textNomeJogador, btnCriarJogo);
         btnCriarJogo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -71,11 +75,11 @@ public class AppMindGraphsFX extends Application{
             }
         });
 
-//vamos adicionar as coisas á hbox
+        //vamos adicionar as coisas á hbox
         boxNomeJogador.getChildren().addAll(textNomeJogador, btnCriarJogo);
         boxNomeJogador.setSpacing(10);
 
-//vamos adicionar a hbox ao border pane
+        //vamos adicionar a hbox ao border pane
         root.setCenter(boxNomeJogador);
 
         //CSS
@@ -84,8 +88,7 @@ public class AppMindGraphsFX extends Application{
         root.setId(painel);
 
         //propriedades da janela
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.setTitle("Mind Graph!");
+        primaryStage.setTitle("Mind Graphs");
         primaryStage.setScene(intro);
         primaryStage.centerOnScreen();
         primaryStage.setResizable(false);
@@ -94,22 +97,21 @@ public class AppMindGraphsFX extends Application{
 
     /**
      * MENU PRINCIPAL
-     *
-     * @return
+     * Recebe a stage principal e o jogador criado anteriormente
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @return Este metodo retorna a cena do menu principal. 
+     * É uma cena com 4 botoes(TT, Arcade, temas, sair)
      */
     public static Scene menuPrincipal(Stage primaryStage, Jogador jogador) {
 
         BorderPane rootMenu = new BorderPane();
         Scene janelaMenu = new Scene(rootMenu, 1000, 600);
 
-        /**
-         * Titulo
-         */
+        //titulo
         Text textoTitulo = new Text();
-        //textoTitulo.setX(100.0f);
-        // textoTitulo.setY(20.0f);
         textoTitulo.setCache(true);
-        textoTitulo.setText("Mind Graph");
+        textoTitulo.setText("Mind Graphs");
         textoTitulo.setFill(Color.GREEN);
         textoTitulo.setFont(Font.font(null, FontWeight.BOLD, 90));
         textoTitulo.setTextAlignment(TextAlignment.CENTER);
@@ -161,7 +163,6 @@ public class AppMindGraphsFX extends Application{
         btnSair.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("Sair!");
                 System.exit(0);
             }
         });
@@ -183,26 +184,22 @@ public class AppMindGraphsFX extends Application{
         rootMenu.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());
         rootMenu.setId(painel);
 
-        // primaryStage.setScene(janelaMenu);
         return janelaMenu;
     }
 
-
-
-
-
-    
-    
-
-//VALIDA SE FOI INTRODUZIDO UM NOME ANTES DE ATIVAR O BOTÃO DE OK
-    private void validaIntroducaoDeNome(TextField textNomeJogador, Button btnCriarJogo) {
-        textNomeJogador.textProperty().addListener(new ChangeListener<String>() {
+    /**
+     * Recebe um txtField e um botao. Desbloqueia o botao se o txt for diferente de vazio.
+     * @param campoTexto campo de texto a ser verificado
+     * @param btnOK botao a ser desbloqueado
+     */
+    public void verificaTextField(TextField campoTexto, Button btnOK) {
+        campoTexto.textProperty().addListener(new ChangeListener<String>() {
+            @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-                //System.out.println(t+"====="+t1);
                 if (t1.equals("")) {
-                    btnCriarJogo.setDisable(true);
+                    btnOK.setDisable(true);
                 } else {
-                    btnCriarJogo.setDisable(false);
+                    btnOK.setDisable(false);
                 }
             }
         });

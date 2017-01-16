@@ -13,7 +13,10 @@ import java.util.Set;
 import javafxgraphs.modelo.iEstrategiaSolucao;
 
 /**
- *
+ * Classe onde é construido o grafo. Foi nos dada inicialmente
+ * As alterações a esta classe foram:
+ * -Implementacao do metodo dijktra, calcularSolucao, execute, removeMin
+ * 
  * @author patricia.macedo
  */
 public class MyGraph<V, E> implements iGraph<V, E> {
@@ -188,15 +191,11 @@ public class MyGraph<V, E> implements iGraph<V, E> {
 
     }
 
+    
     /**
-     *
-     *
-     * ALTERACAO DIJSTRA
-     *
+     * Cada vez que este metodo é chamado, é feita uma iteração no grafo
      * @param s
      */
-    
-    
     private void execute(iVertex<V> s, iEstrategiaSolucao estrategiaSolucao) {
         int value;
         ArrayList<MyVertex> queueVisitados = new ArrayList<>();
@@ -231,11 +230,11 @@ public class MyGraph<V, E> implements iGraph<V, E> {
     
     
     /**
-     * Devolve um inteiro com o custo mais baixo
-     * @param origem
-     * @param destino
-     * @param estrategiaSolucao
-     * @return 
+     * 
+     * @param origem vertice origem
+     * @param destino vertice destino
+     * @param estrategiaSolucao estrategia de calculo(custo, distancia ou movimentos)
+     * @return Devolve um inteiro com o custo mais baixo
      */
     public int calcularSolucao(iVertex<V> origem, iVertex<V> destino, iEstrategiaSolucao estrategiaSolucao) {
         int value = 0;
@@ -246,11 +245,11 @@ public class MyGraph<V, E> implements iGraph<V, E> {
     }
     
     /**
-     * Devolve uma String com o caminho + curto (consoante a estrategia)
-     * @param origem
-     * @param destino
-     * @param estrategiaSolucao
-     * @return 
+     * 
+     * @param origem vertice origem
+     * @param destino vertice destino 
+     * @param estrategiaSolucao estrategia de calculo(custo, distancia ou movimentos)
+     * @return Devolve uma String com o caminho + curto (consoante a estrategia)
      */
     public String dijkstra(iVertex<V> origem, iVertex<V> destino, iEstrategiaSolucao estrategiaSolucao) {
         
@@ -271,6 +270,11 @@ public class MyGraph<V, E> implements iGraph<V, E> {
         return new StringBuilder(caminho).reverse().toString();
     }
 
+    /**
+     * 
+     * @param queue
+     * @return 
+     */
     private MyVertex removeMin(ArrayList<MyVertex> queue) {
         int minValue = 0;
         iVertex v1;
@@ -285,12 +289,7 @@ public class MyGraph<V, E> implements iGraph<V, E> {
         return queue.remove(minValue);
     }
 
-    
-    
-  
-    
-    
-    
+
     private class MyVertex implements iVertex<V> {
 
         private V elem;

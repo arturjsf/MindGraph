@@ -8,16 +8,16 @@ package javafxgraphs.modelo;
 import javafxgraphs.ui.DrawableGraphElement;
 
 /**
+ * Classe Ligacao. É a nossa aresta
  * Tudo o que é necessário na classe Ligacao. nome, distancia, custo e tipo
- *
  * @author Artur Ferreira
  */
 public class Ligacao implements DrawableGraphElement {
 
-    private String nomeLigacao;
-    private int distancia;
-    private int custo;
-    private TipoLigacao tipo;
+    public String nomeLigacao;
+    public int distancia;
+    public int custo;
+    public TipoLigacao tipo;
 
     /**
      * Variaveis obrigatorias pelo Drawable

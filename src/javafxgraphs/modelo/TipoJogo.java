@@ -6,7 +6,7 @@
 package javafxgraphs.modelo;
 
 /**
- *
+ * ENUMERADO Modo de Jogo
  * @author Artur Ferreira
  */
 public enum TipoJogo {

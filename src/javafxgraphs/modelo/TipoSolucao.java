@@ -6,7 +6,7 @@
 package javafxgraphs.modelo;
 
 /**
- *
+ * ENUMERADO Tipo de calculo de solucao
  * @author Artur Ferreira
  */
 public enum TipoSolucao {

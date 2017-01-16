@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- *
+ * Classe jogador. Guarda o nome e a pontuacao.
  * @author Artur Ferreira
  */
 public class Jogador {
@@ -20,38 +20,50 @@ public class Jogador {
     public String nome;
     public int pontuacao;
 
+    /**
+     * Construtor Jogador. Comeca sempre com 0 pontos
+     * @param nome nome jogador
+     */
     public Jogador(String nome) {
         this.nome = nome;
         this.pontuacao = 0;
     }
 
+    /**
+     * 
+     * @return nome
+     */
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
+    /**
+     * 
+     * @return pontuacao do jogador
+     */
     public int getPontuacao() {
         return pontuacao;
     }
 
+    /**
+     * Altera a pontuacao do utilizador
+     * @param pontuacao pontuacao a alterar
+     */
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
     }
 
-    public void resetPontuacao() {
-        pontuacao = 0;
-    }
 
     @Override
     public String toString() {
         return nome + " - " + pontuacao;
     }
 
-    
-    //Metodo que escreve no ficheiro o nome e a pontuação do jogador
+    /**
+     * Recebe uma string e consoante o tipo de jogo escreve no ficheiro o nome e a pontuação do jogador
+     * @param tipoJogo String com o tipo de jogo
+     */
     public void escreverFicheiroRecordes(String tipoJogo) {
 
         PrintWriter fEscrever;
@@ -71,7 +83,11 @@ public class Jogador {
         }
     }
 
-    //Metodo para ler do ficheiro o nome e os pontos do jogador 
+    /**
+     * Metodo para ler do ficheiro o nome e os pontos do jogador 
+     * @param tipoJogo tipojogo
+     * @return String com o conteudo do ficheiro
+     */
     public String lerFicheiroRecordes(String tipoJogo) {
 
         String str = "";

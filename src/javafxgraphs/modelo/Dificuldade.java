@@ -6,7 +6,7 @@
 package javafxgraphs.modelo;
 
 /**
- * Enumerado de Dificuldade. NIVEL 1 2 ou 3
+ * Enumerado de Dificuldade. FACIL MEDIO OU DIFICIL
  * @author Artur Ferreira
  */
    public enum Dificuldade {FACIL, MEDIO, DIFICIL}

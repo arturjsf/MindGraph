@@ -8,20 +8,21 @@ package javafxgraphs.modelo;
 import java.util.Random;
 
 /**
- * Estrategia de dificuldade NIVEL2
+ * Estrategia de dificuldade MEDIO
  * @author Artur Ferreira
  */
 public class DificuldadeMEDIO implements iEstrategiaDificuldade {
 
+    
     Random xRandom = new Random();
-
     
       int minVertices;
       int maxVertices;
+      
+      
+      
     /**
-     *
-     * @return numero de vertices a ser gerado no nivel1 É um valor random entre
-     * 2 e 5 Para haver uma ligação é necessário pelo menos 2 vertices
+     * @return A distancia é um valor random entre 10 e 100
      */
     @Override
     public int randomVertices() {
@@ -34,8 +35,10 @@ public class DificuldadeMEDIO implements iEstrategiaDificuldade {
         return numVertices;
     }
 
-    //a distancia é um random entre 10  e 100 no nivel 1
-    //o custo é um random entre 1 e 10 no nivel 1
+    /**
+     * 
+     * @return A distancia é um valor random entre 10 e 100 
+     */
     @Override
     public int randomCusto() {
 
@@ -48,6 +51,10 @@ public class DificuldadeMEDIO implements iEstrategiaDificuldade {
 
     }
 
+    /**
+     * 
+     * @return A distancia é um valor random entre 10 e 100
+     */
     @Override
     public int randomDistancia() {
         int minDistancia = 10;
@@ -59,14 +66,19 @@ public class DificuldadeMEDIO implements iEstrategiaDificuldade {
 
     }
 
+    /**
+     * 
+     * @return tipo de ligacao T2
+     */
     @Override
     public TipoLigacao randomTipo() {
-
-       // return TipoLigacao.valueOf("T" + (xRandom.nextInt(4) + 1));
        return TipoLigacao.T2;
     }
     
-    
+    /**
+     * 
+     * @return um valor de arestas a serem geradas
+     */
     @Override
      public int randomArestas(){
          

@@ -9,8 +9,8 @@ import javafx.animation.Interpolator;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.animation.TranslateTransitionBuilder;
-import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,38 +29,31 @@ import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 
 /**
- *
+ * CLASSE RECORDES
  * @author Artur Ferreira
  */
 public class Recordes{
     
     /**
      * RECORDES TT
-     *
-     * @param primaryStage
-     * @param jogador
-     * @return
+     * 
+     * @param primaryStage stage Inicial
+     * @param jogador jogador
+     * @return  Este metodo devolve uma "cena" com os recordes do tipo de jogo Time Trial
      */
     public static Scene recordesTimeTrial(Stage primaryStage, Jogador jogador) {
         
         
         BorderPane rootRecordes = new BorderPane();
         Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
-        System.out.println("menu RECORDES TT");
-        
+
         
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRecordes.setTop(nomeJogador);
-        
-        
-        VBox vb = new VBox();
-        vb.setSpacing(80);
-        vb.setAlignment(Pos.CENTER);
-        
-        
+          
         //texto Nomes
         DropShadow ds = new DropShadow();
         ds.setOffsetY(3.0f);
@@ -70,13 +63,18 @@ public class Recordes{
         textoRecordes.setCache(true);
         textoRecordes.setX(20);
         textoRecordes.setY(10);
-        
-        
+             
         //meter o texto dos recordes aki
         textoRecordes.setText(jogador.lerFicheiroRecordes("TT"));
         textoRecordes.setFill(Color.CYAN);
         textoRecordes.setFont(Font.font(null, FontWeight.BOLD, 30));
         textoRecordes.setTextAlignment(TextAlignment.CENTER);
+        
+        
+        
+        VBox vb = new VBox();
+        vb.setPadding(new Insets(0, 0, 100, 0));
+        vb.setAlignment(Pos.CENTER);
         
         
         //botao Voltar
@@ -100,28 +98,26 @@ public class Recordes{
         rootRecordes.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
         rootRecordes.setId(painel);
         
-        vb.getChildren().addAll(textoRecordes, btn1);
-        rootRecordes.setCenter(vb);
+        vb.getChildren().addAll(btn1);
+        rootRecordes.setCenter(textoRecordes);
+        rootRecordes.setBottom(vb);
         translateTransition.play();
         return janelaRecordes;
     }
 
     /**
      * RECORDES ARCADE
-     *
-     * @param primaryStage
-     * @param jogador
-     * @return
+     * 
+     * @param primaryStage stage Inicial
+     * @param jogador jogador
+     * @return Este metodo devolve uma "cena" com os recordes do tipo de jogo Time Trial
      */
     public static Scene recordesArcade(Stage primaryStage, Jogador jogador) {
         
         
         BorderPane rootRecordes = new BorderPane();
         Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
-        
-        System.out.println("menu RECORDES Arcade");
-        
-        
+              
         //para apresentar o nome do jogador
         Text nomeJogador = new Text(jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
@@ -129,11 +125,7 @@ public class Recordes{
         rootRecordes.setTop(nomeJogador);
         
         
-        VBox vb = new VBox();
-        vb.setSpacing(80);
-        vb.setAlignment(Pos.CENTER);
-        
-        
+   
         //texto Nomes
         DropShadow ds = new DropShadow();
         ds.setOffsetY(3.0f);
@@ -150,6 +142,13 @@ public class Recordes{
         textoRecordes.setFill(Color.CYAN);
         textoRecordes.setFont(Font.font(null, FontWeight.BOLD, 30));
         textoRecordes.setTextAlignment(TextAlignment.CENTER);
+        
+        
+        
+        
+        VBox vb = new VBox();
+        vb.setPadding(new Insets(0, 0, 100, 0));
+        vb.setAlignment(Pos.CENTER);
         
         
         //botao Voltar
@@ -173,10 +172,11 @@ public class Recordes{
         rootRecordes.getStylesheets().addAll(AppMindGraphsFX.class.getResource("/javafxgraphs/ui/resources/style.css").toExternalForm());     
         rootRecordes.setId(painel);
         
-        vb.getChildren().addAll(textoRecordes, btn1);
-        rootRecordes.setCenter(vb);
-        
+        vb.getChildren().addAll(btn1);
+        rootRecordes.setCenter(textoRecordes);
+        rootRecordes.setBottom(vb);
         translateTransition.play();
+        
         return janelaRecordes;
     }
     

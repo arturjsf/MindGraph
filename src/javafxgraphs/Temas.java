@@ -5,7 +5,6 @@
  */
 package javafxgraphs;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -22,7 +21,7 @@ import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 
 /**
- *
+ * CLASSE Temas
  * @author Artur Ferreira
  */
 public class Temas{
@@ -31,16 +30,17 @@ public class Temas{
     /**
      * MENU TEMAS
      *
-     * @param primaryStage
-     * @param jogador
-     * @return
+     * @param primaryStage stage inicial
+     * @param jogador jogador
+     * @return Devolve um menu com 4 temas á escolha
      */
     
     public static Scene menuTemas(Stage primaryStage, Jogador jogador) {
         
         BorderPane rootTemas = new BorderPane();
         Scene janelaTemas = new Scene(rootTemas, 1000, 600);
-        System.out.println("menu TEMAS");
+
+        
         int btnSize = 150;
         
         // BOTOES DE ESCOLHA DE TEMA
@@ -60,11 +60,10 @@ public class Temas{
                 
                 Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
                 primaryStage.setScene(scene);
-                primaryStage.show();
-                
-                //primaryStage.setScene(menuPrincipal(primaryStage));
+                primaryStage.show();             
             }
         });
+        
         Button btnCycling = new Button("Cycling");
         btnCycling.setMaxWidth(btnSize);
         btnCycling.setOnAction(new EventHandler<ActionEvent>() {
@@ -79,6 +78,7 @@ public class Temas{
                 primaryStage.show();
             }
         });
+        
         Button btnRugby = new Button("Rugby");
         btnRugby.setMaxWidth(btnSize);
         btnRugby.setOnAction(new EventHandler<ActionEvent>() {
@@ -93,6 +93,7 @@ public class Temas{
                 primaryStage.show();
             }
         });
+        
         Button btnFootball = new Button("Football");
         btnFootball.setMaxWidth(btnSize);
         btnFootball.setOnAction(new EventHandler<ActionEvent>() {
@@ -107,6 +108,7 @@ public class Temas{
                 primaryStage.show();
             }
         });
+        
         Button btnVoltar = new Button("Voltar");
         btnVoltar.setMaxWidth(250);
         btnVoltar.setOnAction(new EventHandler<ActionEvent>() {

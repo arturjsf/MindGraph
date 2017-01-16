@@ -14,7 +14,7 @@ import javafxgraphs.tad.iEdge;
 public class CalcularDeslocacaoMinima implements iEstrategiaSolucao<Ligacao, Local>{
 
     /**
-     * (not implemented)
+     *
      * @param edge aresta
      * @return 1-iteracao
      */
