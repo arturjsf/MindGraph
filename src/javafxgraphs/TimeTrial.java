@@ -468,9 +468,9 @@ public class TimeTrial {
         seconds = tempo;
         Timeline time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
-        if (time != null) {
-            time.stop();
-        }
+//        if (time != null) {
+//            time.stop();
+//        }
         KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
             @Override

@@ -16,11 +16,14 @@ import static org.junit.Assert.*;
  */
 public class TimeTrialTest {
     
+    TimeTrial timeTrial;
+    
     public TimeTrialTest() {
     }
     
     @Before
     public void setUp() {
+        timeTrial = new TimeTrial();
     }
     
     @After
@@ -60,6 +63,7 @@ public class TimeTrialTest {
      */
     @Test
     public void testVerificaSolucao() {
+        assertEquals(this, this);
     }
 
     /**

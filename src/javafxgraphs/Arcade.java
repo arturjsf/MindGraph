@@ -249,9 +249,9 @@ public class Arcade {
         //para apresentar a dificuldade
         Text dificuldadeJogo = new Text("Dificuldade\n"+jogoArcade.getDificuldade() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        if (dificuldadeJogo.getText().equals("FACIL")) {
+        if (dificuldadeJogo.getText().equals("Dificuldade\nFACIL")) {
             dificuldadeJogo.setFill(Color.GREEN);
-        } else if (dificuldadeJogo.getText().equals("MEDIO")) {
+        } else if (dificuldadeJogo.getText().equals("Dificuldade\nMEDIO")) {
             dificuldadeJogo.setFill(Color.YELLOW);
         } else {
             dificuldadeJogo.setFill(Color.RED);
