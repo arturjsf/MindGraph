@@ -1,4 +1,12 @@
 Regras do jogo em Arcade
 
-Aqui é apresentado um pacote de 20 jogos 
-
+Aqui e apresentado um pacote de 20 jogos 
+A finalidade e o jogador conseguir o maximo de 60 estrelas que 
+corresponde a tres estrelas por cada jog, que sao atribuidas consoante 
+o calculo da solucao do jogador: se acertar no valor exato pedido, seja 
+de custo minimo, distancia minima ou numero de movimentos minimo, atribui-se 
+3 estrelas; se a solucao do jogador estiver dentro do intervalo de 25 por 
+cento por excesso ou defeito, atribui-se 2 estrelas; se a solucao do jogador 
+estiver dentro do intervalo de 50 por cento por excesso ou defeito, atribui-se 
+1 estrelas; fora desses intervalos nao lhe sera atribuida nenhuma estrela, tendo 
+que repetir o jogo.

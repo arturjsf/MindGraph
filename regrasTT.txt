@@ -1,15 +1,15 @@
 Regras do jogo em Time Trial
 
-Após selecionar “Start” é apresentado um mini-jogo com um tempo de 
-solução cronometrado de 2 minutos.
-Se antes do tempo terminar o jogador acertar na solução, é apresentado 
-outro mini-jogo com reinício do tempo.
-Os mini-jogos têm três soluções possíveis, que serão pedidas aleatoriamente 
-assim que o jogo inicia: Custo mínimo; Distância mínima; Mínimas deslocações.
+Apos selecionar START sera apresentado um mini-jogo com um tempo de 
+solucao cronometrado de 2 minutos.
+Se antes do tempo terminar, o jogador acertar na solucao, sera apresentado 
+outro mini-jogo com reinicio do tempo.
+Os mini-jogos tem tres solucoes possiveis, que serao pedidas aleatoriamente 
+assim que o jogo inicia: Custo minimo; Distancia minima; Minimas deslocacoes.
 
-Existem 3 níveis de dificuldade e quando se inicia o jogo, a dificuldade nível 
-1 vai-se manter durante os primeiros 8 jogos. No 9º jogo, a dificuldade aumentará 
-para nivel2, onde existirão mais caminhos e locais de partida e chegada, além do 
+Existem 3 niveis de dificuldade e quando se inicia o jogo, a dificuldade nivel 1 
+vai-se manter durante os primeiros 8 jogos. No 9. jogo, a dificuldade aumentara 
+para nivel 2, onde existirao mais caminhos e locais de partida e chegada, alem do 
 tempo reduzir para 90 segundos.
-No décimo segundo jogo, é aumentado o nível de dificuldade para 3, novamente com 
-incremento de locais e caminhos e redução de tempo de jogo para 1 minuto.
+No decimo segundo jogo, aumenta-se o nivel de dificuldade para 3, novamente com 
+incremento de locais e caminhos, e reducao de tempo de jogo para 1 minuto.

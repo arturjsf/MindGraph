@@ -100,6 +100,7 @@ public class TimeTrial {
             public void handle(ActionEvent e) {
                 Scene scene = AppMindGraphsFX.menuPrincipal(primaryStage, jogador);
                 primaryStage.setScene(scene);
+
                 primaryStage.show();
             }
         });
@@ -111,7 +112,7 @@ public class TimeTrial {
         rootTimeTrial.setCenter(boxBotoesTrial);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootTimeTrial.setTop(nomeJogador);
@@ -142,31 +143,30 @@ public class TimeTrial {
         Scene janelaJogoTT = new Scene(rootJogoTT, 1000, 600);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogoTT.getJogador().getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogoTT.getJogador().getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar o nivel
-        Text nivelJogo = new Text(jogoTT.getNivel() + "/" + NIVEL_MAX);
+        Text nivelJogo = new Text("Nivel\n"+jogoTT.getNivel() + "/" + NIVEL_MAX);
         nivelJogo.setFill(Color.YELLOW);
         nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        //Para apresentar o timer
-//        Text timer = new Text(jogoTT.getSegundos() + "");
-//        timer.setFill(Color.GREEN);
-//        timer.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
 
         //para apresentar a dificuldade
-        Text dificuldadeJogo = new Text(jogoTT.getDificuldade() + "");
+        Text dificuldadeJogo = new Text("Dificuldade\n"+jogoTT.getDificuldade() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         
-        if (dificuldadeJogo.getText().equals("FACIL")) {
+        if (dificuldadeJogo.getText().equals("Dificuldade\nFACIL")) {
             dificuldadeJogo.setFill(Color.GREEN);
-        } else if (dificuldadeJogo.getText().equals("MEDIO")) {
+        } else if (dificuldadeJogo.getText().equals("Dificuldade\nMEDIO")) {
             dificuldadeJogo.setFill(Color.YELLOW);
         } else {
             dificuldadeJogo.setFill(Color.RED);
         }
+        
+        
         //HBOX CABECALHO
         HBox boxCabecalho = new HBox();
         boxCabecalho.setSpacing(350);
@@ -234,8 +234,6 @@ public class TimeTrial {
 
                 System.out.println("Erro de entrada");
                 }
-                
-
             }
 
         });
@@ -450,7 +448,7 @@ public class TimeTrial {
         stage.setTitle("Tempo");
 
         stage.setAlwaysOnTop(true);
-        stage.setX(1090.0);
+        stage.setX(1050.0);
         stage.setY(100.0);
         stage.initStyle(StageStyle.TRANSPARENT);
         

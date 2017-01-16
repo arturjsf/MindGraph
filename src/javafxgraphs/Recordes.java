@@ -49,7 +49,7 @@ public class Recordes{
 
         
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRecordes.setTop(nomeJogador);
@@ -119,7 +119,7 @@ public class Recordes{
         Scene janelaRecordes = new Scene(rootRecordes, 1000, 600);
               
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRecordes.setTop(nomeJogador);

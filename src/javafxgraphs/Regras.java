@@ -22,6 +22,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
@@ -44,7 +45,7 @@ public class Regras{
         Scene janelaRegras = new Scene(rootRegras, 1000, 600);
         
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
         rootRegras.setTop(nomeJogador);
@@ -111,7 +112,7 @@ public class Regras{
         Scene janelaRegras = new Scene(rootRegras, 1000, 600);
         
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootRegras.setTop(nomeJogador);

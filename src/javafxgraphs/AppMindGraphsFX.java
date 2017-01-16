@@ -24,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafxgraphs.modelo.Jogador;
 
 /**
@@ -66,7 +67,9 @@ public class AppMindGraphsFX extends Application{
         textNomeJogador.setFocusTraversable(false);
         textNomeJogador.getText();
         textNomeJogador.setMaxWidth(210);
-
+        //Botao de saida
+        Button btnSair = new Button("Sair");
+        btnSair.setMaxWidth(150);        
         //Botao para criar o mini jogo
         Button btnCriarJogo = new Button("OK");
         btnCriarJogo.setMaxWidth(150);
@@ -80,8 +83,15 @@ public class AppMindGraphsFX extends Application{
             }
         });
 
+        btnSair.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
         //vamos adicionar as coisas á hbox
-        boxNomeJogador.getChildren().addAll(textNomeJogador, btnCriarJogo);
+        boxNomeJogador.getChildren().addAll(textNomeJogador, btnCriarJogo,btnSair);
         boxNomeJogador.setSpacing(10);
 
         //vamos adicionar a hbox ao border pane
@@ -93,6 +103,7 @@ public class AppMindGraphsFX extends Application{
         root.setId(painel);
 
         //propriedades da janela
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Mind Graphs");
         primaryStage.setScene(intro);
         primaryStage.centerOnScreen();
@@ -179,7 +190,7 @@ public class AppMindGraphsFX extends Application{
         rootMenu.setCenter(boxBotoes);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
 
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));

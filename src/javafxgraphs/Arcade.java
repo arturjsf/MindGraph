@@ -110,7 +110,7 @@ public class Arcade {
         rootArcade.setCenter(boxBotoesArcade);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         rootArcade.setTop(nomeJogador);
@@ -136,14 +136,14 @@ public class Arcade {
         Scene janelaArcade = new Scene(rootArcade, 1000, 600);
 
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text("Jogador "+jogador.getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogador.getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         int somaEstrelas = somaEstrelas(packMiniJogosArcade);
         jogador.setPontuacao(somaEstrelas);
 
-        Text nivelEstrelas = new Text(somaEstrelas + "/60");
+        Text nivelEstrelas = new Text("Estrelas\n"+somaEstrelas + "/60");
         nivelEstrelas.setFill(Color.YELLOW);
         nivelEstrelas.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -162,6 +162,9 @@ public class Arcade {
         Text textEscolherOpcao = new Text("Pack 1 - Arcade");
         textEscolherOpcao.setFill(Color.GREEN);
         textEscolherOpcao.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        textEscolherOpcao.setEffect(r);
 
         TilePane tilePane = new TilePane(Orientation.HORIZONTAL, 10, 10);
         tilePane.setMaxWidth(500);
@@ -234,17 +237,17 @@ public class Arcade {
 
         
         //para apresentar o nome do jogador
-        Text nomeJogador = new Text(jogoArcade.getJogador().getNome());
+        Text nomeJogador = new Text("Jogador\n"+jogoArcade.getJogador().getNome());
         nomeJogador.setFill(Color.BLACK);
         nomeJogador.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar o nivel
-        Text nivelJogo = new Text(jogoArcade.getNivel() + "/20");
+        Text nivelJogo = new Text("Nivel\n"+jogoArcade.getNivel() + "/20");
         nivelJogo.setFill(Color.YELLOW);
         nivelJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         //para apresentar a dificuldade
-        Text dificuldadeJogo = new Text(jogoArcade.getDificuldade() + "");
+        Text dificuldadeJogo = new Text("Dificuldade\n"+jogoArcade.getDificuldade() + "");
         dificuldadeJogo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         if (dificuldadeJogo.getText().equals("FACIL")) {
             dificuldadeJogo.setFill(Color.GREEN);

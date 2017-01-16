@@ -2,3 +2,5 @@ Jogador|Estrelas
 er        3
 fghj        15
 wert        3
+dsd        55
+
