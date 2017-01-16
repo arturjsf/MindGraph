@@ -1,0 +1,4 @@
+Regras do jogo em Arcade
+
+Aqui é apresentado um pacote de 20 jogos 
+

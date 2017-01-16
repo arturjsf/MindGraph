@@ -51,8 +51,8 @@ public class AppMindGraphsFX extends Application{
         VBox boxNomeJogador = new VBox();
         boxNomeJogador.setAlignment(Pos.CENTER);
         Text textBemVindo = new Text("Bem vindo ao jogo MIND GRAPHS! ");
-        textBemVindo.setFill(Color.LIGHTSALMON);
-        textBemVindo.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        textBemVindo.setFill(Color.GREEN);
+        textBemVindo.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
         boxNomeJogador.getChildren().add(textBemVindo);
 
         //text field com o nome do jogador
@@ -65,6 +65,7 @@ public class AppMindGraphsFX extends Application{
 
         //Botao para criar o mini jogo
         Button btnCriarJogo = new Button("OK");
+        btnCriarJogo.setMaxWidth(150);
         btnCriarJogo.setDisable(true);
         verificaTextField(textNomeJogador, btnCriarJogo);
         btnCriarJogo.setOnAction(new EventHandler<ActionEvent>() {
@@ -192,7 +193,7 @@ public class AppMindGraphsFX extends Application{
      * @param campoTexto campo de texto a ser verificado
      * @param btnOK botao a ser desbloqueado
      */
-    public void verificaTextField(TextField campoTexto, Button btnOK) {
+    public static void verificaTextField(TextField campoTexto, Button btnOK) {
         campoTexto.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {

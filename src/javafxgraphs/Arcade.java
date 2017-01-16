@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import static javafxgraphs.AppMindGraphsFX.painel;
 import javafxgraphs.modelo.Jogador;
 import javafxgraphs.modelo.Ligacao;
@@ -291,6 +292,8 @@ public class Arcade {
 
         //Botao para criar o mini jogo
         Button btnCalcularSolucao = new Button("Calcular");
+        btnCalcularSolucao.setDisable(true);
+        AppMindGraphsFX.verificaTextField(textSolucao, btnCalcularSolucao);
         btnCalcularSolucao.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -450,6 +453,7 @@ public class Arcade {
         stagePOPUP.setScene(janelaPOPUP);
         stagePOPUP.centerOnScreen();
         stagePOPUP.setResizable(false);
+        stagePOPUP.initStyle(StageStyle.TRANSPARENT);
         stagePOPUP.show();
 
     }
